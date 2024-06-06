@@ -1,0 +1,2 @@
+FLASK_APP=tracking.py
+FLASK_ENV=development
