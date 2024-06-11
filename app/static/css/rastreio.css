@@ -32,6 +32,22 @@
     background-color: white;
 }
 
+.button-rastreio {
+    background-color: #3b82f6;
+    color: #f3f7fe;
+    border: none;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: .3s;
+  }
+  
+  .button-rastreio:hover {
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 5px #3b83f65f;
+    color: #fff;
+  }
+
 .imagem-rastreio{
     max-width:1920px;
     max-height:720px;
