@@ -5,7 +5,6 @@
 .background {
     background-color: #F0F0F0;
     border-radius: 45px 45px 0px 0px;
-    height: 90%;
 }
 
 .titulo-rastreio {
@@ -23,7 +22,7 @@
     background-color: #F0F0F0;
     border-radius: 10px;
     transition: all 0.5s;
-  }
+}
   
 .rastreio-input:hover,
 .rastreio-input:focus {
@@ -40,13 +39,13 @@
     width: 100px;
     height: 45px;
     transition: .3s;
-  }
-  
-  .button-rastreio:hover {
+}
+
+.button-rastreio:hover {
     background-color: #3b82f6;
     box-shadow: 0 0 0 5px #3b83f65f;
     color: #fff;
-  }
+}
 
 .imagem-rastreio{
     max-width:1920px;
@@ -55,9 +54,55 @@
     height: auto;
 }
 
+.container-full-width {
+    width: 100%;
+    background-color: #0071BB;
+    padding: 20px 0;
+    margin-bottom: -200px;
+}
+
+.container-perguntas {
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: -200px;
+}
+
+.container {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.text-section {
+    max-width: 50%;
+    margin-bottom: 150px;
+}
+
+.titulo-controle {
+    font-weight: bold;
+}
+
+.image-section {
+    max-width: 50%;
+    position: relative;
+}
+
+.imagem-check {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 50px;
+}
+
 .terms-of-usage {
     background-color: #F0F0F0;
-    padding-bottom: 15px;
+    padding-bottom: 1500px;
 
     a {
         margin-left: 40px
