@@ -67,6 +67,21 @@
     margin-bottom: -200px;
 }
 
+.container-full-width2 {
+    color: #0071BB;
+    padding: 20px 0;
+    margin-top: 200px;
+}
+
+.image-section {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.text-section {
+    flex: 1;
+}
+
 .container {
     color: white;
     display: flex;
@@ -78,6 +93,22 @@
     position: relative;
 }
 
+.container2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.content-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .text-section {
     max-width: 50%;
     margin-bottom: 150px;
@@ -87,12 +118,19 @@
     font-weight: bold;
 }
 
-.image-section {
-    max-width: 50%;
-    position: relative;
+.image-section, .text-section2 {
+    flex: 1;
+    padding: 20px;
 }
 
 .imagem-check {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.imagem-duvida {
     max-width: 600px;
     width: 100%;
     height: auto;
