@@ -138,6 +138,31 @@
     top: 50px;
 }
 
+.texto-controle2 {
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    width: 30%;
+    background-color: #F0F0F0;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+}
+
+.card-content {
+    text-align: center;
+}
+
 .terms-of-usage {
     background-color: #F0F0F0;
     padding-bottom: 1500px;
