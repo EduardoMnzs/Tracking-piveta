@@ -10,6 +10,7 @@
 .titulo-rastreio {
     color: #0071BB;
     font-weight: 600;
+    padding-top: 50px;
 }
 
 .rastreio-input {
@@ -33,6 +34,7 @@
 
 .button-rastreio {
     background-color: #3b82f6;
+    text-decoration: none;
     color: #f3f7fe;
     border: none;
     border-radius: 8px;
@@ -47,11 +49,12 @@
     color: #fff;
 }
 
-.imagem-rastreio{
-    max-width:1920px;
-    max-height:720px;
-    width: auto;
+.imagem-rastreio {
+    max-width: 100%;
     height: auto;
+    display: block;
+    margin: 0 auto;
+    width: 1250px;
 }
 
 .container-full-width {
@@ -148,28 +151,43 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    padding: 20px;
 }
 
 .card {
-    width: 30%;
-    background-color: #F0F0F0;
-    border-radius: 5px;
+    width: 20%;
+    background-color: #F0F0F0 !important; 
+    border-width: 2px !important;
+    border-color: #0071BB !important;
+    border-radius: 25px !important;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     min-height: 500px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .card-content {
-    text-align: center;
+    align-items: center;
+    text-align: left;
 }
 
-.terms-of-usage {
-    background-color: #F0F0F0;
-    padding-bottom: 1500px;
+.card-content img {
+    margin-right: 20px;
+    margin-top: 30px;
+    width: 50px;
+    height: auto;
+    margin-left: 25px;
+}
 
-    a {
-        margin-left: 40px
-    }
+.card-content p {
+    margin: 0;
+    margin-top: 75px;
+    padding-inline: 30px;
+    text-align: justify;
+    font-weight: bold;
 }
 
 .footer-hr {
@@ -179,4 +197,8 @@
     background: black !important;
     margin-bottom: 8px;
     border: none !important;
+}
+
+.text-center {
+    margin-top: 25px;
 }

@@ -1,0 +1,25 @@
+<link href="/static/css/status.css" rel="stylesheet">
+
+{% extends 'blueprint.html' %}
+{% block main %}
+<div class="background">
+    <div class="home-container">
+        <div class="container-rastreio">
+            <div class="input-button-container">
+                <h1 class="titulo-rastreio">Código de rastreamento: </h1>
+                <input type="text" class="rastreio-input" placeholder="Código de rastreio">
+                <a href="/status"><button class="button-rastreio">Rastrear</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="container-imagem-status">
+        <img class="imagem-status" src="../static/img/postado.png" alt="">
+    </div>
+</div>
+
+<footer class="small text-center terms-of-usage">
+    <hr class="footer-hr">
+    © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de privacidade</a>
+</footer>
+
+{% endblock %}
