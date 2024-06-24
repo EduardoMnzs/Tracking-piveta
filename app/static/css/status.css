@@ -25,8 +25,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Espaço entre input e botão */
-    margin-top: 20px; /* Espaço entre o título e os inputs */
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .rastreio-input {
@@ -65,6 +65,70 @@
     color: #fff;
 }
 
+.status-imagem-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.status-column {
+    display: flex;
+    flex-direction: column;
+    margin-left: 145px;
+    margin-top: 75px;
+}
+
+.status-container {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.icon-status-background {
+    padding: 15px;
+}
+  
+.icon-status {
+    transform: translateY(-2px);
+    margin-right: 8px;
+}
+  
+.icon-status path {
+    fill: #fff;
+}
+  
+.situacao-status {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.titulo-status {
+    margin: 0;
+}
+
+.local-status {
+    color: #0071BB;
+    margin: 0;
+    font-weight: bold;
+}
+
+.data-status {
+    margin: 0;
+    font-weight: bold;
+}
+
+.entrega {
+    color: #0071BB;
+    margin: 0;
+}
+
+.info-svg {
+    margin-left: -5px;
+}
+
 .container-imagem-status {
     display: flex;
     justify-content: right;
@@ -72,6 +136,7 @@
 
 .imagem-status {
     width: 750px;
+    margin-right: 100px;
 }
 
 .terms-of-usage {

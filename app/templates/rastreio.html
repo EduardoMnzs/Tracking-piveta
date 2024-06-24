@@ -7,17 +7,23 @@
     <div class="home-container">
         <div class="container-rastreio">
             <h1 class="titulo-rastreio">Ei Pivetencer, não deixe de acompanhar as encomendas!</h1>
-            <input type="text" class="rastreio-input" placeholder="Código de rastreio">
-            <a href="/status"><button class="button-rastreio">Rastrear</button></a>
-            <br>
-            <img class="imagem-rastreio" src="../static/img/rastreio-predio.png" alt="">
+            <form action="/status" method="post">
+                <input type="text" name="codigo_rastreio" class="rastreio-input" placeholder="Código de rastreio">
+                <button class="button-rastreio" type="submit">Rastrear</button>
+                <br>
+                <img class="imagem-rastreio" src="../static/img/rastreio-predio.png" alt="">
+            </form>
         </div>
     </div>
     <div class="container-full-width">
         <div class="container">
             <div class="text-section">
                 <h1 class="titulo-controle">Não perca o controle de envios!</h1>
-                <p class="texto-controle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut maxime perspiciatis modi impedit ea rerum soluta exercitationem ratione autem aliquam molestiae laborum omnis ab cum ipsa quo, explicabo quod suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur esse commodi, voluptas dolorum quia distinctio vitae eius a, hic magnam, quis earum delectus quidem beatae voluptatem repellendus cumque quae? Maiores.</p>
+                <p class="texto-controle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut maxime
+                    perspiciatis modi impedit ea rerum soluta exercitationem ratione autem aliquam molestiae laborum
+                    omnis ab cum ipsa quo, explicabo quod suscipit. Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit. Consequuntur esse commodi, voluptas dolorum quia distinctio vitae eius a, hic magnam, quis
+                    earum delectus quidem beatae voluptatem repellendus cumque quae? Maiores.</p>
             </div>
             <div class="image-section">
                 <img class="imagem-check" src="/static/img/check.png" alt="Descrição da Imagem">
@@ -25,43 +31,50 @@
         </div>
     </div>
     <div class="container-full-width2">
-    <div class="container2">
-        <div class="content-section">
-            <div class="image-section">
-                <img class="imagem-duvida" src="/static/img/duvida.png" alt="Descrição da Imagem">
+        <div class="container2">
+            <div class="content-section">
+                <div class="image-section">
+                    <img class="imagem-duvida" src="/static/img/duvida.png" alt="Descrição da Imagem">
+                </div>
+                <div class="text-section2">
+                    <h1 class="titulo-controle">Precisa de alguma ajuda com algum rastreio?</h1>
+                    <p class="texto-controle2">Veja o que fazer em cada um dos casos.</p>
+                </div>
             </div>
-            <div class="text-section2">
-                <h1 class="titulo-controle">Precisa de alguma ajuda com algum rastreio?</h1>
-                <p class="texto-controle2">Veja o que fazer em cada um dos casos.</p>
+        </div>
+    </div>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-content">
+                <img src="../static/svg/relogio.svg" alt="">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim facere rerum ex laboriosam sint
+                    blanditiis repudiandae, officia quam id voluptatum velit inventore sit, odit tempore placeat nisi a
+                    ea!</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <img src="../static/svg/check.svg" alt="">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime repellendus aut necessitatibus eius
+                    vitae! Fuga, nam dolorum nihil laudantium ipsum consequatur corrupti obcaecati nobis sit reiciendis,
+                    a, earum corporis quidem.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <img src="../static/svg/caminhao.svg" alt="">
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos nostrum pariatur, ea voluptate ad unde
+                    numquam voluptatum quidem ipsum alias repudiandae eligendi eius mollitia vel in aliquam excepturi
+                    expedita cupiditate.</p>
             </div>
         </div>
     </div>
-</div>
-<div class="card-container">
-    <div class="card">
-        <div class="card-content">
-            <img src="../static/svg/relogio.svg" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste enim facere rerum ex laboriosam sint blanditiis repudiandae, officia quam id voluptatum velit inventore sit, odit tempore placeat nisi a ea!</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <img src="../static/svg/check.svg" alt="">
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime repellendus aut necessitatibus eius vitae! Fuga, nam dolorum nihil laudantium ipsum consequatur corrupti obcaecati nobis sit reiciendis, a, earum corporis quidem.</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-content">
-            <img src="../static/svg/caminhao.svg" alt="">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos nostrum pariatur, ea voluptate ad unde numquam voluptatum quidem ipsum alias repudiandae eligendi eius mollitia vel in aliquam excepturi expedita cupiditate.</p>
-        </div>
-    </div>
-</div>
 
-<footer class="small text-center terms-of-usage">
-    <hr class="footer-hr">
-    © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de privacidade</a>
-</footer>
+    <footer class="small text-center terms-of-usage">
+        <hr class="footer-hr">
+        © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
+            privacidade</a>
+    </footer>
 
 </div>
 
