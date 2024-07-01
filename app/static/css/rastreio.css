@@ -73,7 +73,7 @@
 .container-full-width2 {
     color: #0071BB;
     padding: 20px 0;
-    margin-top: 200px;
+    margin-top: 250px;
 }
 
 .image-section {
@@ -85,7 +85,7 @@
     flex: 1;
 }
 
-.container {
+.container1 {
     color: white;
     display: flex;
     justify-content: space-between;
@@ -114,7 +114,6 @@
 
 .text-section {
     max-width: 50%;
-    margin-bottom: 150px;
 }
 
 .titulo-controle {
@@ -128,7 +127,7 @@
 
 .imagem-check {
     max-width: 600px;
-    width: 100%;
+    width: 145%;
     height: auto;
     position: relative;
 }
@@ -155,7 +154,7 @@
 }
 
 .card {
-    width: 20%;
+    width: 25%;
     background-color: #F0F0F0 !important; 
     border-width: 2px !important;
     border-color: #0071BB !important;
@@ -201,4 +200,64 @@
 
 .text-center {
     margin-top: 25px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .card {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .imagem-check {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .card {
+        width: 85% !important;
+        min-height: 325px;
+    }
+
+    .card-container {
+        display: grid;
+        grid-gap: 30px;
+    }
+
+    .container1 {
+        display: ruby-text;
+    }
+
+    .content-section {
+        display: block;
+    }
+
+    .imagem-duvida{
+        display: none;
+    }
+
+    .imagem-check{
+        display: none;
+    }
+
+    .text-section {
+        max-width: 100%;
+        margin-bottom: -50px;
+    }
+
+}
+
+@media only screen and (max-width: 500px) {
+    .imagem-rastreio {
+        display: none;
+    }
+
+    .container-rastreio {
+        padding-bottom: 100px;
+    }
+
+    .titulo-rastreio{
+        padding-top: 100px;
+    }
 }

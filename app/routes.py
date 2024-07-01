@@ -15,7 +15,7 @@ def rastreio():
 def status():
     registros = None
     error = None
-    imagem_status = 'default.png'
+    imagem_status = 'error.png'
 
     if request.method == 'POST':
         codigo_rastreio = request.form.get('codigo_rastreio')
@@ -36,6 +36,8 @@ def selecionar_imagem(status):
         return "transito.png"
     elif status == "Objeto saiu para entrega ao destinatário":
         return "transito.png"
+    elif status == "Objeto recusado pelo destinatário": #manutenção quando recusado
+        return "nao-recebido.png"
     else:
         return "entregue.png"
     
