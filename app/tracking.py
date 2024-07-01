@@ -29,7 +29,8 @@ def fetch_tracking_info(codigo_rastreio):
                 if 'Destino:' in li_text:
                     registro['destino'] = li_text.split('Destino:', 1)[1].strip()
 
-                registros.append(registro)
+            registros.append(registro)
+            print(registro)
         return registros, None
     else:
         return None, f"Erro ao acessar o site: {req.status_code}"

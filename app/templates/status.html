@@ -7,74 +7,81 @@
         <div class="container-rastreio">
             <div class="input-button-container">
                 <h1 class="titulo-rastreio">Código de rastreamento: </h1>
-                <input type="text" class="rastreio-input" placeholder="Código de rastreio">
-                <a href="/status"><button class="button-rastreio">Rastrear</button></a>
+                <form action="/status" method="post">
+                    <input type="text" name="codigo_rastreio" class="rastreio-input" placeholder="Código de rastreio">
+                    <button class="button-rastreio" type="submit">Rastrear</button>
+                </form>
             </div>
         </div>
     </div>
     <div class="status-imagem-container">
         <div class="status-column">
+            {% if registros %}
+            {% for registro in registros %}
             <div class="status-container">
                 <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/entregue.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <div>
-                        <h3 class="titulo-status">Objeto</h3>
-                    </div>
-                    <div>
-                        <h3><span class="entrega">entregue</span> <img class="info-svg" src="../static/svg/info.svg"
-                                alt=""></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="status-container">
-                <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/entrega.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <div>
-                        <h3 class="titulo-status">Objeto saiu</h3>
-                    </div>
-                    <div>
-                        <h3>para <span class="entrega">entrega</span> <img class="info-svg" src="../static/svg/info.svg"
-                                alt=""></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="status-container">
-                <div class="icon-status">
+                    {% if registro.status == "Objeto em transferência - por favor aguarde" %}
                     <img class="icon-status-background" src="../static/svg/transito.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <h3 class="titulo-status">Objeto em trânsito <img class="info-svg" src="../static/svg/info.svg"
-                            alt=""></h3>
-                    <p class="local-status">São Paulo - SP</p>
-                    <p class="data-status">22/07/2023 - 12:27</p>
-                </div>
-            </div>
-            <div class="status-container">
-                <div class="icon-status">
+                    {% elif registro.status == "Objeto postado após o horário limite da unidade" %}
                     <img class="icon-status-background" src="../static/svg/postado.svg" alt="">
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    <img class="icon-status-background" src="../static/svg/entrega.svg" alt="">
+                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    <img class="icon-status-background" src="../static/svg/entregue.svg" alt="">
+                    {% else %}
+                    <img class="icon-status-background" src="../static/svg/{{ registro.status.lower() }}.svg" alt="">
+                    {% endif %}
                 </div>
                 <div class="situacao-status">
-                    <h3 class="titulo-status">Objeto postado <img class="info-svg" src="../static/svg/info.svg" alt="">
+                    {% if registro.status == "Objeto em transferência - por favor aguarde" %}
+                    <h3 class="titulo-status">Objeto em trânsito<img class="info-svg" src="../static/svg/info.svg"
+                            alt=""></h3>
+                    {% elif registro.status == "Objeto postado após o horário limite da unidade" %}
+                    <h3 class="titulo-status">Objeto postado<img class="info-svg" src="../static/svg/info.svg" alt="">
                     </h3>
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    <h3 class="titulo-status">Objeto saiu para <span class="entrega">entrega</span><img class="info-svg"
+                            src="../static/svg/info.svg" alt=""></h3>
+                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    <h3 class="titulo-status">Objeto <span class="entrega">entregue</span><img class="info-svg"
+                            src="../static/svg/info.svg" alt=""></h3>
+                    {% else %}
+                    <h3 class="titulo-status">Objeto {{ registro.status | capitalize }}<img class="info-svg"
+                            src="../static/svg/info.svg" alt=""></h3>
+                    {% endif %}
+
+                    {% if registro.status == "Objeto postado após o horário limite da unidade"%}
+                    <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
                     <p class="local-status">Marília - SP</p>
-                    <p class="data-status">20/07/2023 - 16:57</p>
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
+                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
+                    {% else %}
+                    <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
+                    <p class="local-status">{{ registro.destino }}</p>
+                    {% endif %}
+
                 </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <div class="status-container">
+                <h3>Nenhum dado disponível para o código fornecido.</h3>
+            </div>
+            {% endif %}
         </div>
         <div class="container-imagem-status">
-            <img class="imagem-status" src="../static/img/postado.png" alt="">
+            <img class="imagem-status" src="../static/img/{{ imagem_status }}" alt="Status Atual">
         </div>
     </div>
+    <footer class="small text-center terms-of-usage">
+        <hr class="footer-hr">
+        © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
+            privacidade</a>
+    </footer>
+</div>
 </div>
 
-<footer class="small text-center terms-of-usage">
-    <hr class="footer-hr">
-    © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
-        privacidade</a>
-</footer>
 
 {% endblock %}

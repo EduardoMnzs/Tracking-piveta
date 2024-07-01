@@ -23,7 +23,6 @@
 
 .input-button-container {
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
@@ -69,7 +68,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin: 20px;
 }
 
 .status-column {
@@ -126,7 +124,7 @@
 }
 
 .info-svg {
-    margin-left: -5px;
+    margin-left: 3px;
 }
 
 .container-imagem-status {

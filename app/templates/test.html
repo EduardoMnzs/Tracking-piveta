@@ -1,54 +1,73 @@
-<link href="/static/css/test.css" rel="stylesheet">
+<link href="/static/css/status.css" rel="stylesheet">
 
 {% extends 'blueprint.html' %}
 {% block main %}
 <div class="background">
-    <div class="status-container">
-        <div class="icon-status">
-            <img src="../static/svg/postado.svg" alt="">
-        </div>
-        <div class="situacao-status">
-            <h3 class="titulo-status">Objeto postado <img class="info-svg" src="../static/svg/info.svg" alt=""></h3>
-            <p class="local-status">Marília - SP</p>
-            <p class="data-status">20/07/2023 - 16:57</p>
-        </div>
-    </div>
-    <div class="status-container">
-        <div class="icon-status">
-            <img src="../static/svg/transito.svg" alt="">
-        </div>
-        <div class="situacao-status">
-            <h3 class="titulo-status">Objeto em trânsito <img class="info-svg" src="../static/svg/info.svg" alt=""></h3>
-            <p class="local-status">São Paulo - SP</p>
-            <p class="data-status">22/07/2023 - 12:27</p>
-        </div>
-    </div>
-    <div class="status-container">
-        <div class="icon-status">
-            <img src="../static/svg/entrega.svg" alt="">
-        </div>
-        <div class="situacao-status">
-            <div>
-                <h3 class="titulo-status">Objeto saiu</h3>
-            </div>
-            <div>
-                <h3>para <span class="entrega">entrega</span> <img class="info-svg" src="../static/svg/info.svg" alt="">
-                </h3>
+    <div class="home-container">
+        <div class="container-rastreio">
+            <div class="input-button-container">
+                <h1 class="titulo-rastreio">Código de rastreamento: </h1>
+                <form action="/status" method="post">
+                    <input type="text" name="codigo_rastreio" class="rastreio-input" placeholder="Código de rastreio">
+                    <button onclick="fetchStatus()" class="button-rastreio" type="submit">Rastrear</button>
+                </form>
             </div>
         </div>
     </div>
-    <div class="status-container">
-        <div class="icon-status">
-            <img src="../static/svg/entregue.svg" alt="">
+    <div class="status-imagem-container">
+        <div class="status-column">
+            <div id="status-container" class="status-container">
+                <div class="icon-status">
+                    <img class="icon-status-background" src="../static/svg/entregue.svg" alt="">
+                </div>
+                <div class="situacao-status">
+                    <div>
+                        <h3 class="titulo-status">Objeto</h3>
+                    </div>
+                    <div>
+                        <h3><span class="entrega">entregue</span> <img class="info-svg" src="../static/svg/info.svg" alt=""></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="status-container">
+                <div class="icon-status">
+                    <img class="icon-status-background" src="../static/svg/entrega.svg" alt="">
+                </div>
+                <div class="situacao-status">
+                    <div>
+                        <h3 class="titulo-status">Objeto saiu</h3>
+                    </div>
+                    <div>
+                        <h3>para <span class="entrega">entrega</span> <img class="info-svg" src="../static/svg/info.svg"
+                                alt=""></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="status-container">
+                <div class="icon-status">
+                    <img class="icon-status-background" src="../static/svg/transito.svg" alt="">
+                </div>
+                <div class="situacao-status">
+                    <h3 class="titulo-status">Objeto em trânsito <img class="info-svg" src="../static/svg/info.svg"
+                            alt=""></h3>
+                    <p class="local-status">São Paulo - SP</p>
+                    <p class="data-status">22/07/2023 - 12:27</p>
+                </div>
+            </div>
+            <div class="status-container">
+                <div class="icon-status">
+                    <img class="icon-status-background" src="../static/svg/postado.svg" alt="">
+                </div>
+                <div class="situacao-status">
+                    <h3 class="titulo-status">Objeto postado <img class="info-svg" src="../static/svg/info.svg" alt="">
+                    </h3>
+                    <p class="local-status">Marília - SP</p>
+                    <p class="data-status">20/07/2023 - 16:57</p>
+                </div>
+            </div> 
         </div>
-        <div class="situacao-status">
-            <div>
-                <h3 class="titulo-status">Objeto</h3>
-            </div>
-            <div>
-                <h3><span class="entrega">entregue</span> <img class="info-svg" src="../static/svg/info.svg" alt="">
-                </h3>
-            </div>
+        <div class="container-imagem-status">
+            <img class="imagem-status" src="../static/img/postado.png" alt="">
         </div>
     </div>
 </div>
