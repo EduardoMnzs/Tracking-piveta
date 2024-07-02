@@ -13,7 +13,6 @@
 .background {
     background-color: #F0F0F0;
     border-radius: 45px 45px 0px 0px;
-    height: 90%;
 }
 
 .titulo-rastreio {
@@ -67,7 +66,7 @@
 .status-imagem-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .status-column {
@@ -75,14 +74,20 @@
     flex-direction: column;
     margin-left: 145px;
     margin-top: 75px;
+    margin-bottom: 75px;
 }
 
 .status-container {
-    width: 500px;
+    max-width: 100%;
+    width: 100%;
+    max-width: 500px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: start;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .icon-status-background {
@@ -133,7 +138,8 @@
 }
 
 .imagem-status {
-    width: 750px;
+    max-width: 100%;
+    width: 850px;
     margin-right: 100px;
 }
 
@@ -153,4 +159,36 @@
     background: black !important;
     margin-bottom: 8px;
     border: none !important;
+}
+
+@media only screen and (max-width: 1350px) {
+    .status-imagem-container {
+        display: block;
+    }
+
+    .status-column {
+        margin-left: 0px;
+    }
+
+    .container-imagem-status {
+        justify-content: center;
+    }
+
+    .imagem-status {
+        margin-right: 0px;
+    }
+
+    .home-container {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 796px) {
+    .input-button-container{
+        display: block;
+    }
+
+    .container-rastreio{
+        margin-left: 0px;
+    }
 }
