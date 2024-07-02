@@ -1,0 +1,6 @@
+anticaptchaofficial==1.0.60
+beautifulsoup4==23.2.0
+requests==2.32.3
+selenium==4.21.0
+Flask==3.0.3
+webdriver-manager==4.0.1

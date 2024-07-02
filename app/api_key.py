@@ -1,0 +1,1 @@
+ANTICAPTCHA_KEY = 'null'

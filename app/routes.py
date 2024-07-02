@@ -49,6 +49,10 @@ def api_rastreio(codigo_rastreio):
         return {"error": error}, 400
     return {"registros": registros}, 200
 
+@app.route("/bipagem")
+def bipagem():
+    return render_template('bipagem.html')
+
 @app.route("/test")
 def test():
     return render_template('test.html')
