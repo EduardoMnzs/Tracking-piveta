@@ -1,6 +1,6 @@
 from app import app
 from flask import Flask, render_template, request
-from .tracking import fetch_tracking_info
+from .utils.tracking import fetch_tracking_info
 
 @app.route("/")
 @app.route("/index")

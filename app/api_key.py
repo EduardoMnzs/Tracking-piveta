@@ -1,1 +1,0 @@
-ANTICAPTCHA_KEY = 'null'
