@@ -26,7 +26,7 @@
     padding: 0 1rem;
     color: #000000;
     font-size: 15px;
-    border: 1px solid #3898EC;
+    border: 1px solid #0071BB;
     border-radius: 25px 0px 0px 25px;
     background-color: #fff;
 }
@@ -37,7 +37,7 @@
     padding: 0 1rem;
     color: #000000;
     font-size: 15px;
-    border: 1px solid #3898EC;
+    border: 1px solid #0071BB;
     border-radius: 0px 25px 25px 0px;
     background-color: #fff;
 }
@@ -52,7 +52,7 @@
     padding: .5em 1em;
     border: none;
     border-radius: 0px 25px 25px 0px;
-    background-color: #3898EC;
+    background-color: #0071BB;
     color: #fff;
     font-size: 15px;
     cursor: pointer;
@@ -64,7 +64,7 @@
     padding: .5em 1em;
     border: none;
     border-radius: 25px 0px 0px 25px;
-    background-color: #3898EC;
+    background-color: #0071BB;
     color: #fff;
     font-size: 15px;
     cursor: pointer;
@@ -72,12 +72,12 @@
 }
 
 .button-search:hover {
-    background-color: #3898EC;
+    background-color: #0071BB;
 }
 
 .input-pesquisa-volume, .input-pesquisa-produto:focus,
 .input-pesquisa-volume, .input-pesquisa-produto:focus-visible {
-    border-color: #3898EC;
+    border-color: #0071BB;
     outline: none;
 }
 
