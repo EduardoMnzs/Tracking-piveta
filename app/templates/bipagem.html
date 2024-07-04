@@ -27,7 +27,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="display: none;">
                     <tr>
                         <td>0</td>
                         <td>00000000</td>
@@ -38,16 +38,76 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="aviso-inicio"><h1>Inicie operação para acompanhar os dados.</h1></div>
+            <div class="aviso-iniciado" style="display: none;"><h1>Operação iniciada, aguardando leitura de dados.</h1></div>
         </div>
         <div class="footer-legenda-botao">
             <div class="legenda">
-                <div><p>Qntd. de Volume: 18</p></div>
-                <div><p>Data</p></div>
-                <div><p>Hora</p></div>
+                <div class="decoração-legenda"></div>
+                <p>Qntd. de Volume: 18</p>
+                <div class="decoração-legenda"></div>
+                <p>Data: 04/07/2024</p>
+                <div class="decoração-legenda"></div>
+                <p id="realtime-clock">Hora: </p>
             </div>
             <div class="button-footer">
+                <button class="button-iniciar">Iniciar</button>
                 <button class="button-cancelar">Cancelar</button>
                 <button class="button-finalizar">Finalizar</button>
+                <div id="popup-cancelar-container" class="popup-cancelar-container" style="display:none;">
+                    <div class="popup-cancelar">
+                        <h2>Cancelar Operação<span class="close-button-confirm">&times;</span></h2>
+                        <div class="aviso-cuidado">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            <p>Com a operação excluída o processo não será salvo.</p>
+                        </div>
+                        <p class="confirm-message">Assim que cancelar, a operação <b>não será salva</b> e <b>todos os registros serão descartados</b> e não poderá ser revertido.
+                        <br><br>Deseja cancelar esta operação?</p>
+                        <div class="button-container-confirm">
+                            <button class="button-cancel-operação">Cancelar</button>
+                            <button class="button-confirm-cancel-operação">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="popup-finalizar-container" class="popup-finalizar-container" style="display:none;">
+                    <div class="popup-finalizar">
+                        <h2>Confirmação<span class="close-button-confirm">&times;</span></h2>
+                        <div class="aviso-cuidado">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            <p>Com a operação finalizada não poderá ser feito mais alterações.</p>
+                        </div>
+                        <p class="confirm-message">Uma vez finalizado, a operação será <b>salva e todos os registros serão carregados</b> e não poderá ser alterado.
+                        <br><br>Deseja finalizar esta operação?</p>
+                        <div class="button-container-confirm">
+                            <button class="button-cancel">Cancelar</button>
+                            <button class="button-confirm">Finalizar</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="popup-loading-container" class="popup-loading-container" style="display:none;">
+                    <div class="popup-loading">
+                        <h2>Finalizando Operação</h2>
+                        <p>Operação finalizada, baixa do sistema sendo realizada.</p>
+                        <div class="loading-container">
+                            <p class="loading">Loading</p>
+                            <div class="loader-container">
+                                <div class="loader"></div>
+                            </div>
+                            <p class="progresso">3/18</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="popup-finalizado-container" class="popup-finalizado-container" style="display:none;">
+                    <div class="popup-finalizado">
+                        <h2>Operação Finalizada<span class="close-button-concluido" onclick="closeLoadingPopup()">&times;</span></h2>
+                        <p>Operação finalizada, baixa do sistema completa.</p>
+                        <div class="finalizado-container">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            <p>18/18</p>
+                            <button class="button-concluir">Concluir</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -57,5 +117,7 @@
     <hr class="footer-hr">
     © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de privacidade</a>
 </footer>
+
+<script src="../static/js/bipagem.js"></script>
 
 {% endblock %}
