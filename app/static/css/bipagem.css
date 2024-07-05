@@ -20,8 +20,8 @@
     align-items: center;
 }
 
-.input-pesquisa-volume {
-    width: 350px;
+.input-pesquisa-volume,.input-pesquisa-produto {
+    width: 450px;
     min-height: 50px;
     padding: 0 1rem;
     color: #000000;
@@ -29,17 +29,7 @@
     border: 1px solid #0071BB;
     border-radius: 25px 0px 0px 25px;
     background-color: #fff;
-}
-
-.input-pesquisa-produto {
-    width: 350px;
-    min-height: 50px;
-    padding: 0 1rem;
-    color: #000000;
-    font-size: 15px;
-    border: 1px solid #0071BB;
-    border-radius: 0px 25px 25px 0px;
-    background-color: #fff;
+    cursor: not-allowed;
 }
 
 .pesquisa-produto {
@@ -47,11 +37,13 @@
     align-items: center;
 }
 
-.button-search {
+.button-search, .button-produto {
+    width: 150px;
+    border-radius: 25px;
+    margin-left: -25px;
     min-height: 50px;
     padding: .5em 1em;
     border: none;
-    border-radius: 0px 25px 25px 0px;
     background-color: #0071BB;
     color: #fff;
     font-size: 15px;
@@ -59,16 +51,8 @@
     transition: background-color .3s ease-in-out;
 }
 
-.button-produto {
-    min-height: 50px;
-    padding: .5em 1em;
-    border: none;
-    border-radius: 25px 0px 0px 25px;
-    background-color: #0071BB;
-    color: #fff;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color .3s ease-in-out;
+.fa-search, .fa-cube {
+    font-size: 20px !important;
 }
 
 .button-search:hover {
@@ -81,6 +65,13 @@
 .input-pesquisa-produto:focus-visible {
     border-color: #0071BB;
     outline: none;
+}
+
+.input-pesquisa-volume:disabled, .input-pesquisa-produto:disabled {
+    background-color: #e0e0e0;
+    color: #a1a1a1;
+    border: 1px solid #d3d3d3;
+    cursor: not-allowed;
 }
 
 .tabela-produtos {
@@ -165,6 +156,11 @@ tr {
     background-color: #0071BB;
     width: 20px;
     height: 20px;
+}
+
+.contador {
+    font-weight: bold;
+    margin-left: 4;
 }
 
 .legenda {
@@ -384,10 +380,7 @@ tr {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 30% !important;
     text-align: center;
-    height: 332px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
+    height: 356px;
 }
 
 .loading-container {
@@ -403,6 +396,7 @@ tr {
 
 .popup-loading > p {
     padding-top: 75px;
+    padding-bottom: 30px;
     width: 100%;
 }
 
@@ -435,10 +429,9 @@ tr {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 30% !important;
     text-align: center;
-    height: 332px;
+    height: 356px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
 }
 
 .popup-finalizado > h2 {
@@ -452,6 +445,7 @@ tr {
 }
 
 .finalizado-container {
+    margin-top: 33px;
     text-align: center;
 }
 
@@ -461,6 +455,7 @@ tr {
 }
 
 .button-concluir {
+    margin-top: 20px;
     background-color: #0071BB;
     text-decoration: none;
     color: #f3f7fe;

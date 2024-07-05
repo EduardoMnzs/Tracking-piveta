@@ -7,19 +7,21 @@
     <div class="home-container">
         <div class="container-busca">
             <div class="pesquisa-volume">
-                <input type="email" class="input-pesquisa-volume" placeholder="Código do Volume" autocomplete="off">
-                <button class="button-search" type="submit"><i class="fa fa-search"></i></button>
+                <label for="codigoProduto"></label>
+                <input type="text" id="codigoProduto" name="codigoProduto" class="input-pesquisa-volume" placeholder="Código do Volume" autocomplete="off" disabled autofocus>
+                <button id="add-data" class="button-search" type="submit"><i class="fa fa-search"></i></button>
             </div>
             <div class="pesquisa-produto">
-                <button class="button-produto" type="submit"><i class="fa fa-cube"></i></button>
-                <input type="email" class="input-pesquisa-produto" placeholder="Código do Produto" autocomplete="off">
+                <label for="chaveProduto"></label>
+                <input type="text" id="chaveProduto" name="chaveProduto" class="input-pesquisa-produto" placeholder="Código do Produto" autocomplete="off" disabled>
+                <button id="add-data" class="button-produto" type="submit"><i class="fa fa-cube"></i></button>
             </div>
         </div>
         <div class="tabela-produtos">
             <table class="tabela-table">
                 <thead class="tabela-thead">
                     <tr>
-                        <th>CheckBox</th>
+                        <th><input type="checkbox"></th>
                         <th>N° do Produto</th>
                         <th>Cód. do Produto</th>
                         <th>Chave do Produto</th>
@@ -27,15 +29,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody style="display: none;">
-                    <tr>
-                        <td>0</td>
-                        <td>00000000</td>
-                        <td>100654</td>
-                        <td>35240606013526000192550020000280321080392888</td>
-                        <td>01/01/2024 12:00:00</td>
-                        <td>:</td>
-                    </tr>
+                <tbody id="table-body" style="display: none;">
                 </tbody>
             </table>
             <div class="aviso-inicio"><h1>Inicie operação para acompanhar os dados.</h1></div>
@@ -44,11 +38,11 @@
         <div class="footer-legenda-botao">
             <div class="legenda">
                 <div class="decoração-legenda"></div>
-                <p>Qntd. de Volume: 18</p>
+                <p>Qntd. de Volume: <span id="product-count" class="contador"> N/A</span></p>
                 <div class="decoração-legenda"></div>
-                <p>Data: 04/07/2024</p>
+                <p class="data" id="realdata">Data: </p>
                 <div class="decoração-legenda"></div>
-                <p id="realtime-clock">Hora: </p>
+                <p class="hora" id="realtime-clock">Hora: </p>
             </div>
             <div class="button-footer">
                 <button class="button-iniciar">Iniciar</button>
@@ -89,21 +83,19 @@
                         <h2>Finalizando Operação</h2>
                         <p>Operação finalizada, baixa do sistema sendo realizada.</p>
                         <div class="loading-container">
-                            <p class="loading">Loading</p>
+                            <p class="loading">Carregando</p>
                             <div class="loader-container">
                                 <div class="loader"></div>
                             </div>
-                            <p class="progresso">3/18</p>
                         </div>
                     </div>
                 </div>
                 <div id="popup-finalizado-container" class="popup-finalizado-container" style="display:none;">
                     <div class="popup-finalizado">
                         <h2>Operação Finalizada<span class="close-button-concluido" onclick="closeLoadingPopup()">&times;</span></h2>
-                        <p>Operação finalizada, baixa do sistema completa.</p>
                         <div class="finalizado-container">
                             <i class="fa fa-check-circle" aria-hidden="true"></i>
-                            <p>18/18</p>
+                            <p>Operação Finalizada com sucesso.</p>
                             <button class="button-concluir">Concluir</button>
                         </div>
                     </div>
