@@ -1,5 +1,4 @@
 let lastProductNumber = 1;
-
 let productCount = 0;
 
 function dataTable() {
@@ -57,6 +56,56 @@ function getNextProductNumber() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    const tableBody = document.getElementById('table-body');
+    const masterCheckbox = document.getElementById('showDivCheckbox');
+    const selectedCountSpan = document.getElementById('selected-count'); // Elemento para mostrar a contagem de checkboxes selecionados
+
+    masterCheckbox.addEventListener('change', function () {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+        updateCheckboxCount();
+        toggleDivVisibility();
+    });
+
+    tableBody.addEventListener('change', function (event) {
+        if (event.target.type === 'checkbox') {
+            updateCheckboxCount();
+            toggleDivVisibility();
+        }
+    });
+
+    function updateCheckboxCount() {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+        const count = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+        selectedCountSpan.textContent = count; // Atualiza a contagem no DOM
+    }
+
+    function toggleDivVisibility() {
+        const anyChecked = selectedCountSpan.textContent > 0;
+        document.getElementById('toggleDiv').style.display = anyChecked ? 'block' : 'none';
+    }
+
+    // Chamada inicial para configurar o estado correto na carga da página
+    updateCheckboxCount();
+    toggleDivVisibility();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const checkbox = document.getElementById('showDivCheckbox');
+    const toggleDiv = document.getElementById('toggleDiv');
+
+    checkbox.addEventListener('change', function () {
+        if (checkbox.checked) {
+            toggleDiv.style.display = 'block';
+        } else {
+            toggleDiv.style.display = 'none';
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     const codigoProdutoInput = document.getElementById('codigoProduto');
     const chaveProdutoInput = document.getElementById('chaveProduto');
     const tbody = document.getElementById('table-body');
@@ -98,6 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const checkBox = document.createElement('input');
         checkBox.type = 'checkbox';
+        const uniqueId = 'showDivCheckbox-' + new Date().getTime(); // Cria um ID único baseado no timestamp
+        checkBox.id = uniqueId;
         newCell1.appendChild(checkBox);
 
         newCell2.textContent = getNextProductNumber();
@@ -106,8 +157,42 @@ document.addEventListener("DOMContentLoaded", function () {
         newCell5.textContent = dataTable();
         newCell6.textContent = 'Ações';
 
+        // Ouvinte de evento diretamente no checkbox criado
+        checkBox.addEventListener('change', function () {
+            const toggleDiv = document.getElementById('toggleDiv'); // A div que você quer mostrar/ocultar
+            toggleDiv.style.display = this.checked ? 'block' : 'none';
+        });
+
         const avisoIniciado = document.querySelector('.aviso-iniciado');
-        avisoIniciado.style.display = 'none';
+        if (avisoIniciado) {
+            avisoIniciado.style.display = 'none';
+        }
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tableBody = document.getElementById('table-body');
+    const toggleDiv = document.getElementById('toggleDiv');
+    const masterCheckbox = document.getElementById('showDivCheckbox');
+
+    masterCheckbox.addEventListener('change', function () {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+        toggleDiv.style.display = this.checked ? 'block' : 'none';
+    });
+
+    tableBody.addEventListener('change', function (event) {
+        if (event.target.type === 'checkbox') {
+            checkCheckboxes();
+        }
+    });
+
+    function checkCheckboxes() {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        toggleDiv.style.display = anyChecked ? 'block' : 'none';
     }
 });
 
