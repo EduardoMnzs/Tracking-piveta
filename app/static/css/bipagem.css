@@ -587,9 +587,114 @@ tr {
     text-align: left;
 }
 
-.button-confirm-cancel-operação {
+i.fa.fa-trash-o {
+    font-size: 20px;
+    padding-right: 5px;
+}
+
+.button-excluir-produto-selecionado {
     margin-right: 200px;
-    margin-left: auto;
+    background-color: #FF0000;
+    text-decoration: none;
+    color: #f3f7fe;
+    border: none;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: .3s;
+}
+
+.popup-excluir-produto-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    align-content: center;
+}
+
+.popup-excluir-produto {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 30% !important;
+    text-align: center;
+    height: auto; /* Ajuste automático da altura */
+}
+
+.popup-excluir-produto>h2 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.popup-excluir-produto>p {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.button-cancel-excluir-produto {
+    background-color: transparent;
+    text-decoration: none;
+    color: #272833;
+    border: 2px solid #272833;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: .3s;
+}
+
+.button-confirm-excluir-produto {
+    background-color: #FF0000;
+    text-decoration: none;
+    color: #f3f7fe;
+    border: none;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: .3s;
+}
+
+.more-options {
+    position: relative;
+    display: inline-block;
+}
+
+.more-options .fa-ellipsis-v {
+    cursor: pointer;
+}
+
+.more-options .dropdown-menu {
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-110%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    min-width: 140px;
+}
+
+.more-options .dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.more-options .dropdown-menu a:hover {
+    background-color: #f1f1f1;
 }
 
 .terms-of-usage {

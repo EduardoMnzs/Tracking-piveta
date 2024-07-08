@@ -1,5 +1,6 @@
-let lastProductNumber = 1;
 let productCount = 0;
+let lastProductNumber = 1;
+
 
 function dataTable() {
     const now = new Date();
@@ -58,7 +59,7 @@ function getNextProductNumber() {
 document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.getElementById('table-body');
     const masterCheckbox = document.getElementById('showDivCheckbox');
-    const selectedCountSpan = document.getElementById('selected-count'); // Elemento para mostrar a contagem de checkboxes selecionados
+    const selectedCountSpan = document.getElementById('selected-count');
 
     masterCheckbox.addEventListener('change', function () {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
@@ -79,7 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateCheckboxCount() {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
         const count = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
-        selectedCountSpan.textContent = count; // Atualiza a contagem no DOM
+        const selectedCountSpan = document.getElementById('selected-count');
+        const produtoText = document.getElementById('produto-text');
+
+        selectedCountSpan.textContent = count;
+        produtoText.textContent = count === 1 ? 'Produto' : 'Produtos';
+
+        document.getElementById('toggleDiv').style.display = count > 0 ? 'block' : 'none';
     }
 
     function toggleDivVisibility() {
@@ -87,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('toggleDiv').style.display = anyChecked ? 'block' : 'none';
     }
 
-    // Chamada inicial para configurar o estado correto na carga da página
     updateCheckboxCount();
     toggleDivVisibility();
 });
@@ -113,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let isDataBeingProcessed = false;
 
     function updateProductCount() {
-        productCount++;
         productCountSpan.textContent = productCount;
     }
 
@@ -147,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const checkBox = document.createElement('input');
         checkBox.type = 'checkbox';
-        const uniqueId = 'showDivCheckbox-' + new Date().getTime(); // Cria um ID único baseado no timestamp
+        const uniqueId = 'showDivCheckbox-' + new Date().getTime();
         checkBox.id = uniqueId;
         newCell1.appendChild(checkBox);
 
@@ -155,11 +160,47 @@ document.addEventListener("DOMContentLoaded", function () {
         newCell3.textContent = codigo;
         newCell4.textContent = chave;
         newCell5.textContent = dataTable();
-        newCell6.textContent = 'Ações';
 
-        // Ouvinte de evento diretamente no checkbox criado
+        const moreOptionsDiv = document.createElement('div');
+        moreOptionsDiv.classList.add('more-options');
+        moreOptionsDiv.innerHTML = `
+            <i class="fa fa-ellipsis-v"></i>
+            <div class="dropdown-menu" style="display: none;">
+                <a href="#" class="edit-codigo">Editar Código</a>
+                <a href="#" class="edit-chave">Editar Chave</a>
+                <a href="#" class="delete-option">Excluir</a>
+            </div>
+        `;
+        newCell6.appendChild(moreOptionsDiv);
+
+        // Adicionar eventos para mostrar/ocultar o menu
+        moreOptionsDiv.querySelector('.fa-ellipsis-v').addEventListener('click', function () {
+            const dropdownMenu = moreOptionsDiv.querySelector('.dropdown-menu');
+            dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Adicionar evento para excluir
+        moreOptionsDiv.querySelector('.delete-option').addEventListener('click', function () {
+            newRow.remove();
+            updateProductCount('remove');
+            checkCheckboxes();
+        });
+
+        // Adicionar evento para editar
+        moreOptionsDiv.querySelector('.edit-codigo').addEventListener('click', function () {
+            // Lógica de edição
+            alert('Editar: ' + codigo);
+        });
+
+        moreOptionsDiv.querySelector('.edit-chave').addEventListener('click', function () {
+            // Lógica de edição
+            alert('Editar: ' + chave);
+        });
+
+        productCount++;
+
         checkBox.addEventListener('change', function () {
-            const toggleDiv = document.getElementById('toggleDiv'); // A div que você quer mostrar/ocultar
+            const toggleDiv = document.getElementById('toggleDiv');
             toggleDiv.style.display = this.checked ? 'block' : 'none';
         });
 
@@ -168,19 +209,15 @@ document.addEventListener("DOMContentLoaded", function () {
             avisoIniciado.style.display = 'none';
         }
     }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
+    const deleteButton = document.getElementById('deleteSelectedRows');
     const tableBody = document.getElementById('table-body');
     const toggleDiv = document.getElementById('toggleDiv');
     const masterCheckbox = document.getElementById('showDivCheckbox');
 
     masterCheckbox.addEventListener('change', function () {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-        toggleDiv.style.display = this.checked ? 'block' : 'none';
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        updateDivVisibility();
     });
 
     tableBody.addEventListener('change', function (event) {
@@ -194,6 +231,25 @@ document.addEventListener("DOMContentLoaded", function () {
         const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
         toggleDiv.style.display = anyChecked ? 'block' : 'none';
     }
+
+    function updateDivVisibility() {
+        const anyChecked = Array.from(tableBody.querySelectorAll('input[type="checkbox"]')).some(checkbox => checkbox.checked);
+        toggleDiv.style.display = anyChecked ? 'block' : 'none';
+    }
+
+    deleteButton.addEventListener('click', function () {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                checkbox.closest('tr').remove();
+                productCount--
+                updateProductCount();
+            }
+        });
+        checkCheckboxes();
+    });
+
+    checkCheckboxes();
 });
 
 function checkAndToggleAviso(tbody, avisoIniciado) {
@@ -261,6 +317,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const avisoIniciado = document.querySelector('.aviso-iniciado');
     const codigoProdutoInput = document.getElementById('codigoProduto');
     const chaveProdutoInput = document.getElementById('chaveProduto');
+    const deleteButton = document.querySelector('.button-excluir-produto-selecionado');
+    const popupExcluirProduto = document.getElementById('popup-excluir-produto-container');
+    const cancelExcluirButton = document.querySelector('.button-cancel-excluir-produto');
+    const closeButtons = document.querySelectorAll('.button-confirm-excluir-produto');
+    const deleteProdutoButton = document.getElementById('deleteSelectedRows');
 
     function toggleInputs(enabled) {
         const codigoProdutoInput = document.getElementById('codigoProduto');
@@ -322,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
         codigoProdutoInput.value = '';
         chaveProdutoInput.value = '';
         avisoInicio.style.display = 'none';
-        avisoIniciado.style.display = 'none';
+        avisoIniciado.style.display = 'flex';
         btnIniciar.style.display = 'none';
         btnCancelar.style.display = 'inline';
         btnFinalizar.style.display = 'inline';
@@ -344,12 +405,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     btnFinalizar.onclick = function () {
+
+        if (tbody.rows.length > 0) {
+            btnIniciar.style.display = 'inline-block';
+            btnCancelar.style.display = 'none';
+            btnFinalizar.style.display = 'none';
+            avisoIniciado.style.display = 'none';
+            confirmationModal.style.display = 'flex';
+        } else {
+            alert("Não há dados na tabela para finalizar.");
+            confirmationModal.style.display = 'none';
+        }
+
         avisoInicio.style.display = 'none';
-        avisoIniciado.style.display = 'none';
         btnIniciar.style.display = 'none';
         btnCancelar.style.display = 'inline';
         btnFinalizar.style.display = 'inline';
-        confirmationModal.style.display = 'flex';
     };
 
     document.querySelector('.button-confirm').onclick = function () {
@@ -383,6 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmationModal.style.display = 'none';
             loadingPopup.style.display = 'none';
             finalizadoPopup.style.display = 'none';
+            popupExcluirProduto.style.display = 'none';
         };
     });
 
@@ -401,5 +473,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     codigoProdutoInput.addEventListener('input', function () {
         chaveProdutoInput.disabled = !codigoProdutoInput.value.trim();
+    });
+
+    deleteButton.addEventListener('click', function () {
+        popupExcluirProduto.style.display = 'block';
+    });
+
+    // Esconder o popup quando o botão Cancelar dentro do popup for clicado
+    cancelExcluirButton.addEventListener('click', function () {
+        popupExcluirProduto.style.display = 'none';
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            popupExcluirProduto.style.display = 'none';
+        });
     });
 });

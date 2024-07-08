@@ -115,9 +115,26 @@
         </div>
         <div class="seleção-container" id="toggleDiv" style="display: none;">
             <div class="seleção">
-                <h6><span id="selected-count">0</span></h6>
-                <p>Produto selecionado | <a href="">Desmarcar Seleção</a></p>
-                <button class="button-confirm-cancel-operação">Excluir</button>
+                <h6><span id="selected-count">N/A</span></h6>
+                <p><span id="produto-text">Produto</span> selecionado | <a href="#">Desmarcar Seleção</a></p>
+                <button class="button-excluir-produto-selecionado"><i class="fa fa-trash-o"
+                        aria-hidden="true"></i>Excluir</button>
+            </div>
+        </div>
+        <div id="popup-excluir-produto-container" class="popup-excluir-produto-container" style="display:none;">
+            <div class="popup-excluir-produto">
+                <h2>Excluir Produto<span class="close-button-confirm">&times;</span></h2>
+                <div class="aviso-cuidado">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <p>Exclusão de produtos é uma ação irreversível.</p>
+                </div>
+                <p class="confirm-message">Uma vez excluído, o produto <b>será apagado de todos os registros atuais
+                        realizado</b> e não poderá ser recuperado. <br><br>Deseja excluir os produtos selecionado?
+                </p>
+                <div class="button-container-confirm">
+                    <button class="button-cancel-excluir-produto">Cancelar</button>
+                    <button id="deleteSelectedRows" class="button-confirm-excluir-produto">Excluir</button>
+                </div>
             </div>
         </div>
     </div>
