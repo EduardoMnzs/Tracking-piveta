@@ -5,16 +5,40 @@
 {% block main %}
 <div class="background">
     <div class="home-container">
+        <div id="operação-iniciada-popup" class="operação-iniciada-popup" style="display: none;">
+            <div class="operação-iniciada-container">
+                <p>Operação iniciada com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="operação-excluir-popup" class="operação-excluir-popup" style="display: none;">
+            <div class="operação-excluir-container">
+                <p>Operação cancelada com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="operação-excluir-produto-popup" class="operação-excluir-produto-popup" style="display: none;">
+            <div class="operação-excluir-produto-container">
+                <p>Produto excluido com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="operação-finalizar-popup" class="operação-finalizar-popup" style="display: none;">
+            <div class="operação-finalizar-container">
+                <p>Operação finalizada com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
         <div class="container-busca">
             <div class="pesquisa-volume">
                 <label for="codigoProduto"></label>
-                <input type="text" id="codigoProduto" name="codigoProduto" class="input-pesquisa-volume"
+                <input type="number" id="codigoProduto" name="codigoProduto" class="input-pesquisa-volume"
                     placeholder="Código do Volume" autocomplete="off" disabled autofocus>
                 <button id="add-data" class="button-search" type="submit"><i class="fa fa-search"></i></button>
             </div>
             <div class="pesquisa-produto">
                 <label for="chaveProduto"></label>
-                <input type="text" id="chaveProduto" name="chaveProduto" class="input-pesquisa-produto"
+                <input type="number" id="chaveProduto" name="chaveProduto" class="input-pesquisa-produto"
                     placeholder="Código do Produto" autocomplete="off" disabled>
                 <button id="add-data" class="button-produto" type="submit"><i class="fa fa-cube"></i></button>
             </div>

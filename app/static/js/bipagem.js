@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 chaveProdutoInput.disabled = true;
                 isDataBeingProcessed = false;
                 codigoProdutoInput.focus();
-            }, 1000);
+            }, 300);
         }
     });
 
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="dropdown-menu" style="display: none;">
                 <a href="#" class="edit-codigo">Editar Código</a>
                 <a href="#" class="edit-chave">Editar Chave</a>
-                <a href="#" class="delete-option">Excluir</a>
+                <a href="#" class="delete-option" style="color: red;">Excluir</a>
             </div>
         `;
         newCell6.appendChild(moreOptionsDiv);
@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Adicionar evento para excluir
         moreOptionsDiv.querySelector('.delete-option').addEventListener('click', function () {
             newRow.remove();
+            productCount--;
             updateProductCount('remove');
             checkCheckboxes();
         });
@@ -321,7 +322,60 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupExcluirProduto = document.getElementById('popup-excluir-produto-container');
     const cancelExcluirButton = document.querySelector('.button-cancel-excluir-produto');
     const closeButtons = document.querySelectorAll('.button-confirm-excluir-produto');
-    const deleteProdutoButton = document.getElementById('deleteSelectedRows');
+    const popupIniciado = document.getElementById('operação-iniciada-popup');
+    const popupExcluirOperacao = document.getElementById('operação-excluir-popup');
+    const popupExcluirProdutoFeedback = document.getElementById('operação-excluir-produto-popup');
+    const popupFinalizarOperacao = document.getElementById('operação-finalizar-popup');
+
+
+
+    function popupOperacaoIniciada() {
+        const popup = document.getElementById('operação-iniciada-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function popupOperacaoExcluida() {
+        const popup = document.getElementById('operação-excluir-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function popupOperacaoProdutoExcluido() {
+        const popup = document.getElementById('operação-excluir-produto-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function popupOperacaoFinalizada() {
+        const popup = document.getElementById('operação-finalizar-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
 
     function toggleInputs(enabled) {
         const codigoProdutoInput = document.getElementById('codigoProduto');
@@ -339,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (codigoProdutoInput.value.trim() !== '') {
             setTimeout(function () {
                 chaveProdutoInput.focus();
-            }, 1000);
+            }, 100);
         }
     });
 
@@ -353,6 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleInputs(true);
         tbody.style.display = 'table-row-group';
         codigoProdutoInput.focus();
+        popupOperacaoIniciada();
     };
 
     btnCancelar.onclick = function () {
@@ -402,6 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmationCancelModal.style.display = 'none';
         clearTbody(tbody);
         resetProductCount();
+        popupOperacaoExcluida();
     }
 
     btnFinalizar.onclick = function () {
@@ -444,17 +500,20 @@ document.addEventListener("DOMContentLoaded", function () {
         btnFinalizar.style.display = 'none';
         finalizadoPopup.style.display = 'none';
         clearTbody(tbody);
+        popupOperacaoFinalizada();
     };
 
     document.querySelectorAll('.close-button-confirm').forEach(button => {
         button.onclick = function () {
-            avisoInicio.style.display = 'none';
-            avisoIniciado.style.display = 'none';
+            popupFinalizarOperacao.style.display = 'none';
+            popupExcluirProdutoFeedback.style.display = 'none';
+            popupIniciado.style.display = 'none';
             confirmationCancelModal.style.display = 'none';
             confirmationModal.style.display = 'none';
             loadingPopup.style.display = 'none';
             finalizadoPopup.style.display = 'none';
             popupExcluirProduto.style.display = 'none';
+            popupExcluirOperacao.style.display = 'none';
         };
     });
 
@@ -468,6 +527,7 @@ document.addEventListener("DOMContentLoaded", function () {
             finalizadoPopup.style.display = 'none';
             confirmationModal.style.display = 'none';
             loadingPopup.style.display = 'none';
+            popupOperacaoFinalizada();
         };
     });
 
@@ -486,6 +546,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     closeButtons.forEach(button => {
         button.addEventListener('click', function () {
+            popupOperacaoProdutoExcluido();
             popupExcluirProduto.style.display = 'none';
         });
     });
