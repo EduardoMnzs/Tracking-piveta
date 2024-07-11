@@ -265,7 +265,9 @@ tr {
     width: 100%;
 }
 
-.button-cancel-operação {
+.button-cancel-operação,
+.button-cancel-edição-código,
+.button-confirm-edição-chave {
     background-color: transparent;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-decoration: none;
@@ -359,7 +361,16 @@ tr {
     gap: 15px;
 }
 
-.button-confirm {
+.button-container-confirm-edição {
+    display: flex;
+    justify-content: end;
+    gap: 15px;
+    padding-top: 40px;
+}
+
+.button-confirm,
+.button-confirm-edição-código,
+.button-confirm-edição-chave {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: #04BB00;
     text-decoration: none;
@@ -740,7 +751,8 @@ i.fa.fa-trash-o {
 }
 
 .operação-iniciada-popup,
-.operação-finalizar-popup {
+.operação-finalizar-popup,
+.operação-produto-alterado-popup {
     position: fixed;
     top: 85px;
     left: 50%;
@@ -784,14 +796,16 @@ i.fa.fa-trash-o {
 .operação-iniciada-popup.fade-out,
 .operação-excluir-popup.fade-out,
 .operação-excluir-produto-popup.fade-out,
-.operação-finalizar-popup.fade-out {
+.operação-finalizar-popup.fade-out,
+.operação-produto-alterado-popup.fade-out {
     animation: fadeOut 0.5s forwards;
 }
 
 .operação-iniciada-container,
 .operação-excluir-container,
 .operação-excluir-produto-container,
-.operação-finalizar-popup-container {
+.operação-finalizar-popup-container,
+.operação-produto-alterado-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -800,7 +814,8 @@ i.fa.fa-trash-o {
 .operação-iniciada-container > p,
 .operação-excluir-container > p,
 .operação-excluir-produto-container > p,
-.operação-finalizar-popup-container > p {
+.operação-finalizar-container > p ,
+.operação-produto-alterado-container > p{
     margin-top: 0;
     margin-bottom: 0;
     display: flex;
@@ -810,10 +825,90 @@ i.fa.fa-trash-o {
 .operação-iniciada-container > p > .close-button-confirm,
 .operação-excluir-container > p > .close-button-confirm,
 .operação-excluir-produto-container > p > .close-button-confirm,
-.operação-finalizar-container > p > .close-button-confirm {
+.operação-finalizar-container > p > .close-button-confirm,
+.operação-produto-alterado-container > p > .close-button-confirm {
     font-size: 20px;
     cursor: pointer;
     margin-left: 300px;
+}
+
+.popup-editar-codigo-container,
+.popup-editar-chave-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    align-content: center;
+}
+
+.popup-editar-codigo,
+.popup-editar-chave {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 30% !important;
+    text-align: center;
+    height: 356px;
+}
+
+.popup-editar-codigo>h2,
+.popup-editar-chave>h2 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.popup-editar-codigo>p,
+.popup-editar-chave>p {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.data-hora {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.data-hora-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
+
+.data-edição, .hora-edição, .codigo-edição {
+    margin-bottom: 5px;
+}
+
+.input-data-edição, .input-hora-edição {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: not-allowed;
+}
+
+.input-codigo-edição {
+    width: 350px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 .terms-of-usage {

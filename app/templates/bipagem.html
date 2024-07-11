@@ -29,6 +29,12 @@
                         onclick="closeLoadingPopup()">&times;</span></p>
             </div>
         </div>
+        <div id="operação-produto-alterado-popup" class="operação-produto-alterado-popup" style="display: none;">
+            <div class="operação-produto-alterado-container">
+                <p>Produto excluido com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
         <div class="container-busca">
             <div class="pesquisa-volume">
                 <label for="codigoProduto"></label>
@@ -78,90 +84,133 @@
                 <button class="button-iniciar">Iniciar</button>
                 <button class="button-cancelar">Cancelar</button>
                 <button class="button-finalizar">Finalizar</button>
-                <div id="popup-cancelar-container" class="popup-cancelar-container" style="display:none;">
-                    <div class="popup-cancelar">
-                        <h2>Cancelar Operação<span class="close-button-confirm">&times;</span></h2>
-                        <div class="aviso-cuidado">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            <p>Com a operação excluída o processo não será salvo.</p>
-                        </div>
-                        <p class="confirm-message">Assim que cancelar, a operação <b>não será salva</b> e <b>todos os
-                                registros serão descartados</b> e não poderá ser revertido.
-                            <br><br>Deseja cancelar esta operação?
-                        </p>
-                        <div class="button-container-confirm">
-                            <button class="button-cancel-operação">Cancelar</button>
-                            <button class="button-confirm-cancel-operação">Excluir</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="popup-finalizar-container" class="popup-finalizar-container" style="display:none;">
-                    <div class="popup-finalizar">
-                        <h2>Confirmação<span class="close-button-confirm">&times;</span></h2>
-                        <div class="aviso-cuidado">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            <p>Com a operação finalizada não poderá ser feito mais alterações.</p>
-                        </div>
-                        <p class="confirm-message">Uma vez finalizado, a operação será <b>salva e todos os registros
-                                serão carregados</b> e não poderá ser alterado.
-                            <br><br>Deseja finalizar esta operação?
-                        </p>
-                        <div class="button-container-confirm">
-                            <button class="button-cancel">Cancelar</button>
-                            <button class="button-confirm">Finalizar</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="popup-loading-container" class="popup-loading-container" style="display:none;">
-                    <div class="popup-loading">
-                        <h2>Finalizando Operação</h2>
-                        <p>Operação finalizada, baixa do sistema sendo realizada.</p>
-                        <div class="loading-container">
-                            <p class="loading">Carregando</p>
-                            <div class="loader-container">
-                                <div class="loader"></div>
+                <div id="popup-editar-codigo-container" class="popup-editar-codigo-container" style="display:none;">
+                    <div class="popup-editar-codigo">
+                        <h2>Editar Código<span class="close-button-confirm" onclick="closeEditPopup('codigo')">&times;</span></h2>
+                        <div class="data-hora-container">
+                            <div class="data-hora">
+                                <h6 class="data-edição" id="realdata">Data: </h6>
+                                <input type="text" class="input-data-edição" id="input-data-edição" disabled>
+                                <h6 class="hora-edição" id="realtime-clock">Hora: </h6>
+                                <input type="text" class="input-hora-edição" id="input-hora-edição" disabled>
+                            </div>
+                            <div class="input-editar-codigo">
+                                <h6 class="codigo-edição">Código do Produto: </h6>
+                                <input type="text" class="input-codigo-edição" id="input-codigo-edição">
+                            </div>
+                            <div class="button-container-confirm-edição">
+                                <button class="button-cancel-edição-código" id="button-cancel-edição-código" onclick="closeEditPopup('codigo')">Cancelar</button>
+                                <button class="button-confirm-edição-código" id="button-confirm-edição-código">Ok</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="popup-finalizado-container" class="popup-finalizado-container" style="display:none;">
-                    <div class="popup-finalizado">
-                        <h2>Operação Finalizada<span class="close-button-concluido"
-                                onclick="closeLoadingPopup()">&times;</span></h2>
-                        <div class="finalizado-container">
-                            <i class="fa fa-check-circle" aria-hidden="true"></i>
-                            <p>Operação Finalizada com sucesso.</p>
-                            <button class="button-concluir">Concluir</button>
+                
+                <div id="popup-editar-chave-container" class="popup-editar-chave-container" style="display:none;">
+                    <div class="popup-editar-chave">
+                        <h2>Editar Chave<span class="close-button-confirm" onclick="closeEditPopup('chave')">&times;</span></h2>
+                        <div class="data-hora-container">
+                            <div class="data-hora">
+                                <h6 class="data-edição" id="realdata-ch">Data: </h6>
+                                <input type="text" class="input-data-edição" id="input-data-edição-ch" disabled>
+                                <h6 class="hora-edição" id="realtime-clock-ch">Hora: </h6>
+                                <input type="text" class="input-hora-edição" id="input-hora-edição-ch" disabled>
+                            </div>
+                            <div class="input-editar-chave">
+                                <h6 class="chave-edição">Chave do Produto: </h6>
+                                <input type="text" class="input-chave-edição" id="input-chave-edição">
+                            </div>
+                            <div class="button-container-confirm-edição">
+                                <button class="button-cancel-edição-chave" id="button-cancel-edição-chave" onclick="closeEditPopup('chave')">Cancelar</button>
+                                <button class="button-confirm-edição-chave" id="button-confirm-edição-chave">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div id="popup-cancelar-container" class="popup-cancelar-container" style="display:none;">
+                <div class="popup-cancelar">
+                    <h2>Cancelar Operação<span class="close-button-confirm">&times;</span></h2>
+                    <div class="aviso-cuidado">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        <p>Com a operação excluída o processo não será salvo.</p>
+                    </div>
+                    <p class="confirm-message">Assim que cancelar, a operação <b>não será salva</b> e <b>todos os
+                            registros serão descartados</b> e não poderá ser revertido.
+                        <br><br>Deseja cancelar esta operação?
+                    </p>
+                    <div class="button-container-confirm">
+                        <button class="button-cancel-operação">Cancelar</button>
+                        <button class="button-confirm-cancel-operação">Excluir</button>
+                    </div>
+                </div>
+            </div>
+            <div id="popup-finalizar-container" class="popup-finalizar-container" style="display:none;">
+                <div class="popup-finalizar">
+                    <h2>Confirmação<span class="close-button-confirm">&times;</span></h2>
+                    <div class="aviso-cuidado">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        <p>Com a operação finalizada não poderá ser feito mais alterações.</p>
+                    </div>
+                    <p class="confirm-message">Uma vez finalizado, a operação será <b>salva e todos os registros
+                            serão carregados</b> e não poderá ser alterado.
+                        <br><br>Deseja finalizar esta operação?
+                    </p>
+                    <div class="button-container-confirm">
+                        <button class="button-cancel">Cancelar</button>
+                        <button class="button-confirm">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="popup-loading-container" class="popup-loading-container" style="display:none;">
+                <div class="popup-loading">
+                    <h2>Finalizando Operação</h2>
+                    <p>Operação finalizada, baixa do sistema sendo realizada.</p>
+                    <div class="loading-container">
+                        <p class="loading">Carregando</p>
+                        <div class="loader-container">
+                            <div class="loader"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="seleção-container" id="toggleDiv" style="display: none;">
-            <div class="seleção">
-                <h6><span id="selected-count">N/A</span></h6>
-                <p><span id="produto-text">Produto</span> selecionado | <a href="#">Desmarcar Seleção</a></p>
-                <button class="button-excluir-produto-selecionado"><i class="fa fa-trash-o"
-                        aria-hidden="true"></i>Excluir</button>
-            </div>
-        </div>
-        <div id="popup-excluir-produto-container" class="popup-excluir-produto-container" style="display:none;">
-            <div class="popup-excluir-produto">
-                <h2>Excluir Produto<span class="close-button-confirm">&times;</span></h2>
-                <div class="aviso-cuidado">
-                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                    <p>Exclusão de produtos é uma ação irreversível.</p>
-                </div>
-                <p class="confirm-message">Uma vez excluído, o produto <b>será apagado de todos os registros atuais
-                        realizado</b> e não poderá ser recuperado. <br><br>Deseja excluir os produtos selecionado?
-                </p>
-                <div class="button-container-confirm">
-                    <button class="button-cancel-excluir-produto">Cancelar</button>
-                    <button id="deleteSelectedRows" class="button-confirm-excluir-produto">Excluir</button>
+            <div id="popup-finalizado-container" class="popup-finalizado-container" style="display:none;">
+                <div class="popup-finalizado">
+                    <h2>Operação Finalizada<span class="close-button-concluido"
+                            onclick="closeLoadingPopup()">&times;</span></h2>
+                    <div class="finalizado-container">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        <p>Operação Finalizada com sucesso.</p>
+                        <button class="button-concluir">Concluir</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="seleção-container" id="toggleDiv" style="display: none;">
+        <div class="seleção">
+            <h6><span id="selected-count">N/A</span></h6>
+            <p><span id="produto-text">Produto</span> selecionado | <a href="">Desmarcar Seleção</a></p>
+            <button class="button-excluir-produto-selecionado"><i class="fa fa-trash-o"
+                    aria-hidden="true"></i>Excluir</button>
+        </div>
+    </div>
+    <div id="popup-excluir-produto-container" class="popup-excluir-produto-container" style="display:none;">
+        <div class="popup-excluir-produto">
+            <h2>Excluir Produto<span class="close-button-confirm">&times;</span></h2>
+            <div class="aviso-cuidado">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <p>Exclusão de produtos é uma ação irreversível.</p>
+            </div>
+            <p class="confirm-message">Uma vez excluído, o produto <b>será apagado de todos os registros atuais
+                    realizado</b> e não poderá ser recuperado. <br><br>Deseja excluir os produtos selecionado?
+            </p>
+            <div class="button-container-confirm">
+                <button class="button-cancel-excluir-produto">Cancelar</button>
+                <button id="deleteSelectedRows" class="button-confirm-excluir-produto">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <footer class="small text-center terms-of-usage">
