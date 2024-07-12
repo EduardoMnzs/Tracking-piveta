@@ -267,7 +267,7 @@ tr {
 
 .button-cancel-operação,
 .button-cancel-edição-código,
-.button-confirm-edição-chave {
+.button-cancel-edição-chave {
     background-color: transparent;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-decoration: none;
@@ -902,7 +902,8 @@ i.fa.fa-trash-o {
     cursor: not-allowed;
 }
 
-.input-codigo-edição {
+.input-codigo-edição,
+.input-chave-edição {
     width: 350px;
     padding: 10px;
     border: 1px solid #ccc;

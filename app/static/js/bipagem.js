@@ -16,9 +16,7 @@ function dataTable() {
 dataTable();
 
 function updateClock() {
-
     const now = new Date();
-
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
@@ -29,30 +27,25 @@ function updateClock() {
 
     const timeString = `${hours}:${minutes}:${seconds}`;
 
-    document.getElementById('realtime-clock').textContent = "Hora: " + timeString;
     document.getElementById('input-hora-edição').value = timeString;
-    document.getElementById('realdata-ch').textContent = "Data: " + timeString;
-    document.getElementById('input-data-edição-ch').value = timeString;
+    document.getElementById('input-hora-edição-ch').value = timeString;
+    document.getElementById('realtime-clock').textContent = timeString;
 
     setTimeout(updateClock, 1000);
 }
 updateClock();
 
 function getFormattedDate() {
-
     const today = new Date();
-
     let day = today.getDate().toString().padStart(2, '0');
     let month = (today.getMonth() + 1).toString().padStart(2, '0');
     let year = today.getFullYear();
 
     const dataString = `${day}/${month}/${year}`;
 
-    document.getElementById('realdata').textContent = "Data: " + dataString;
     document.getElementById('input-data-edição').value = dataString;
-    document.getElementById('realdata-ch').textContent = "Data: " + dataString;
     document.getElementById('input-data-edição-ch').value = dataString;
-
+    document.getElementById('realdata').textContent = dataString;
 }
 getFormattedDate();
 
@@ -119,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+    
     const codigoProdutoInput = document.getElementById('codigoProduto');
     const chaveProdutoInput = document.getElementById('chaveProduto');
     const tbody = document.getElementById('table-body');
@@ -156,18 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const newCell4 = newRow.insertCell(3);
         const newCell5 = newRow.insertCell(4);
         const newCell6 = newRow.insertCell(5);
-    
+
         const checkBox = document.createElement('input');
         checkBox.type = 'checkbox';
         const uniqueId = 'showDivCheckbox-' + new Date().getTime();
         checkBox.id = uniqueId;
         newCell1.appendChild(checkBox);
-    
+
         newCell2.textContent = getNextProductNumber();
         newCell3.textContent = codigo;
         newCell4.textContent = chave;
         newCell5.textContent = dataTable();
-    
+
         const moreOptionsDiv = document.createElement('div');
         moreOptionsDiv.classList.add('more-options');
         moreOptionsDiv.innerHTML = `
@@ -179,84 +173,121 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
         newCell6.appendChild(moreOptionsDiv);
-    
+
         moreOptionsDiv.querySelector('.fa-ellipsis-v').addEventListener('click', function (event) {
             const dropdownMenu = moreOptionsDiv.querySelector('.dropdown-menu');
             const isOpen = dropdownMenu.style.display === 'block';
-    
+
             document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
-    
+
             dropdownMenu.style.display = isOpen ? 'none' : 'block';
-    
+
             event.stopPropagation();
         });
-    
+
         document.addEventListener('click', function () {
             document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
         });
-    
+
         moreOptionsDiv.querySelector('.delete-option').addEventListener('click', function () {
             newRow.remove();
             productCount--;
             updateProductCount('remove');
             checkCheckboxes();
         });
-    
-        moreOptionsDiv.querySelector('.edit-codigo').addEventListener('click', function () {
-            const cell = this.closest('tr').querySelector('td:nth-child(3)');
-            const codigo = cell.textContent;
-            openEditPopup('codigo', codigo, cell);
+
+        document.querySelectorAll('.edit-codigo').forEach(button => {
+            button.addEventListener('click', function() {
+                const cell = this.closest('tr').querySelector('td:nth-child(3)');
+                const codigo = cell.textContent;
+                openEditCodigoPopup(codigo, cell);
+            });
         });
     
-        moreOptionsDiv.querySelector('.edit-chave').addEventListener('click', function () {
-            const cell = this.closest('tr').querySelector('td:nth-child(4)');
-            const chave = cell.textContent;
-            openEditPopup('chave', chave, cell);
+        document.querySelectorAll('.edit-chave').forEach(button => {
+            button.addEventListener('click', function() {
+                const cell = this.closest('tr').querySelector('td:nth-child(4)');
+                const chave = cell.textContent;
+                openEditChavePopup(chave, cell);
+            });
         });
-    
+
         productCount++;
-    
+
         checkBox.addEventListener('change', function () {
             const toggleDiv = document.getElementById('toggleDiv');
             toggleDiv.style.display = this.checked ? 'block' : 'none';
         });
-    
+
         const avisoIniciado = document.querySelector('.aviso-iniciado');
         if (avisoIniciado) {
             avisoIniciado.style.display = 'none';
         }
     }
 
-    function openEditPopup(type, value, cell) {
-        const popupContainer = document.getElementById(`popup-editar-${type}-container`);
-        const inputField = document.getElementById(`input-${type}-edição`);
-        const buttonConfirm = document.querySelector(`.button-confirm-edição-${type}`);
-    
+    function openEditCodigoPopup(value, cell) {
+        const popupContainer = document.getElementById('popup-editar-codigo-container');
+        const inputField = document.getElementById('input-codigo-edição');
+        const buttonConfirm = document.getElementById('button-confirm-edição-codigo');
+
+        if (!popupContainer || !inputField || !buttonConfirm) {
+            console.error(`Elementos do popup de edição código não encontrados.`);
+            return;
+        }
+
         inputField.value = value;
         popupContainer.classList.add('fade-in');
         popupContainer.style.display = 'block';
-    
-        buttonConfirm.onclick = function () {
+
+        buttonConfirm.onclick = function() {
             const newValue = inputField.value.trim();
             if (newValue !== '' && /^\d+$/.test(newValue)) {
                 cell.textContent = newValue;
-                closeEditPopup(type);
+                closeEditPopup('codigo');
             } else {
-                alert(`Digite um ${type} válido (apenas números).`);
+                alert(`Digite um código válido (apenas números).`);
+            }
+        };
+    }
+
+    // Função para abrir o popup de edição de chave
+    function openEditChavePopup(value, cell) {
+        const popupContainer = document.getElementById('popup-editar-chave-container');
+        const inputField = document.getElementById('input-chave-edição');
+        const buttonConfirm = document.getElementById('button-confirm-edição-chave');
+
+        if (!popupContainer || !inputField || !buttonConfirm) {
+            console.error(`Elementos do popup de edição chave não encontrados.`);
+            return;
+        }
+
+        inputField.value = value;
+        popupContainer.classList.add('fade-in');
+        popupContainer.style.display = 'block';
+
+        buttonConfirm.onclick = function() {
+            const newValue = inputField.value.trim();
+            if (newValue !== '' && /^\d+$/.test(newValue)) {
+                cell.textContent = newValue;
+                closeEditPopup('chave');
+            } else {
+                alert(`Digite uma chave válida (apenas números).`);
             }
         };
     }
 
     function closeEditPopup(type) {
         const popupContainer = document.getElementById(`popup-editar-${type}-container`);
-        popupContainer.classList.remove('fade-in');
-        popupContainer.classList.add('fade-out');
-        setTimeout(() => {
-            popupContainer.style.display = 'none';
-            popupContainer.classList.remove('fade-out');
-        }, 500);
+        if (popupContainer) {
+            popupContainer.classList.remove('fade-in');
+            popupContainer.classList.add('fade-out');
+            setTimeout(() => {
+                popupContainer.style.display = 'none';
+                popupContainer.classList.remove('fade-out');
+            }, 500);
+        }
     }
-    
+
     const deleteButton = document.getElementById('deleteSelectedRows');
     const tableBody = document.getElementById('table-body');
     const toggleDiv = document.getElementById('toggleDiv');
@@ -290,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 checkbox.closest('tr').remove();
-                productCount--
+                productCount--;
                 updateProductCount();
             }
         });
@@ -375,6 +406,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupFinalizarOperacao = document.getElementById('operação-finalizar-popup');
     const popupEditarCodigo = document.getElementById('popup-editar-codigo-container');
     const btnCancelarEdição = document.getElementById('button-cancel-edição-código');
+    const popupEditarChave = document.getElementById('popup-editar-chave-container');
+    const btnCancelarEdiçãoChave = document.getElementById('button-cancel-edição-chave');
+
+
 
     function popupOperacaoIniciada() {
         const popup = document.getElementById('operação-iniciada-popup');
@@ -554,6 +589,10 @@ document.addEventListener("DOMContentLoaded", function () {
         popupEditarCodigo.style.display = 'none';
     };
 
+    btnCancelarEdiçãoChave.onclick = function () {
+        popupEditarChave.style.display = 'none';
+    };
+
     document.querySelectorAll('.close-button-confirm').forEach(button => {
         button.onclick = function () {
             popupEditarCodigo.style.display = 'none'
@@ -566,6 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
             finalizadoPopup.style.display = 'none';
             popupExcluirProduto.style.display = 'none';
             popupExcluirOperacao.style.display = 'none';
+            popupEditarChave.style.display = 'none';
         };
     });
 
