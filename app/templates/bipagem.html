@@ -35,6 +35,30 @@
                         onclick="closeLoadingPopup()">&times;</span></p>
             </div>
         </div>
+        <div id="operação-chave-editada-produto-popup" class="operação-chave-editada-produto-popup" style="display: none;">
+            <div class="operação-chave-editada-produto-popup-container">
+                <p>Chave de produto editado com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="operação-codigo-editado-produto-popup" class="operação-codigo-editado-produto-popup" style="display: none;">
+            <div class="operação-codigo-editado-produto-popup-container">
+                <p>Código de produto editado com sucesso!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="apenas-numeros-popup" class="apenas-numeros-popup" style="display: none;">
+            <div class="apenas-numeros-popup-container">
+                <p>Insira informação válida (apenas números)<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
+        <div id="tabela-vazia-popup" class="tabela-vazia-popup" style="display: none;">
+            <div class="tabela-vazia-popup-container">
+                <p>Insira informação para finalizar tarefa!<span class="close-button-confirm"
+                        onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
         <div class="container-busca">
             <div class="pesquisa-volume">
                 <label for="codigoProduto"></label>
@@ -74,7 +98,7 @@
         <div class="footer-legenda-botao">
             <div class="legenda">
                 <div class="decoração-legenda"></div>
-                <p>Qntd. de Volume: <span id="product-count" class="contador"> N/A</span></p>
+                <p>Qntd. de Volume: <span id="product-count" class="contador"> 0</span></p>
                 <div class="decoração-legenda"></div>
                 <p class="data" id="realdata">Data: </p>
                 <div class="decoração-legenda"></div>
@@ -189,8 +213,8 @@
     </div>
     <div class="seleção-container" id="toggleDiv" style="display: none;">
         <div class="seleção">
-            <h6><span id="selected-count">N/A</span></h6>
-            <p><span id="produto-text">Produto</span> selecionado | <a href="">Desmarcar Seleção</a></p>
+            <h6><span id="selected-count">0</span></h6>
+            <p><span id="produto-text">Produto</span> selecionado | <a href="#" id="desmarcar-selecao">Desmarcar Seleção</a></p>
             <button class="button-excluir-produto-selecionado"><i class="fa fa-trash-o"
                     aria-hidden="true"></i>Excluir</button>
         </div>

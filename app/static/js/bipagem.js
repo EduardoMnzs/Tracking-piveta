@@ -70,6 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleDivVisibility();
     });
 
+    document.getElementById('desmarcar-selecao').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default action of the link
+        const checkboxes = document.querySelectorAll('#table-body input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        updateCheckboxCount();
+        toggleDivVisibility();
+    });
+
     tableBody.addEventListener('change', function (event) {
         if (event.target.type === 'checkbox') {
             updateCheckboxCount();
@@ -112,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     const codigoProdutoInput = document.getElementById('codigoProduto');
     const chaveProdutoInput = document.getElementById('chaveProduto');
     const tbody = document.getElementById('table-body');
@@ -189,23 +199,35 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
         });
 
-        moreOptionsDiv.querySelector('.delete-option').addEventListener('click', function () {
-            newRow.remove();
-            productCount--;
-            updateProductCount('remove');
-            checkCheckboxes();
+        const popupExcluirProduto = document.getElementById('popup-excluir-produto-container');
+        const buttonConfirmExcluirProduto = document.getElementById('deleteSelectedRows');
+
+
+        moreOptionsDiv.querySelector('.delete-option').addEventListener('click', function (event) {
+            popupExcluirProduto.style.display = 'block';
+
+            buttonConfirmExcluirProduto.onclick = function () {
+                newRow.remove();
+                productCount--;
+                if (productCount < 0) productCount = 0;
+                updateProductCount();
+                checkCheckboxes();
+                popupExcluirProduto.style.display = 'none';
+            };
+
+            event.stopPropagation();
         });
 
         document.querySelectorAll('.edit-codigo').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const cell = this.closest('tr').querySelector('td:nth-child(3)');
                 const codigo = cell.textContent;
                 openEditCodigoPopup(codigo, cell);
             });
         });
-    
+
         document.querySelectorAll('.edit-chave').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const cell = this.closest('tr').querySelector('td:nth-child(4)');
                 const chave = cell.textContent;
                 openEditChavePopup(chave, cell);
@@ -239,18 +261,54 @@ document.addEventListener("DOMContentLoaded", function () {
         popupContainer.classList.add('fade-in');
         popupContainer.style.display = 'block';
 
-        buttonConfirm.onclick = function() {
+        buttonConfirm.onclick = function () {
             const newValue = inputField.value.trim();
             if (newValue !== '' && /^\d+$/.test(newValue)) {
                 cell.textContent = newValue;
                 closeEditPopup('codigo');
+                popupCodigoEditado();
             } else {
-                alert(`Digite um código válido (apenas números).`);
+                popupApenasNumeros();
             }
         };
     }
 
-    // Função para abrir o popup de edição de chave
+    function popupChaveEditada() {
+        const popup = document.getElementById('operação-chave-editada-produto-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function popupCodigoEditado() {
+        const popup = document.getElementById('operação-codigo-editado-produto-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function popupApenasNumeros() {
+        const popup = document.getElementById('apenas-numeros-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
     function openEditChavePopup(value, cell) {
         const popupContainer = document.getElementById('popup-editar-chave-container');
         const inputField = document.getElementById('input-chave-edição');
@@ -265,13 +323,14 @@ document.addEventListener("DOMContentLoaded", function () {
         popupContainer.classList.add('fade-in');
         popupContainer.style.display = 'block';
 
-        buttonConfirm.onclick = function() {
+        buttonConfirm.onclick = function () {
             const newValue = inputField.value.trim();
             if (newValue !== '' && /^\d+$/.test(newValue)) {
                 cell.textContent = newValue;
                 closeEditPopup('chave');
+                popupChaveEditada();
             } else {
-                alert(`Digite uma chave válida (apenas números).`);
+                popupApenasNumeros();
             }
         };
     }
@@ -408,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnCancelarEdição = document.getElementById('button-cancel-edição-código');
     const popupEditarChave = document.getElementById('popup-editar-chave-container');
     const btnCancelarEdiçãoChave = document.getElementById('button-cancel-edição-chave');
-
+    const popupTabelaVaziaStyle = document.getElementById('tabela-vazia-popup');
 
 
     function popupOperacaoIniciada() {
@@ -542,6 +601,18 @@ document.addEventListener("DOMContentLoaded", function () {
         popupOperacaoExcluida();
     }
 
+    function popupTabelaVazia() {
+        const popup = document.getElementById('tabela-vazia-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
     btnFinalizar.onclick = function () {
 
         if (tbody.rows.length > 0) {
@@ -551,7 +622,7 @@ document.addEventListener("DOMContentLoaded", function () {
             avisoIniciado.style.display = 'none';
             confirmationModal.style.display = 'flex';
         } else {
-            alert("Não há dados na tabela para finalizar.");
+            popupTabelaVazia();
             confirmationModal.style.display = 'none';
         }
 
@@ -606,6 +677,7 @@ document.addEventListener("DOMContentLoaded", function () {
             popupExcluirProduto.style.display = 'none';
             popupExcluirOperacao.style.display = 'none';
             popupEditarChave.style.display = 'none';
+            popupTabelaVaziaStyle.style.display = 'none';
         };
     });
 

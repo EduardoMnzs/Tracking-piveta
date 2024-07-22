@@ -752,7 +752,9 @@ i.fa.fa-trash-o {
 
 .operação-iniciada-popup,
 .operação-finalizar-popup,
-.operação-produto-alterado-popup {
+.operação-produto-alterado-popup,
+.operação-chave-editada-produto-popup,
+.operação-codigo-editado-produto-popup {
     position: fixed;
     top: 85px;
     left: 50%;
@@ -793,11 +795,37 @@ i.fa.fa-trash-o {
     animation: fadeIn 0.5s;
 }
 
+.apenas-numeros-popup,
+.tabela-vazia-popup {
+    position: fixed;
+    top: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: hsla(41, 100%, 65%, 0.9);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-color: hsla(41, 100%, 65%, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+    z-index: 9999999;
+}
+
 .operação-iniciada-popup.fade-out,
 .operação-excluir-popup.fade-out,
 .operação-excluir-produto-popup.fade-out,
 .operação-finalizar-popup.fade-out,
-.operação-produto-alterado-popup.fade-out {
+.operação-produto-alterado-popup.fade-out,
+.operação-chave-editada-produto-popup.fade-out,
+.operação-codigo-editado-produto-popup.fade-out
+.apenas-numeros-popup.fade-out,
+.tabela-vazia-popup.fade-out {
     animation: fadeOut 0.5s forwards;
 }
 
@@ -805,7 +833,11 @@ i.fa.fa-trash-o {
 .operação-excluir-container,
 .operação-excluir-produto-container,
 .operação-finalizar-popup-container,
-.operação-produto-alterado-container {
+.operação-produto-alterado-container,
+.operação-chave-editada-produto-popup-container,
+.operação-codigo-editado-produto-popup-container,
+.apenas-numeros-popup-container,
+.tabela-vazia-popup-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -815,7 +847,11 @@ i.fa.fa-trash-o {
 .operação-excluir-container > p,
 .operação-excluir-produto-container > p,
 .operação-finalizar-container > p ,
-.operação-produto-alterado-container > p{
+.operação-produto-alterado-container > p,
+.operação-chave-editada-produto-popup-container > p,
+.operação-codigo-editado-produto-popup-container > p,
+.apenas-numeros-popup-container > p,
+.tabela-vazia-popup-container > p {
     margin-top: 0;
     margin-bottom: 0;
     display: flex;
@@ -826,7 +862,11 @@ i.fa.fa-trash-o {
 .operação-excluir-container > p > .close-button-confirm,
 .operação-excluir-produto-container > p > .close-button-confirm,
 .operação-finalizar-container > p > .close-button-confirm,
-.operação-produto-alterado-container > p > .close-button-confirm {
+.operação-produto-alterado-container > p > .close-button-confirm,
+.operação-chave-editada-produto-popup-container > p > .close-button-confirm,
+.operação-codigo-editado-produto-popup-container > p > .close-button-confirm,
+.apenas-numeros-popup-container > p > .close-button-confirm,
+.tabela-vazia-popup-container > p > .close-button-confirm {
     font-size: 20px;
     cursor: pointer;
     margin-left: 300px;
