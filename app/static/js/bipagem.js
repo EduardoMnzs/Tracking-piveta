@@ -579,7 +579,7 @@ document.addEventListener("DOMContentLoaded", function () {
         codigoProdutoInput.value = '';
         chaveProdutoInput.value = '';
         avisoInicio.style.display = 'none';
-        avisoIniciado.style.display = 'flex';
+        avisoIniciado.style.display = 'none';
         btnIniciar.style.display = 'none';
         btnCancelar.style.display = 'inline';
         btnFinalizar.style.display = 'inline';
