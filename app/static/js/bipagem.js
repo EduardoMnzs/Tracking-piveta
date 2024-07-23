@@ -714,3 +714,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.getElementById('save-table-data').addEventListener('click', function () {
+    const tableBody = document.getElementById('table-body');
+    const rows = tableBody.querySelectorAll('tr');
+    const produtos = [];
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const codigo_interno = cells[1].textContent;
+        const codigo = cells[2].textContent;
+        const chave = cells[3].textContent;
+        const data_hora = cells[4].textContent;
+        produtos.push({ codigo_interno, codigo, chave, data_hora });
+    });
+
+    fetch('/add_produtos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ produtos }),
+    })
+});

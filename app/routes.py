@@ -76,6 +76,7 @@ def bipagem():
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    pass #Remova para testes, ass. Eu do passado
 
 @app.route('/add_produtos', methods=['POST'])
 def add_produtos():
@@ -85,27 +86,21 @@ def add_produtos():
     conn = connect_db()
     cursor = conn.cursor()
 
-    inserted_ids = []
     for produto in produtos:
         codigo_interno = produto['codigo_interno']
         codigo = produto['codigo']
         chave = produto['chave']
         data_hora = produto['data_hora']
         cursor.execute(
-            "INSERT INTO produtos (codigo_interno, codigo, chave, data_hora) VALUES (%s, %s, %s, %s) RETURNING id",
+            "INSERT INTO produtos (codigo_interno, codigo, chave, data_hora) VALUES (%s, %s, %s, %s)",
             (codigo_interno, codigo, chave, data_hora)
         )
-        inserted_id = cursor.fetchone()[0]
-        inserted_ids.append(inserted_id)
 
     conn.commit()
     cursor.close()
     conn.close()
 
-    if inserted_ids:
-        return jsonify({"message": "Produtos adicionados com sucesso!", "inserted_ids": inserted_ids}), 201
-    else:
-        return jsonify({"message": "Falha ao adicionar produtos."}), 500
+    return jsonify({"message": "Produtos adicionados com sucesso!"}), 201
 
 @app.route("/test")
 def test():
