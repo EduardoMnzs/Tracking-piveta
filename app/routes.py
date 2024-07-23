@@ -102,6 +102,10 @@ def add_produtos():
 
     return jsonify({"message": "Produtos adicionados com sucesso!"}), 201
 
+@app.route("/relatorios")
+def relatorios():
+    return render_template('relatorios.html')
+
 @app.route("/test")
 def test():
     return render_template('test.html')
