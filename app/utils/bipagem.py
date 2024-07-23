@@ -1,42 +1,28 @@
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from anticaptchaofficial.hcaptchaproxyless import *
-from app.utils.api_key import ANTICAPTCHA_KEY
-import time
+import cv2
+from pyzbar.pyzbar import decode
+import numpy as np
 
-navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-link = 'https://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConsulta=resumo&tipoConteudo=7PhJ+gAVw2g='
-navegador.get(link)
+def gen():
+    cap = cv2.VideoCapture(0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-WebDriverWait(navegador, 10).until(EC.visibility_of_element_located((By.ID, 'ctl00_ContentPlaceHolder1_txtChaveAcessoResumo')))
-navegador.find_element(By.ID, 'ctl00_ContentPlaceHolder1_txtChaveAcessoResumo').send_keys('35240606013526000192550020000280321080392888')
+        decoded_objects = decode(frame)
+        for obj in decoded_objects:
+            points = obj.polygon
+            if len(points) == 4:
+                pts = np.array([[point.x, point.y] for point in points], dtype=np.int32)
+                pts = pts.reshape((-1, 1, 2))
+                cv2.polylines(frame, [pts], True, (0, 0, 255), 3)
 
-chave_captcha = WebDriverWait(navegador, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'h-captcha'))).get_attribute('data-sitekey')
+            barcode_data = obj.data.decode("utf-8")
+            barcode_type = obj.type
+            cv2.putText(frame, f'{barcode_data} ({barcode_type})', (obj.rect.left, obj.rect.top - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-solver = hCaptchaProxyless()
-solver.set_verbose(1)
-solver.set_key(ANTICAPTCHA_KEY)
-solver.set_website_url(link)
-solver.set_website_key(chave_captcha)
-resposta = solver.solve_and_return_solution()
-
-if resposta:
-    print(resposta)
-
-    script_show = "document.getElementsByName('h-captcha-response')[0].style.display = 'block';"
-    navegador.execute_script(script_show)
-    time.sleep(1)
-    script_set = f"document.getElementsByName('h-captcha-response')[0].value = '{resposta}';"
-    navegador.execute_script(script_set)
-
-    submit_button = WebDriverWait(navegador, 10).until(EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_btnConsultarHCaptcha")))
-    submit_button.click()
-
-else:
-    print(solver.err_string)
-
-time.sleep(1000)
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        frame = jpeg.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')

@@ -1,6 +1,26 @@
 from app import app
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response, jsonify
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from datetime import datetime
 from .utils.tracking import fetch_tracking_info
+from .utils.bipagem import gen
+
+DB_HOST = "localhost"
+DB_NAME = "Piveta"
+DB_USER = "postgres"
+DB_PASS = "piveta"
+PORT = '5432'
+
+def connect_db():
+    conn = psycopg2.connect(
+        host=DB_HOST,
+        database=DB_NAME,
+        user=DB_USER,
+        password=DB_PASS,
+        port=PORT
+    )
+    return conn
 
 @app.route("/")
 @app.route("/index")
@@ -36,7 +56,7 @@ def selecionar_imagem(status):
         return "transito.png"
     elif status == "Objeto saiu para entrega ao destinatário":
         return "transito.png"
-    elif status == "Objeto recusado pelo destinatário": #manutenção quando recusado
+    elif status == "Objeto recusado pelo destinatário":
         return "nao-recebido.png"
     else:
         return "entregue.png"
@@ -53,6 +73,43 @@ def api_rastreio(codigo_rastreio):
 def bipagem():
     return render_template('bipagem.html')
 
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/add_produtos', methods=['POST'])
+def add_produtos():
+    data = request.get_json()
+    produtos = data['produtos']
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    inserted_ids = []
+    for produto in produtos:
+        codigo_interno = produto['codigo_interno']
+        codigo = produto['codigo']
+        chave = produto['chave']
+        data_hora = produto['data_hora']
+        cursor.execute(
+            "INSERT INTO produtos (codigo_interno, codigo, chave, data_hora) VALUES (%s, %s, %s, %s) RETURNING id",
+            (codigo_interno, codigo, chave, data_hora)
+        )
+        inserted_id = cursor.fetchone()[0]
+        inserted_ids.append(inserted_id)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    if inserted_ids:
+        return jsonify({"message": "Produtos adicionados com sucesso!", "inserted_ids": inserted_ids}), 201
+    else:
+        return jsonify({"message": "Falha ao adicionar produtos."}), 500
+
 @app.route("/test")
 def test():
     return render_template('test.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

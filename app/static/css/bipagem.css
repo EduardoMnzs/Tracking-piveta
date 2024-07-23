@@ -909,9 +909,10 @@ i.fa.fa-trash-o {
     padding: 20px;
     border-radius: 20px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 30% !important;
+    width: 90%;
+    max-width: 600px;
     text-align: center;
-    height: 356px;
+    height: auto;
 }
 
 .popup-editar-codigo>h2,
@@ -934,6 +935,7 @@ i.fa.fa-trash-o {
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .data-hora-container {
@@ -951,7 +953,8 @@ i.fa.fa-trash-o {
 
 .input-data-edição,
 .input-hora-edição {
-    width: 150px;
+    width: 100%;
+    max-width: 150px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -962,12 +965,17 @@ i.fa.fa-trash-o {
 
 .input-codigo-edição,
 .input-chave-edição {
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f9f9f9;
     color: #333;
+}
+
+.camera-img, .camera-video {
+    display: none;
 }
 
 .terms-of-usage {
@@ -1006,6 +1014,27 @@ i.fa.fa-trash-o {
         flex: 1 1 33px;
         max-width: 100%;
     }
+
+    .camera {
+        display: flex;
+        padding-top: 50px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .camera-img {
+        display: block;
+        width: 80%;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* .camera-video {
+        display: block;
+        width: 80%;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    } */
 }
 
 @media only screen and (max-width: 750px) {
@@ -1034,6 +1063,22 @@ i.fa.fa-trash-o {
     .apenas-numeros-popup-container>p,
     .tabela-vazia-popup-container>p {
         gap: 20px;
+    }
+
+    .seleção {
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+    }
+
+    .seleção > p {
+        text-align: center;
+    }
+
+    .button-excluir-produto-selecionado {
+        margin-right: 0px;
     }
 
 }
