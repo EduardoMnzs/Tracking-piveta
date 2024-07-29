@@ -1022,19 +1022,19 @@ i.fa.fa-trash-o {
         justify-content: center;
     }
 
-    .camera-img {
-        display: block;
-        width: 80%;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    /* .camera-video {
+    /* .camera-img {
         display: block;
         width: 80%;
         border-radius: 15px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     } */
+
+    .camera-video {
+        display: block;
+        width: 80%;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 }
 
 @media only screen and (max-width: 750px) {

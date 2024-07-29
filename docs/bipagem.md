@@ -25,19 +25,19 @@ Para facilitar a compreensão, utilizei a abordagem de arquitetura C4 para ilust
 
 A primeira etapa do desenho é mostrar as interações de forma macro, focando nas comunicações e dependências entre sistemas e usuários no processo de bipagem. Esse diagrama deve ser compreendido por todos os envolvidos no projeto, tanto técnicos quanto de negócios, que interagem direta ou indiretamente com o sistema.
 
-![Diagrama de Contexto](./arquitetura/C4-contexto-bipagem.jpg)
+![Diagrama de Contexto](./arquitetura/bipagem/C4-contexto-bipagem.jpg)
 
 ##### Container de Bipagem
 
 O segundo nível detalha o sistema, descrevendo seus containers e como eles se comunicam. Foca na arquitetura e tecnologias usadas, mostrando como o sistema é construído de forma macro. Um container pode ser uma aplicação web, um banco de dados, ou um sistema de arquivos. Este diagrama é direcionado à equipe técnica, como desenvolvedores e profissionais de suporte.
 
-![Diagrama de Contexto](./arquitetura/C4-container-bipagem.jpg)
+![Diagrama de Contexto](./arquitetura/bipagem/C4-container-bipagem.jpg)
 
 ##### Componentes de Bipagem
 
 No terceiro nível, detalhamos as partes que compõem os containers, incluindo interações, responsabilidades e tecnologias de forma mais minuciosa. Um sistema pode ter vários diagramas de componente, focando na equipe técnica de desenvolvimento.
 
-![Diagrama de Contexto](./arquitetura/C4-Componentes-bipagem.jpg)
+![Diagrama de Contexto](./arquitetura/bipagem/C4-Componentes-bipagem.jpg)
   
 ### Estrutura do Projeto
   
