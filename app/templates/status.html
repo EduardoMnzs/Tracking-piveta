@@ -22,12 +22,17 @@
                 <div class="icon-status">
                     {% if registro.status == "Objeto em transferência - por favor aguarde" %}
                     <img class="icon-status-background" src="../static/svg/transito.svg" alt="">
-                    {% elif registro.status == "Objeto postado após o horário limite da unidade" %}
+                    {% elif registro.status == "Objeto postado após o horário limite da unidade" or registro.status ==
+                    "Objeto postado"%}
                     <img class="icon-status-background" src="../static/svg/postado.svg" alt="">
-                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" or registro.status == "Objeto saiu para entrega ao remetente"%}
                     <img class="icon-status-background" src="../static/svg/entrega.svg" alt="">
-                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    {% elif registro.status == "Objeto entregue ao destinatário" or registro.status == "Objeto entregue ao remetente"%}
                     <img class="icon-status-background" src="../static/svg/entregue.svg" alt="">
+                    {% elif registro.status == "Objeto aguardando retirada no endereço indicado" %}
+                    <img class="icon-status-background" src="../static/svg/aguardando.svg" alt="">
+                    {% elif registro.status == "Objeto não entregue - prazo de retirada encerrado" %}
+                    <img class="icon-status-background" src="../static/svg/prazo-retirada-encerrado.svg" alt="">
                     {% else %}
                     <img class="icon-status-background" src="../static/svg/{{ registro.status.lower() }}.svg" alt="">
                     {% endif %}
@@ -36,27 +41,39 @@
                     {% if registro.status == "Objeto em transferência - por favor aguarde" %}
                     <h3 class="titulo-status">Objeto em trânsito<img class="info-svg" src="../static/svg/info.svg"
                             alt=""></h3>
-                    {% elif registro.status == "Objeto postado após o horário limite da unidade" %}
+                    {% elif registro.status == "Objeto postado após o horário limite da unidade" or registro.status ==
+                    "Objeto postado"%}
                     <h3 class="titulo-status">Objeto postado<img class="info-svg" src="../static/svg/info.svg" alt="">
                     </h3>
-                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" or registro.status == "Objeto saiu para entrega ao remetente"%}
                     <h3 class="titulo-status">Objeto saiu para <span class="entrega">entrega</span><img class="info-svg"
                             src="../static/svg/info.svg" alt=""></h3>
-                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    {% elif registro.status == "Objeto entregue ao destinatário" or registro.status == "Objeto entregue ao remetente"%}
                     <h3 class="titulo-status">Objeto <span class="entrega">entregue</span><img class="info-svg"
                             src="../static/svg/info.svg" alt=""></h3>
+                    {% elif registro.status == "Objeto aguardando retirada no endereço indicado" %}
+                    <h3 class="titulo-status">Objeto aguardando<span class="entrega"> retirada</span><img
+                            class="info-svg" src="../static/svg/info.svg" alt=""></h3>
+                    {% elif registro.status == "Objeto não entregue - prazo de retirada encerrado" %}
+                    <h3 class="titulo-status">Objeto não entregue - prazo de retirada<span class="entrega"> encerrado</span><img
+                            class="info-svg" src="../static/svg/info.svg" alt=""></h3>
                     {% else %}
                     <h3 class="titulo-status">Objeto {{ registro.status | capitalize }}<img class="info-svg"
                             src="../static/svg/info.svg" alt=""></h3>
                     {% endif %}
 
-                    {% if registro.status == "Objeto postado após o horário limite da unidade"%}
+                    {% if registro.status == "Objeto postado após o horário limite da unidade" or registro.status ==
+                    "Objeto postado"%}
                     <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
                     <p class="local-status">Marília - SP</p>
-                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" %}
+                    {% elif registro.status == "Objeto saiu para entrega ao destinatário" or registro.status == "Objeto saiu para entrega ao remetente"%}
                     <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
-                    {% elif registro.status == "Objeto entregue ao destinatário" %}
+                    {% elif registro.status == "Objeto entregue ao destinatário" or registro.status == "Objeto entregue ao remetente"%}
                     <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
+                    {% elif registro.status == "Objeto aguardando retirada no endereço indicado" %}
+                    <p class="data-status"></p>
+                    {% elif registro.status == "Objeto não entregue - prazo de retirada encerrado" %}
+                    <p class="data-status"></p>
                     {% else %}
                     <p class="data-status">{{ registro.data }} - {{ registro.hora }}</p>
                     <p class="local-status">{{ registro.destino }}</p>

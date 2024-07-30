@@ -58,6 +58,8 @@ def selecionar_imagem(status):
         return "transito.png"
     elif status == "Objeto recusado pelo destinatário":
         return "nao-recebido.png"
+    elif status == "Objeto aguardando retirada no endereço indicado":
+        return "aguardando.png"
     else:
         return "entregue.png"
     
