@@ -37,7 +37,7 @@ O segundo nível detalha o sistema, descrevendo seus containers e como eles se c
 
 No terceiro nível, detalhamos as partes que compõem os containers, incluindo interações, responsabilidades e tecnologias de forma mais minuciosa. Um sistema pode ter vários diagramas de componente, focando na equipe técnica de desenvolvimento.
 
-![Diagrama de Contexto](./arquitetura/bipagem/C4-Componentes-bipagem.jpg)
+![Diagrama de Contexto](./arquitetura/bipagem/C4-componentes-bipagem.jpg)
   
 ### Estrutura do Projeto
   
@@ -138,17 +138,7 @@ if __name__ == '__main__':
 ---
   
 ##### HTML
-O HTML contém a estrutura para a tabela de produtos, botões e modais:
-  
-1. Elemento ``div``:
-  
-O elemento ``div`` serve como container principal para o popup, encapsulando todo o seu conteúdo. Atribua um identificador único (``id``) para este elemento, que é crucial para manipulação com JavaScript.
-  
-Ex: ``<div id="meuPopup">...</div>``
-  
-2. Conteúdo do Popup:
-  
-Dentro do container ``div``, está incluido todo o conteúdo que exibe no popup, como formulários, textos informativos e botões. O conteúdo de forma lógica utiliza elementos HTML adequados para cada tipo de informação.
+O HTML contém a informações cruciais frizando a importância da usabilidade do rastreio:
   
 Ex:
   
@@ -205,7 +195,7 @@ Ex:
 }
 ```
   
-2. ``Media Queries`` para animação:
+3. ``Media Queries`` para redimensionar:
   
 As ``Media Queries`` permitem adaptar o layout e o estilo de uma página com base em diferentes características do dispositivo do usuário, como tamanho da tela, orientação, resolução e tipo de dispositivo (desktop, tablet, mobile).
   
@@ -288,4 +278,3 @@ function getNextProductNumber() {
 ---
   
 Este sistema permite a inserção, edição e exclusão de produtos, armazenando todas as operações em um banco de dados PostgreSQL. O frontend responsivo garante uma boa experiência do usuário em diferentes dispositivos.
-  
