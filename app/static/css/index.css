@@ -5,7 +5,16 @@
 .background {
     background-color: #F0F0F0;
     border-radius: 45px 45px 0px 0px;
-    height: 90%;
+}
+
+.carousel-item {
+    transition: transform 0.3s ease-in-out !important;
+}
+
+.d-block {
+    width: 100%;
+    border-radius: 45px;
+    padding: 10px;
 }
 
 .card-container {
@@ -86,6 +95,58 @@
 .acessar {
     color: #000;
     margin-left: 10px;
+}
+
+.frase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial {
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 850px;
+}
+
+.testimonial h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.testimonial blockquote {
+    margin: 0;
+    padding: 0;
+    color: #666;
+    font-style: italic;
+}
+
+.testimonial blockquote p {
+    font-size: 22px;
+    line-height: 1.5;
+    margin: 0;
+    position: relative;
+}
+
+.testimonial blockquote p::before,
+.testimonial blockquote p::after {
+    content: '“';
+    font-size: 40px;
+    color: #0071BB;
+    position: absolute;
+}
+
+.testimonial blockquote p::before {
+    top: -10px;
+    left: -20px;
+}
+
+.testimonial blockquote p::after {
+    content: '”';
+    bottom: -10px;
+    right: -20px;
 }
 
 .terms-of-usage {
