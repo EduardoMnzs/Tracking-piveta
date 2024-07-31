@@ -4,35 +4,24 @@
 {% block main %}
 <div class="background">
     <div class="home-container">
-        <div id="bannerCarrossel" class="carousel slide" data-ride="carousel">
-
-            <ol class="carousel-indicators">
-                <li data-target="#bannerCarrossel" data-slide-to="0" class="active"></li>
-                <li data-target="#bannerCarrossel" data-slide-to="1"></li>
-                <li data-target="#bannerCarrossel" data-slide-to="2"></li>
-                <li data-target="#bannerCarrossel" data-slide-to="3"></li>
-            </ol>
-
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../static/img/banner-1.png" class="d-block w-100" alt="banner">
-                </div>
-                <div class="carousel-item">
-                    <img src="../static/img/banner-1.png" class="d-block w-100" alt="banner 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="../static/img/banner-1.png" class="d-block w-100" alt="banner 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="../static/img/banner-1.png" class="d-block w-100" alt="banner 3">
-                </div>
+        <div class="slider">
+            <div class="slides">
+                <div class="slide"><img src="../static/img/banner-1.png"
+                        alt="Slide 1"></div>
+                <div class="slide"><img src="../static/img/banner-2.png"
+                        alt="Slide 2" href="/bipagem"></div>
+                <div class="slide"><img src="../static/img/banner-3.png"
+                        alt="Slide 3"></div>
             </div>
-            <a class="carousel-control-prev" href="#bannerCarrossel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </a>
-            <a class="carousel-control-next" href="#bannerCarrossel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </a>
+            <div class="navigation">
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+            <div class="indicators">
+                <span class="indicator" onclick="currentSlide(0)"></span>
+                <span class="indicator" onclick="currentSlide(1)"></span>
+                <span class="indicator" onclick="currentSlide(2)"></span>
+              </div>
         </div>
         <div class="card-container">
         </div>
@@ -40,9 +29,103 @@
             <div class="testimonial">
                 <h2>Bem vindos ao Grupo Piveta Ferramentas!<br> Esse é o Piveta System!</h2>
                 <blockquote>
-                    <p>Sem dúvida, recomendo o Grupo Piveta Ferramentas como uma das melhores empresas de ferramentas de usinagem. Uma das melhores que encontrei até agora. Não hesitaria em apresentar seu trabalho a outra pessoa.</p>
+                    <p>Sem dúvida, recomendo o Grupo Piveta Ferramentas como uma das melhores empresas de ferramentas de
+                        usinagem. Uma das melhores que encontrei até agora. Não hesitaria em apresentar seu trabalho a
+                        outra pessoa.</p>
                 </blockquote>
             </div>
+        </div>
+        <div class="container-card-info">
+            <div class="card-info">
+            </div>
+            <div class="card-info" style='background-color: rgb(25, 26, 35);'>
+            </div>
+            <div class="card-info" style="background-color: rgb(0, 113, 187);">
+            </div>
+        </div>
+        <div class="container-informacoes">
+            <div class="app-screens">
+                <img src="../static/img/como-criado.png" alt="">
+            </div>
+            <div class="description">
+                <h2><br>Como começou a <br> Piveta System?</h2>
+                <p>A Piveta System foi fundada para preencher uma lacuna no mercado de automação industrial, oferecendo soluções tecnológicas avançadas para melhorar a eficiência operacional. Rapidamente se estabeleceu como líder no setor, graças à sua equipe qualificada e ao foco em pesquisa e desenvolvimento.</p>
+                <button class="button-informacoes">Leia mais</button>
+            </div>
+        </div>
+        <div class="container-informacoes">
+            <div class="description">
+                <h2><br>Qual o impacto <br> do sistema?</h2>
+                <p>Hoje, a Piveta System impacta inúmeras empresas de modo positivo, agilizando processos e fazendo que você tenha total controle de toda a sua empresa! Deixando-o livre para acompanhar todos os processos e a eficiência de todos os setores!</p>
+                <button class="button-informacoes">Leia mais</button>
+            </div>
+            <div class="app-screens">
+                <img src="../static/img/impacto.png" alt="">
+            </div>
+        </div>
+        <h2 class="titulo-documentacao">Materiais feitos para você!</h2>
+        <div class="documentacao-container">
+            <div class="box">
+                <div class="documentacao-img-container">
+                    <img class="documentacao-img" src="../static/svg/doc.svg">
+                </div>
+                <div class="documentacao-text">
+                    <h5>Documentação</h5>
+                    <p>Aprenda como utilizar do melhor modo as nossas ferramentas, sempre de modo correto desenvolvido</p>
+                </div>
+            </div>
+            <div class="box" style="background-color: rgb(0, 113, 187);">
+                <div class="documentacao-img-container">
+                    <img class="documentacao-img" src="../static/svg/html.svg">
+                </div>
+                <div class="documentacao-text" style="color: #fff;">
+                    <h5>Website</h5>
+                    <p>Entenda como é a funcionalidade de nosso site, e tenha acesso a estratégias únicas</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="documentacao-img-container">
+                    <img class="documentacao-img" src="../static/svg/zip.svg">
+                </div>
+                <div class="documentacao-text">
+                    <h5>Arquivos</h5>
+                    <p>Não perca os materiais de apoio que deixamos disponíveis para download</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="documentacao-img-container" >
+                    <img class="documentacao-img" src="../static/svg/xls.svg">
+                </div>
+                <div class="documentacao-text">
+                    <h5>Planilhas</h5>
+                    <p>Também possuimos alguns modelos de planilhas, prezamos sempre pela organização</p>
+                </div>
+            </div>
+            <div class="box" style='background-color: rgb(25, 26, 35);'>
+                <div class="documentacao-img-container">
+                    <img class="documentacao-img" src="../static/svg/js.svg">
+                </div>
+                <div class="documentacao-text" style="color: #fff;">
+                    <h5>Código JS</h5>
+                    <p>Deixamos alguns exemplos de códigos para consulta, fique sempre por dentro de toda atualizção</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="documentacao-img-container">
+                    <img class="documentacao-img" src="../static/svg/ppt.svg">
+                </div>
+                <div class="documentacao-text">
+                    <h5>Treinamentos</h5>
+                    <p>Nossa cultura é treinar e desenvolver, por isso disponibilizamos alguns arquivos e materiais de apoio</p>
+                </div>
+            </div>
+        </div>
+        <div class="video-container">
+            <h2>Antes mesmo de todo o sistema Piveta<br> nós temos uma história!</h2>
+            <blockquote>
+                <p>E essa história começou a muito tempo, em 1987...</p>
+            </blockquote>
+            <iframe class="video-home" src="https://www.youtube.com/embed/yBGPD5Ec2a4?si=uIYX0P5X51_xBnC4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
     </div>
 </div>

@@ -77,6 +77,38 @@ for (let application of AplicationsList) {
     createCard(application.name, application.path, application.imgPath, application.colors);
 }
 
-$('.carousel').carousel({
-    interval: 5000
-})
+let currentSlideIndex = 0;
+
+function showSlide(index) {
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const indicators = document.querySelectorAll('.indicator');
+
+    if (index >= totalSlides) {
+        currentSlideIndex = 0;
+    } else if (index < 0) {
+        currentSlideIndex = totalSlides - 1;
+    } else {
+        currentSlideIndex = index;
+    }
+
+    slides.style.transform = 'translateX(' + (-currentSlideIndex * 100) + '%)';
+
+    indicators.forEach((indicator, i) => {
+        if (i === currentSlideIndex) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+}
+
+function moveSlide(step) {
+    showSlide(currentSlideIndex + step);
+}
+
+function currentSlide(index) {
+    showSlide(index);
+}
+
+showSlide(currentSlideIndex);

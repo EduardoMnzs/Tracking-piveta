@@ -1,4 +1,4 @@
-.home-container{
+.home-container {
     text-align: center;
 }
 
@@ -7,14 +7,70 @@
     border-radius: 45px 45px 0px 0px;
 }
 
-.carousel-item {
-    transition: transform 0.3s ease-in-out !important;
+.slider {
+    width: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
 }
 
-.d-block {
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+
+}
+
+.slide {
+    padding: 25px;
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.slide img {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    border-radius: 45px;
+    display: block;
+    border-radius: 25px;
+}
+
+.navigation {
+    padding-inline: 150px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.prev,
+.next {
+    background: none;
+    border: none;
+    color: white;
     padding: 10px;
+    cursor: pointer;
+}
+
+.indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #0070bb5f;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.indicator.active {
+    background-color: white;
 }
 
 .card-container {
@@ -28,7 +84,7 @@
 
     a {
         display: contents;
-    }    
+    }
 }
 
 .cartao {
@@ -49,7 +105,7 @@
 
     img {
         width: 165px;
-        height: 165px;  
+        height: 165px;
         max-width: 100%;
         object-fit: cover;
     }
@@ -67,7 +123,7 @@
     p {
         padding: 20px 10px;
     }
-    
+
     h3 {
         width: 200px;
         background-color: #0071BB;
@@ -114,6 +170,7 @@
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
+    font-weight: bold;
 }
 
 .testimonial blockquote {
@@ -149,6 +206,140 @@
     right: -20px;
 }
 
+.container-card-info {
+    display: flex;
+    margin-inline: 100px;
+    padding: 50px;
+}
+
+.card-info {
+    border-radius: 20px;
+    margin-left: 10px;
+    height: 200px;
+    background-color: #fff;
+    flex: 1;
+    transition: 0.7s all ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-info:hover {
+    flex: 2;
+}
+
+.container-informacoes {
+    margin-block: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.app-screens {
+    width: 525px;
+}
+
+.app-screens img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.description {
+    max-width: 500px;
+}
+
+.description h2 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.description p {
+    color: #333;
+    text-align: justify;
+    margin-inline: 30px;
+}
+
+.button-informacoes {
+    background-color: #3b82f6;
+    text-decoration: none;
+    color: #f3f7fe;
+    border: none;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: .3s;
+}
+
+.button-informacoes:hover {
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 5px #3b83f65f;
+    color: #fff;
+}
+
+.titulo-documentacao {
+    font-size: 25px;
+    margin-bottom: 35px;
+    color: #333;
+    font-weight: bold;
+}
+
+.documentacao-container {
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-inline: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    background-color: #fff;
+    width: calc(33.33% - 10px);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+.documentacao-img {
+    width: 75px;
+    margin-inline: 30px;
+    border-radius: 15px;
+}
+
+.documentacao-text {
+    padding: 10px;
+    text-align: left;
+}
+
+.video-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.video-home {
+    border-radius: 15px;
+    width: 800px; 
+    height: 420px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-center {
+    padding-top: 18px;
+}
+
 .terms-of-usage {
     background-color: #F0F0F0;
     padding-bottom: 15px;
@@ -168,14 +359,11 @@
 }
 
 @media only screen and (max-width: 1340px) {
-    .background {
-        height: 80rem;
-    }
     .card-container {
         grid-template-columns: 1fr;
     }
 
-    .card-text{
+    .card-text {
         padding-right: 100px;
     }
 }
@@ -184,15 +372,8 @@
     .cartao img {
         display: none;
     }
-    
+
     .card-text {
         text-align: center;
-    }
-}
-
-@media only screen and (max-height: 690px) {
-    .background {
-        height: 100%;
-        min-height: 690px;
     }
 }

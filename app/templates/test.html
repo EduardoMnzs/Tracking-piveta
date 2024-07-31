@@ -4,74 +4,30 @@
 {% block main %}
 <div class="background">
     <div class="home-container">
-        <div class="container-rastreio">
-            <div class="input-button-container">
-                <h1 class="titulo-rastreio">Código de rastreamento: </h1>
-                <form action="/status" method="post">
-                    <input type="text" name="codigo_rastreio" class="rastreio-input" placeholder="Código de rastreio">
-                    <button onclick="fetchStatus()" class="button-rastreio" type="submit">Rastrear</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="status-imagem-container">
-        <div class="status-column">
-            <div id="status-container" class="status-container">
-                <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/entregue.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <div>
-                        <h3 class="titulo-status">Objeto</h3>
+                    <div class="card-info">
+                <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                    <div
+                        class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                     </div>
-                    <div>
-                        <h3><span class="entrega">entregue</span> <img class="info-svg" src="../static/svg/info.svg" alt=""></h3>
+                    <div class="p-6">
+                        <h5
+                            class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                            Tailwind card
+                        </h5>
+                        <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.
+                        </p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button data-ripple-light="true" type="button"
+                            class="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Read More
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="status-container">
-                <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/entrega.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <div>
-                        <h3 class="titulo-status">Objeto saiu</h3>
-                    </div>
-                    <div>
-                        <h3>para <span class="entrega">entrega</span> <img class="info-svg" src="../static/svg/info.svg"
-                                alt=""></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="status-container">
-                <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/transito.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <h3 class="titulo-status">Objeto em trânsito <img class="info-svg" src="../static/svg/info.svg"
-                            alt=""></h3>
-                    <p class="local-status">São Paulo - SP</p>
-                    <p class="data-status">22/07/2023 - 12:27</p>
-                </div>
-            </div>
-            <div class="status-container">
-                <div class="icon-status">
-                    <img class="icon-status-background" src="../static/svg/postado.svg" alt="">
-                </div>
-                <div class="situacao-status">
-                    <h3 class="titulo-status">Objeto postado <img class="info-svg" src="../static/svg/info.svg" alt="">
-                    </h3>
-                    <p class="local-status">Marília - SP</p>
-                    <p class="data-status">20/07/2023 - 16:57</p>
-                </div>
-            </div> 
-        </div>
-        <div class="container-imagem-status">
-            <img class="imagem-status" src="../static/img/postado.png" alt="">
-        </div>
     </div>
 </div>
-
 <footer class="small text-center terms-of-usage">
     <hr class="footer-hr">
     © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
