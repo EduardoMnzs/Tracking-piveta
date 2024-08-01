@@ -1,10 +1,16 @@
 from app import app
-from flask import Flask, render_template, request, Response, jsonify
+from flask import Flask, render_template, request, Response, jsonify, session, redirect
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from .utils.tracking import fetch_tracking_info
 from .utils.bipagem import gen
+from werkzeug.exceptions import default_exceptions
+from werkzeug.security import check_password_hash
+from .utils.login import errorhandler, login_required, not_login_required
+
+app.secret_key = 'piveta' 
+
 
 DB_HOST = "localhost"
 DB_NAME = "Piveta"
@@ -22,16 +28,53 @@ def connect_db():
     )
     return conn
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    db_connection = connect_db()
+    cursor = db_connection.cursor()
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        cursor.execute("SELECT * FROM usuario WHERE email = %s;", (email,))
+        rows = cursor.fetchone()
+
+        if not rows or not check_password_hash(rows[2], password):
+            cursor.close()
+            db_connection.close()
+            return render_template("login.html", msg="Credenciais inválidas!")
+
+        session["user_id"] = rows[0]
+
+        if request.form.get('lembrar_me'):
+            app.config["PERMANENT_SESSION_LIFETIME"] = 604800  # uma semana
+        else:
+            app.config["PERMANENT_SESSION_LIFETIME"] = 7200  # duas horas
+
+        cursor.close()
+        db_connection.close()
+        return redirect("/")
+    else:
+        return render_template("login.html")
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.clear()
+    return redirect("/login")
+
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=["GET"])
+@login_required
 def index():
     return render_template('index.html')
 
-@app.route("/rastreio")
+@app.route("/rastreio", methods=["GET"])
+@login_required
 def rastreio():
     return render_template('rastreio.html')
 
 @app.route("/status", methods=['GET','POST'])
+@login_required
 def status():
     registros = None
     error = None
@@ -64,23 +107,27 @@ def selecionar_imagem(status):
         return "entregue.png"
     
 
-@app.route("/api/rastreio/<codigo_rastreio>")
+@app.route("/api/rastreio/<codigo_rastreio>", methods=["GET"])
+@login_required
 def api_rastreio(codigo_rastreio):
     registros, error = fetch_tracking_info(codigo_rastreio)
     if error:
         return {"error": error}, 400
     return {"registros": registros}, 200
 
-@app.route("/bipagem")
+@app.route("/bipagem", methods=["GET"])
+@login_required
 def bipagem():
     return render_template('bipagem.html')
 
-@app.route('/video_feed')
+@app.route('/video_feed', methods=["GET"])
+@login_required
 def video_feed():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
     pass #Remova para testes, ass. Eu do passado
 
 @app.route('/add_produtos', methods=['POST'])
+@login_required
 def add_produtos():
     data = request.get_json()
     produtos = data['produtos']
@@ -104,11 +151,13 @@ def add_produtos():
 
     return jsonify({"message": "Produtos adicionados com sucesso!"}), 201
 
-@app.route("/relatorios")
+@app.route("/relatorios", methods=["GET"])
+@login_required
 def relatorios():
     return render_template('relatorios.html')
 
-@app.route("/test")
+@app.route("/test", methods=["GET"])
+@login_required
 def test():
     return render_template('test.html')
 
