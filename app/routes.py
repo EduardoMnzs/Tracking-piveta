@@ -156,6 +156,11 @@ def add_produtos():
 def relatorios():
     return render_template('relatorios.html')
 
+@app.route("/dashboard", methods=["GET"])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
 @app.route("/test", methods=["GET"])
 @login_required
 def test():

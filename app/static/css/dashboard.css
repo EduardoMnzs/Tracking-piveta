@@ -1,0 +1,234 @@
+.home-container {
+    text-align: center;
+}
+
+.titulo-dashboard {
+    color: #0071BB;
+    font-weight: 600;
+    padding-top: 25px;
+}
+
+.data-info {
+    font-weight: bold;
+    display: flex;
+    align-items: end;
+    justify-content: right;
+    margin-right: 30px;
+    margin-bottom: 5px;
+    gap: 20px;
+}
+
+.data-info>p {
+    margin-bottom: 0rem !important;
+}
+
+.frase-dashboard {
+    padding-inline: 10%;
+    text-align: center;
+}
+
+.iframe-looker-studio {
+    width: auto;
+    border-radius: 25px;
+    border: solid 1.2px #d2d2d2;
+    overflow: hidden;
+    background-color: white;
+    margin-inline: 25px;
+}
+
+.iframe-looker-studio iframe {
+    width: 100%;
+    height: 690px;
+    border-radius: 25px;
+    display: block;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+}
+
+.card-dashboard {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    flex: 1 1 30%;
+    max-width: 25%;
+    min-width: 250px;
+}
+
+.card-dashboard img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.card-dashboard h2 {
+    font-size: 1.5em;
+    color: #0071BB;
+    margin-bottom: 10px;
+}
+
+.card-dashboard p {
+    font-size: 1em;
+    color: #333;
+}
+
+.container-informacoes{
+    background-color: #0071BB;
+    border-radius: 25px;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.app-screens{
+    width: 525px;
+}
+
+.app-screens>img {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+}
+
+.description {
+    max-width: 500px;
+}
+
+.description h2 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.description p {
+    color: #fff;
+    text-align: justify;
+    margin-inline: 30px;
+}
+
+.frase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial {
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 850px;
+}
+
+.testimonial h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.testimonial blockquote {
+    margin: 0;
+    padding: 0;
+    color: #666;
+    font-style: italic;
+}
+
+.testimonial blockquote p {
+    font-size: 22px;
+    line-height: 1.5;
+    margin: 0;
+    position: relative;
+}
+
+.testimonial blockquote p::before,
+.testimonial blockquote p::after {
+    content: '“';
+    font-size: 40px;
+    color: #0071BB;
+    position: absolute;
+}
+
+.testimonial blockquote p::before {
+    top: -10px;
+    left: -20px;
+}
+
+.testimonial blockquote p::after {
+    content: '”';
+    bottom: -10px;
+    right: -20px;
+}
+
+.background {
+    background-color: #F0F0F0;
+    border-radius: 45px 45px 0px 0px;
+}
+
+.terms-of-usage {
+    background-color: #F0F0F0;
+    padding-bottom: 15px;
+
+    a {
+        margin-left: 40px
+    }
+}
+
+.footer-hr {
+    margin: auto;
+    width: 75%;
+    height: 2px;
+    background: black !important;
+    margin-bottom: 8px;
+    border: none !important;
+}
+
+@media (min-width: 1200px) {
+    .frase-dashboard {
+        padding-inline: 300px;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .container-informacoes {
+        margin-block: 50px;
+        display: grid;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .app-screens>img {
+        max-width: 500px;
+    }
+
+    .app-screens {
+        width: auto;
+        order: -1;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .frase-dashboard {
+        padding-inline: 20%;
+    }
+}
+
+@media (max-width: 767px) {
+    .frase-dashboard {
+        padding-inline: 5%;
+    }
+}

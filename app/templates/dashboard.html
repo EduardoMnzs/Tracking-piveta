@@ -1,0 +1,66 @@
+<link href="/static/css/dashboard.css" rel="stylesheet">
+
+{% extends 'blueprint.html' %}
+{% block main %}
+<div class="background">
+    <div class="home-container">
+        <h1 class="titulo-dashboard">Acompanhe!</h1>
+        <div class="data-info" id="dateInfo">
+            <p id="currentDate"></p>
+            <p id="businessDaysRemaining"></p>
+          </div>
+        <div class="iframe-looker-studio">
+            <iframe
+                src="https://lookerstudio.google.com/embed/reporting/bdebbb1d-0c48-45a0-8113-a82b1de8d6a9/page/p_o0jl1ltajd"
+                frameborder="0" style="border:0" allowfullscreen
+                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        </div>
+        <h1 class="titulo-dashboard">Dashboard</h1>
+        <p class="frase-dashboard">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis in, animi quisquam necessitatibus, eos officiis accusamus consectetur laudantium repellendus corrupti doloremque dolores libero reiciendis illum pariatur placeat at asperiores modi!</p>
+        <div class="container">
+            <div class="card-dashboard">
+                <img src="../static/video/dashboard-1.gif" alt="Busca por encomenda">
+                <h2>Acompanhe os dados</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum excepturi similique quibusdam iure asperiores? Quam ullam atque, nostrum dolore molestiae, vitae aspernatur placeat corrupti esse dicta aliquam.</p>
+            </div>
+            <div class="card-dashboard">
+                <img src="../static/video/dashboard-2.gif" alt="Acompanhe suas encomendas">
+                <h2>Gráficos completos</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur necessitatibus ullam quibusdam voluptate odio placeat officia quos reiciendis ex doloribus odit voluptates quo non labore, quia perferendis fugit quod nihil.</p>
+            </div>
+            <div class="card-dashboard">
+                <img src="../static/video/dashboard-3.gif" alt="Receba notificações">
+                <h2>Monitore a produtividade</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat quasi eius voluptate consequuntur possimus animi, eligendi nemo odio sapiente maxime voluptatem placeat sequi minus quas culpa beatae magnam ?</p>
+            </div>
+        </div>
+        <div class="container-informacoes">
+            <div class="description">
+                <h2><br>Qual a importância de <br> acompanhar os dados?</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus totam ut sint enim maiores ipsam error earum aliquid sit tempora cum incidunt natus, corporis, blanditiis, provident atque itaque quo minus! Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci facilis dolorum molestiae enim illo rem quidem. Cumque, in! Cum animi sequi ve Explicabo, asperiores. Veniam nihil reprehenderit eveniet laboriosam animi nulla iusto ullam, dolores cupiditate harum autem architecto molestiae, nobis voluptatum ut. Numquam dolor quidem placeat.</p>
+            </div>
+            <div class="app-screens">
+                <img src="../static/img/analisando.png" alt="">
+            </div>
+        </div>
+        <div class="frase">
+            <div class="testimonial">
+                <h2>Sim, todos os nossos dados são oficiais!<br> E para tudo isso, uma equipe se empenhou para que se tornasse possível!</h2>
+                <blockquote>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita nesciunt itaque natus consectetur reiciendis recusandae aspernatur nisi officiis voluptatum. Nam ullam soluta officiis laudantium at impedit numquam corporis explicabo sunt?</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<footer class="small text-center terms-of-usage">
+    <hr class="footer-hr">
+    © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
+        privacidade</a>
+</footer>
+
+<script src="../static/js/dashboard.js"></script>
+
+{% endblock %}

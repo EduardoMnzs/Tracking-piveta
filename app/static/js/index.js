@@ -69,8 +69,8 @@ function createCard(name, path, imgPath, colors) {
 const AplicationsList = [
     { name: "Rastreio", path: "/rastreio", imgPath: "../static/img/rastreio-index.png", colors: [] },
     { name: "Bip!", path: "/bipagem", imgPath: "../static/img/bipagem-index.png", colors: ["#0071BB", "#FFF", "#000", "#FFF", "#FFF"] },
-    { name: "Relatórios", path: "/relatorios", imgPath: "../static/img/relatorios-index.png", colors: ["#191A23", "#FFF", "#000", "#0071BB", "#FFF", "#FFF"] },
-    { name: "Controle", path: "/null", imgPath: "../static/img/controle-index.png", colors: [] },
+    { name: "Dashboard", path: "/dashboard", imgPath: "../static/img/relatorios-index.png", colors: ["#191A23", "#FFF", "#000", "#0071BB", "#FFF", "#FFF"] },
+    { name: "Relatórios", path: "/relatorios", imgPath: "../static/img/controle-index.png", colors: [] },
 ];
 
 for (let application of AplicationsList) {
