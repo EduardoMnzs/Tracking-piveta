@@ -10,7 +10,20 @@ con = psycopg2.connect(
 
 cur = con.cursor()
 
-sql = "CREATE TABLE IF NOT EXISTS usuario(id_usuario SERIAL NOT NULL UNIQUE PRIMARY KEY, email VARCHAR(50) NOT NULL, hash TEXT NOT NULL);"
+bip = '''CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL,
+    chave VARCHAR(50) NOT NULL,
+    data_hora VARCHAR(50) NOT NULL
+);'''
+cur.execute(bip)
+con.commit()
+
+sql = '''CREATE TABLE IF NOT EXISTS usuario (
+	id_usuario SERIAL NOT NULL UNIQUE PRIMARY KEY,
+    email VARCHAR(50) NOT NULL, 
+    hash TEXT NOT NULL
+);'''
 cur.execute(sql)
 con.commit()
 

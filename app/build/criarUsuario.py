@@ -1,6 +1,5 @@
-from werkzeug.security import generate_password_hash
-
 import psycopg2
+from werkzeug.security import generate_password_hash
 
 con = psycopg2.connect(
 	host='localhost', 

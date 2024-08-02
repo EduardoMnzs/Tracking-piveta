@@ -9,7 +9,7 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
 
-app.secret_key = 'piveta' 
+app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'
 
 
 DB_HOST = "localhost"
