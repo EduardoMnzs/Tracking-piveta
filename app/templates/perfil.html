@@ -1,0 +1,69 @@
+<link href="../static/css/perfil.css" rel="stylesheet">
+
+{% extends 'blueprint.html' %}
+{% block main %}
+
+<div class="perfil-container">
+    <div class="div-perfil">
+        <div class="imagem-perfil">
+            <img src="/static/img/perfil.png" alt="Foto de Perfil" class="profile-image">
+        </div>
+        <div class="box">
+            <label class="avatar" for="btn">
+            </label>
+            <input type="checkbox" id="btn">
+            <div class="menu-upload-remove">
+                <div class="menu1">
+                    <a class="enviar" href="#"><svg width="21" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.375 19.5L13.9375 10.5L18.4375 15M4.375 19.5H15.625C17.489 19.5 19 17.989 19 16.125V10.5M4.375 19.5C2.51104 19.5 1 17.989 1 16.125V4.875C1 3.01104 2.51104 1.5 4.375 1.5H11.6875M14.5 3.78991L16.8009 1.5M16.8009 1.5L19 3.6864M16.8009 1.5V7.125M7.75 6.5625C7.75 7.49448 6.99448 8.25 6.0625 8.25C5.13052 8.25 4.375 7.49448 4.375 6.5625C4.375 5.63052 5.13052 4.875 6.0625 4.875C6.99448 4.875 7.75 5.63052 7.75 6.5625Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg><span> Enviar</span></a>
+                    <br><br>
+                </div>
+                <div class="menu2">
+                    <a class="remove" href="#"><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.35294 19.4412L13.8529 10.5L18.3235 14.9706M4.35294 19.4412H15.5294C17.3812 19.4412 18.8824 17.94 18.8824 16.0882V9.38237M4.35294 19.4412C2.50116 19.4412 1 17.94 1 16.0882V4.91178C1 3.06 2.50116 1.55884 4.35294 1.55884H11.6176M20 6.02943L17.7647 3.79413M17.7647 3.79413L15.5294 1.55884M17.7647 3.79413L15.5294 6.02943M17.7647 3.79413L20 1.55884M7.70588 6.58825C7.70588 7.51414 6.9553 8.26472 6.02941 8.26472C5.10352 8.26472 4.35294 7.51414 4.35294 6.58825C4.35294 5.66236 5.10352 4.91178 6.02941 4.91178C6.9553 4.91178 7.70588 5.66236 7.70588 6.58825Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg><span> Remover</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="formulario-perfil">
+            <form class="formulario-perfil-inputs">
+                <div class="nomes">
+                    <label class="label-perfil" for="nome"></label>
+                    <input class="nome" type="text" id="nome" name="nome" placeholder="Nome completo" required>
+
+                    <label class="label-perfil" for="nome"></label>
+                    <input placeholder="Nome do usuário" class="usuario">
+                </div>
+                <div class="email">
+                    <label class="label-perfil" for="email"></label>
+                    <input placeholder="E-mail" type="email" id="email" name="email" required autocomplete="off">
+                </div>
+                <div class="senhas">
+                    <label class="label-perfil" for="senha"></label>
+                    <input placeholder="Senha" type="password" id="senha" name="senha" required>
+
+                    <label class="label-perfil" for="senha"></label>
+                    <input placeholder="Confirmar senha" type="password" id="senha" name="senha" required>
+                </div>
+
+                <div class="button-container">
+                    <button class="btn-excluir" type="Excluir">Excluir</button>
+                    <button class="btn-dados" type="reset">Alterar dados</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="blue-div">
+
+    </div>
+
+    <footer class="small text-center terms-of-usage">
+        <hr class="footer-hr">
+        © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
+            privacidade</a>
+    </footer>
+</div>
+
+{% endblock %}

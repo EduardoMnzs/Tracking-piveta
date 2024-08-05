@@ -15,10 +15,7 @@
     line-height: normal;
 }
 
-.navbar-brand:hover {
-    color: #0071BB;
-}
-
+.navbar-brand:hover,
 .navbar-brand:focus {
     color: #0071BB;
 }
@@ -29,9 +26,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
-    .active {
-        color: #0071BB !important;
-    }
+}
+
+.nav-item .active {
+    color: #0071BB !important;
 }
 
 .user-container {
@@ -40,26 +38,24 @@
 }
 
 .user {
-    display: contents;
-    img {
-        width: 40px;
-        height: 40px;
-    }
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 45px;
+    margin-right: 12px;
 }
 
 .user-info {
     display: inline-grid;
-    margin-left: 12px;
     margin-right: 18px;
-}
-
-.user-icon {
-    border-radius: 45px;
 }
 
 .user-name {
     font-size: 14px;
-    display: inline;
     white-space: nowrap;
     color: black;
     font-weight: bold;
@@ -69,41 +65,201 @@
 
 .user-username {
     font-size: 14px;
-    display: block;
     color: #212121b3;
+}
+
+.nome-perfil {
+    display: flex;
+    text-align: right;
+    justify-content: end;
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: black;
+    margin-left: 10px;
 }
 
 .logout {
     margin-left: 10px;
     margin-right: 40px;
-    border: 1px solid var(--Light-outline, rgba(0, 0, 0, 0.12));
-    border-radius: 4px;
-    z-index: 1;
-    display: flex;
+    border-radius: 10px;
     align-items: center;
     cursor: pointer;
     text-decoration: none;
-    p {
-        margin-left: 5px;
-        color: #0071BB;
-        font-size: 14px;
-        font-weight: bold;
-        margin: 2px;
-    }
-    svg {
-        fill: #0071BB;
-        width: 20px;
-        height: 21px;
-    }
 }
+
+.logout p {
+    margin-left: 5px;
+    color: #0071BB;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.logout svg {
+    fill: #0071BB;
+    width: 20px;
+    height: 21px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    border: 0.5px solid #34495E;
+    padding: 15px;
+    display: none;
+    position: fixed;
+    top: 65px;
+    right: 3px;
+    height: calc(47% - 40px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 15px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item,
+.logout>.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+}
+
+.menu-item:hover {
+    background-color: #F0F0F0;
+}
+
+.menu-icon {
+    margin-right: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 43px;
+    height: 20px;
+    margin-left: auto;
+}
+
+.menu-item>i {
+    width: 20px;
+}
+
+.menu>a {
+    color: #000;
+    text-decoration: none !important;
+}
+
+.slider {
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: none;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:checked+.slider:before {
+    transform: translateX(14px);
+}
+
+input:checked+.slider.round {
+    border-radius: 34px;
+}
+
+.switch input {
+    opacity: 1;
+    width: 0;
+    height: 0;
+}
+
+.slider-input {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    background: #fff;
+    transition: .4s;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+
+.slider-input:before {
+    position: absolute;
+    content: "";
+    height: 1em;
+    width: 1em;
+    border-radius: 16px;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 2px 5px #999999;
+    transition: .4s;
+}
+
+input:checked+.slider-input {
+    background-color: #2196F3;
+    border: 1px solid transparent;
+}
+
+input:checked+.slider-input:before {
+    transform: translateX(1.5em);
+}
+
 @media only screen and (max-width: 991px) {
     .logout {
         padding: 5px;
-        p {
-            display: none;
-        }
     }
+
+    .logout p {
+        display: none;
+    }
+
     .user-info {
         margin-right: 1px;
+    }
+
+    .nav-item {
+        display: block;
+    }
+
+    .sidebar {
+        right: auto;
+        top: 120px;
+        left: 3px;
+    }
+
+    .menu>a {
+        display: flex;
+        width: auto;
+        height: auto;
+        justify-content: left;
+        margin-left: -4px;
+        margin-top: -8px;
     }
 }

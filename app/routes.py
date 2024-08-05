@@ -161,8 +161,12 @@ def relatorios():
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route("/test", methods=["GET"])
+@app.route("/perfil", methods=["GET"])
 @login_required
+def perfil():
+    return render_template('perfil.html')
+
+@app.route("/test", methods=["GET"])
 def test():
     return render_template('test.html')
 
