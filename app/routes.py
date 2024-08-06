@@ -166,6 +166,16 @@ def dashboard():
 def perfil():
     return render_template('perfil.html')
 
+@app.route("/gerenciar-perfil", methods=["GET"])
+@login_required
+def gerenciarperfil():
+    return render_template('gerenciar-perfil.html')
+
+@app.route("/gerenciar-acessos", methods=["GET"])
+@login_required
+def gerenciaracessos():
+    return render_template('gerenciar-acessos.html')
+
 @app.route("/test", methods=["GET"])
 def test():
     return render_template('test.html')
