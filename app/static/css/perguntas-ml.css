@@ -1,0 +1,121 @@
+.home-container {
+    text-align: center;
+}
+
+.background {
+    background-color: #F0F0F0;
+    border-radius: 45px 45px 0px 0px;
+    height: 90%;
+}
+
+.container-perguntas {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    margin: 50px;
+    height: 65vh;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    
+    margin-top: -66px;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #e0e0e0;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab.active {
+    background-color: #ffffff;
+    border-top: 2px solid #007bff;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.tab:not(.active) {
+    color: #b0b0b0;
+}
+
+.filter-section {
+    padding-top: 50px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+.filter-section input,
+.filter-section select {
+    padding: 10px;
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 240px;
+}
+
+.filter-section input[type="date"] {
+    width: 240px;
+}
+
+.filter-section button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-section button:hover {
+    background-color: #0056b3;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.content img {
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.content h2 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.content p {
+    color: #4d4d4d;
+}
+
+
+.terms-of-usage {
+    background-color: #F0F0F0;
+    padding-bottom: 15px;
+
+    a {
+        margin-left: 40px
+    }
+}
+
+.footer-hr {
+    margin: auto;
+    width: 75%;
+    height: 2px;
+    background: black !important;
+    margin-bottom: 8px;
+    border: none !important;
+}

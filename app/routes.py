@@ -176,6 +176,11 @@ def gerenciarperfil():
 def gerenciaracessos():
     return render_template('gerenciar-acessos.html')
 
+@app.route("/perguntas-mercado-livre", methods=["GET"])
+@login_required
+def perguntas_ml():
+    return render_template('perguntas-ml.html')
+
 @app.route("/test", methods=["GET"])
 def test():
     return render_template('test.html')
