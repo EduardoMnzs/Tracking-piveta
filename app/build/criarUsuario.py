@@ -6,7 +6,7 @@ con = psycopg2.connect(
 	database='Piveta', 
 	port='5432',
 	user='postgres', 
-	password='piveta'
+	password='postgres'
 )
 
 cur = con.cursor()
