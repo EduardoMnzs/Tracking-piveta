@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from .utils.tracking import fetch_tracking_info
-from .utils.bipagem import gen
+# from .utils.bipagem import gen
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
@@ -15,7 +15,7 @@ app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'
 DB_HOST = "localhost"
 DB_NAME = "Piveta"
 DB_USER = "postgres"
-DB_PASS = "piveta"
+DB_PASS = "postgres"
 PORT = '5432'
 
 def connect_db():

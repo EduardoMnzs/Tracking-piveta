@@ -5,15 +5,16 @@ con = psycopg2.connect(
 	database='Piveta', 
 	port='5432',
 	user='postgres', 
-	password='piveta'
+	password='postgres'
 )
 
 cur = con.cursor()
 
 bip = '''CREATE TABLE produtos (
     id SERIAL PRIMARY KEY,
+    codigo_interno VARCHAR(50) NOT NULL,
     codigo VARCHAR(50) NOT NULL,
-    chave VARCHAR(50) NOT NULL,
+    chave VARCHAR(70) NOT NULL,
     data_hora VARCHAR(50) NOT NULL
 );'''
 cur.execute(bip)
