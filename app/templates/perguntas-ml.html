@@ -4,6 +4,10 @@
 {% block main %}
 <div class="background">
     <div class="home-container">
+        <div class="buttons-options">
+            <button><i class="fa fa-comments-o" aria-hidden="true"></i></button>
+            <button><i class="fa fa-calculator" aria-hidden="true"></i></button>
+        </div>
         <div class="filter-section">
             <input type="text" placeholder="Nome">
             <input type="text" placeholder="Código MLB">
@@ -13,19 +17,81 @@
                 <option>Não respondidas</option>
                 <option>Respondidas</option>
             </select>
-            <button>Filtrar</button>
+            <button class="filtrar">Filtrar</button>
         </div>
-        <div class="container-perguntas">
+        <div class="container-tabs">
             <div class="tabs">
-                <div class="tab active">Piveta</div>
-                <div class="tab">Suprir</div>
-                <div class="tab">JG Tools</div>
+                <div class="tab active" data-tab="tab1">Piveta</div>
+                <div class="tab" data-tab="tab2">Suprir</div>
+                <div class="tab" data-tab="tab3">JG Tools</div>
             </div>
-            
-            <div class="content">
-                <img src="../static/img/sem-perguntas.png" alt="Excelente Trabalho!">
-                <h2>Bom trabalho! Todas as perguntas foram respondidas!</h2>
-                <p>Assim que chegarem novas perguntas, vamos atualizar a tela automaticamente e também te avisar pelo ícone de notificação no topo.</p>
+            <div class="tab-content" id="tab1">
+                <div class="container-perguntas">
+                    <div class="content">
+                        <img src="../static/img/sem-perguntas.png" alt="Excelente Trabalho!">
+                        <h2>Bom trabalho! Todas as perguntas foram respondidas!</h2>
+                        <p>Assim que chegarem novas perguntas, vamos atualizar a tela automaticamente e também te avisar
+                            pelo ícone de notificação no topo.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="tab-content" id="tab1">
+                <div class="container-perguntas">
+                    <div class="question">
+                        <div class="question-header">
+                            <img src="../static/img/torno.png" alt="Imagem do Produto">
+                            <div class="question-info">
+                                <div class="titulo-produto">
+                                    <h3>Placa Para Torno Med. 250mm - Independente com 4 Castanhas</h3> <i
+                                    class="fa fa-ellipsis-v"></i>
+                                </div>
+                                <a href="#" class="link-mlb">
+                                    <p>MLB1450205569 <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                                </a> | 09/08/2024 - 09:47</p>
+                                <hr class="line-product">
+                                <div class="produto-info">
+                                    <p class="price">R$ 1.894,90</p>
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <p class="estoque">5</p>
+                                    <i class="fa fa-cubes" aria-hidden="true"></i>
+                                    <p class="stock">20</p>
+                                </div>
+                                <div class="question-user">
+                                    <p class="resposta-rapida">#Respostas rápidas</p>
+                                    <p>Vinícius Fogaça</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-content">
+                            <p class="point-question">•</p>
+                            <p>Qual o prazo de disponibilidade?</p>
+                        </div>
+                        <div class="question-footer">
+                            <div class="question-input-container">
+                                <input type="text"
+                                    placeholder="Você pode enviar apenas 1 resposta. Não inclua dados de contato."
+                                    maxlength="2000" id="inputResposta">
+                                <div class="container-contador">
+                                    <p>Digite # para acessar suas respostas rápidas.</p>
+                                    <p id="charCount">0 / 2000</p>
+                                </div>
+                            </div>
+                            <div class="button-question-container">
+                                <button id="btnResponder" disabled>Responder</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="divisao-produto">
+                </div>
+            </div> -->
+            <div class="tab-content" id="tab2" style="display:none;">
+                <h3>Conteúdo da aba Suprir</h3>
+                <p>Informações relacionadas à Suprir.</p>
+            </div>
+
+            <div class="tab-content" id="tab3" style="display:none;">
+                <h3>Conteúdo da aba JG Tools</h3>
+                <p>Informações relacionadas à JG Tools.</p>
             </div>
         </div>
     </div>
@@ -35,5 +101,36 @@
     © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
         privacidade</a>
 </footer>
+
+<script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = document.getElementById(tab.getAttribute('data-tab'));
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(content => content.style.display = 'none');
+
+            tab.classList.add('active');
+            target.style.display = 'block';
+        });
+    });
+
+    const inputResposta = document.getElementById('inputResposta');
+    const btnResponder = document.getElementById('btnResponder');
+    const charCount = document.getElementById('charCount');
+
+    inputResposta.addEventListener('input', function () {
+        charCount.textContent = `${inputResposta.value.length} / 2000`;
+
+        if (inputResposta.value.trim() !== "") {
+            btnResponder.disabled = false; // Habilita o botão se o input não estiver vazio
+        } else {
+            btnResponder.disabled = true; // Desabilita o botão se o input estiver vazio
+        }
+    });
+</script>
 
 {% endblock %}
