@@ -5,6 +5,7 @@ from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from .utils.tracking import fetch_tracking_info
 # from .utils.bipagem import gen
+from .utils.perguntas_ml import buscar_perguntas, atualizar_token
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
@@ -176,10 +177,12 @@ def gerenciarperfil():
 def gerenciaracessos():
     return render_template('gerenciar-acessos.html')
 
-@app.route("/perguntas-mercado-livre", methods=["GET"])
-@login_required
-def perguntas_ml():
-    return render_template('perguntas-ml.html')
+@app.route('/perguntas-mercado-livre')
+def perguntas_mercado_livre():
+    refresh_token = 'TG-66bbbfa97748bf0001fb14fe-442729255'
+    access_token, _ = atualizar_token(refresh_token)
+    perguntas, count_nao_respondidas  = buscar_perguntas(access_token)
+    return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas =count_nao_respondidas)
 
 @app.route("/test", methods=["GET"])
 def test():

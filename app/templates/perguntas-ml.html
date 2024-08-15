@@ -21,10 +21,80 @@
         </div>
         <div class="container-tabs">
             <div class="tabs">
-                <div class="tab active" data-tab="tab1">Piveta</div>
+                <div class="tab active" data-tab="tab1">Piveta
+                    {% if count_nao_respondidas >= 1 %}
+                    <div class="summary">
+                        <p> {{ count_nao_respondidas }}</p>
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="tab" data-tab="tab2">Suprir</div>
                 <div class="tab" data-tab="tab3">JG Tools</div>
             </div>
+            {% if count_nao_respondidas >= 1 %}
+            <div class="tab-content" id="tab1">
+                <div class="container-perguntas">
+                    {% for pergunta in perguntas %}
+                    <div class="question">
+                        <div class="question-header">
+                            <img src="{{ pergunta.produto.thumbnail }}" alt="Imagem do Produto">
+                            <div class="question-info">
+                                <div class="titulo-produto">
+                                    <h3>{{ pergunta.produto.titulo }}</h3> <i class="fa fa-ellipsis-v"></i>
+                                </div>
+                                <a href="{{ pergunta.produto.permalink }}" target="_blank" class="link-mlb">
+                                    <p>{{ pergunta.mlb }} <span><i class="fa fa-external-link"
+                                                aria-hidden="true"></i></span>
+                                </a> | {{ pergunta.data_hora }}</p>
+                                <hr class="line-product">
+                                <div class="produto-info">
+                                    {% if pergunta.produto.preco == None %}
+                                        <p class="price">Preço a combinar</p>
+                                    {% else %}
+                                        <p class="price">R$ {{ pergunta.produto.preco }}</p>
+                                    {% endif %}
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <p class="estoque">{{ pergunta.produto.vendido }}</p>
+                                    <i class="fa fa-cubes" aria-hidden="true"></i>
+                                    <p class="stock">{{ pergunta.produto.estoque }}</p>
+                                </div>
+                                <div class="question-user">
+                                    <p class="resposta-rapida">#Respostas rápidas</p>
+                                    <p>{{ pergunta.usuario }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-content">
+                            <p class="point-question">•</p>
+                            <p>{{ pergunta.texto_pergunta }}</p>
+                        </div>
+                        <div class="question-footer">
+                            {% if pergunta.resposta %}
+                            <div class="pergunta-respondida">
+                                <p>Resposta: {{ pergunta.resposta }}</p>
+                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            </div>
+                            {% else %}
+                            <div class="question-input-container">
+                                <input type="text" class="input-resposta"
+                                    placeholder="Você pode enviar apenas 1 resposta. Não inclua dados de contato."
+                                    maxlength="2000">
+                                <div class="container-contador">
+                                    <p>Digite # para acessar suas respostas rápidas.</p>
+                                    <p class="char-count">0 / 2000</p>
+                                </div>
+                            </div>
+                            <div class="button-question-container">
+                                <button class="btn-responder" disabled>Responder</button>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr class="divisao-produto">
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <div class="tab-content" id="tab1">
                 <div class="container-perguntas">
                     <div class="content">
@@ -35,63 +105,29 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="tab-content" id="tab1">
-                <div class="container-perguntas">
-                    <div class="question">
-                        <div class="question-header">
-                            <img src="../static/img/torno.png" alt="Imagem do Produto">
-                            <div class="question-info">
-                                <div class="titulo-produto">
-                                    <h3>Placa Para Torno Med. 250mm - Independente com 4 Castanhas</h3> <i
-                                    class="fa fa-ellipsis-v"></i>
-                                </div>
-                                <a href="#" class="link-mlb">
-                                    <p>MLB1450205569 <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
-                                </a> | 09/08/2024 - 09:47</p>
-                                <hr class="line-product">
-                                <div class="produto-info">
-                                    <p class="price">R$ 1.894,90</p>
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <p class="estoque">5</p>
-                                    <i class="fa fa-cubes" aria-hidden="true"></i>
-                                    <p class="stock">20</p>
-                                </div>
-                                <div class="question-user">
-                                    <p class="resposta-rapida">#Respostas rápidas</p>
-                                    <p>Vinícius Fogaça</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="question-content">
-                            <p class="point-question">•</p>
-                            <p>Qual o prazo de disponibilidade?</p>
-                        </div>
-                        <div class="question-footer">
-                            <div class="question-input-container">
-                                <input type="text"
-                                    placeholder="Você pode enviar apenas 1 resposta. Não inclua dados de contato."
-                                    maxlength="2000" id="inputResposta">
-                                <div class="container-contador">
-                                    <p>Digite # para acessar suas respostas rápidas.</p>
-                                    <p id="charCount">0 / 2000</p>
-                                </div>
-                            </div>
-                            <div class="button-question-container">
-                                <button id="btnResponder" disabled>Responder</button>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="divisao-produto">
-                </div>
-            </div> -->
+
+            {% endif %}
+
             <div class="tab-content" id="tab2" style="display:none;">
-                <h3>Conteúdo da aba Suprir</h3>
-                <p>Informações relacionadas à Suprir.</p>
+                <div class="container-perguntas">
+                    <div class="content">
+                        <img src="../static/img/sem-perguntas.png" alt="Excelente Trabalho!">
+                        <h2>Bom trabalho! Todas as perguntas foram respondidas!</h2>
+                        <p>Assim que chegarem novas perguntas, vamos atualizar a tela automaticamente e também te avisar
+                            pelo ícone de notificação no topo.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-content" id="tab3" style="display:none;">
-                <h3>Conteúdo da aba JG Tools</h3>
-                <p>Informações relacionadas à JG Tools.</p>
+                <div class="container-perguntas">
+                    <div class="content">
+                        <img src="../static/img/sem-perguntas.png" alt="Excelente Trabalho!">
+                        <h2>Bom trabalho! Todas as perguntas foram respondidas!</h2>
+                        <p>Assim que chegarem novas perguntas, vamos atualizar a tela automaticamente e também te avisar
+                            pelo ícone de notificação no topo.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -117,19 +153,20 @@
             target.style.display = 'block';
         });
     });
+    document.querySelectorAll('.input-resposta').forEach((input, index) => {
+        const inputResposta = document.getElementById('inputResposta');
+        const btnResponder = document.querySelectorAll('.btn-responder')[index];
+        const charCount = document.querySelectorAll('.char-count')[index];
 
-    const inputResposta = document.getElementById('inputResposta');
-    const btnResponder = document.getElementById('btnResponder');
-    const charCount = document.getElementById('charCount');
+        input.addEventListener('input', function () {
+            charCount.textContent = `${input.value.length} / 2000`;
 
-    inputResposta.addEventListener('input', function () {
-        charCount.textContent = `${inputResposta.value.length} / 2000`;
-
-        if (inputResposta.value.trim() !== "") {
-            btnResponder.disabled = false; // Habilita o botão se o input não estiver vazio
-        } else {
-            btnResponder.disabled = true; // Desabilita o botão se o input estiver vazio
-        }
+            if (input.value.trim() !== "") {
+                btnResponder.disabled = false; // Habilita o botão se o input não estiver vazio
+            } else {
+                btnResponder.disabled = true; // Desabilita o botão se o input estiver vazio
+            }
+        });
     });
 </script>
 

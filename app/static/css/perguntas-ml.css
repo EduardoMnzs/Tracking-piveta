@@ -35,19 +35,35 @@
 }
 
 .tab.active {
+    display: flex;
     background-color: #ffffff;
     border-top: 2px solid #007bff;
     font-weight: bold;
     color: #007bff;
+    align-items: baseline;
 }
 
 .tab:not(.active) {
+    display: flex;
     color: #b0b0b0;
+}
+
+.summary {
+    padding-left: 5px;
+}
+
+.summary > p {
+    padding-inline: 8px;
+    background-color: rgba(0, 113, 187, 0.24);
+    border-radius: 25px;
+    margin-top: 0;
+    margin-bottom: 0rem;
 }
 
 .filter-section {
     padding-top: 25px;
     display: flex;
+    flex-wrap: wrap; /* Permite que os itens se ajustem ao mudar o tamanho da tela */
     gap: 20px;
     justify-content: center;
     padding-bottom: 40px;
@@ -311,6 +327,28 @@ select:focus {
     transition: background-color 0.3s;
 }
 
+.pergunta-respondida {
+    width: 100%;
+    padding: 5px;
+    background-color: rgba(0, 113, 187, 0.24);
+    padding-inline: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pergunta-respondida > p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #007bff;
+}
+
+.pergunta-respondida > i {
+    display: flex;
+    color: #007bff;
+    align-items: center;
+}
+
 .divisao-produto {
     border: solid 5px;
     color: #F0F0F0;
@@ -355,4 +393,61 @@ select:focus {
     background: black !important;
     margin-bottom: 8px;
     border: none !important;
+}
+
+@media only screen and (max-width: 1226px) {
+    .question {
+        margin-inline: 0px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .background {
+        height: 110%;
+    }
+}
+
+@media screen and (max-width: 628px) {
+    .question-footer {
+        flex-direction: column;
+    }
+
+    .button-question-container {
+        margin-top: 25px;
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+
+    .background {
+        height: 150%;
+    }
+
+    .question-header {
+        flex-direction: column;
+    }
+
+    .question-header img {
+        width: 230px;
+        height: 230px;
+    }
+
+    .container-perguntas {
+        height: 93vh;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .filter-section {
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 15px;
+        padding-bottom: 20px;
+        align-items: center;
+    }
+
+    .background {
+        height: 150%;
+    }
 }
