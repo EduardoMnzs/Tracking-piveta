@@ -54,7 +54,7 @@ def buscar_nickname_usuario(access_token, user_id):
     else:
         raise Exception(f"Falha ao buscar informações do usuário: {response.status_code} {response.text}")
 
-def buscar_perguntas(access_token):
+def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb):
     url = "https://api.mercadolibre.com/my/received_questions/search"
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -68,30 +68,59 @@ def buscar_perguntas(access_token):
         count_nao_respondidas = 0
 
         for pergunta in perguntas_json:
-            detalhes_produto = buscar_detalhes_produto(access_token, pergunta['item_id'])
-            nickname_usuario = buscar_nickname_usuario(access_token, pergunta['from']['id'])
-            resposta = None
+            # Filtrar por data usando strings (assumindo formato 'YYYY-MM-DD')
+            data_pergunta = pergunta['date_created'][:10]  # Extrai apenas a parte da data
+
+            if data_de and data_pergunta < data_de:
+                continue
+            if data_ate and data_pergunta > data_ate:
+                continue
+
+            if codigo_mlb and codigo_mlb.lower() not in pergunta['item_id'].lower():
+                continue
+
+            # Lógica de resposta
             if 'answer' in pergunta and pergunta['answer'] is not None:
+                if filtro_resposta == 'nao_respondidas':
+                    continue  # Pula perguntas respondidas se filtrando por não respondidas
                 resposta = pergunta['answer'].get('text', None)
             else:
+                if filtro_resposta == 'respondidas':
+                    continue  # Pula perguntas não respondidas se filtrando por respondidas
+                resposta = None
                 count_nao_respondidas += 1
 
-            mlb = pergunta['item_id']
-            data_iso = pergunta['date_created']
-
-            # Usar dateutil.parser para converter a data ISO 8601
-            data_obj = parser.isoparse(data_iso)
-            data_formatada = data_obj.strftime("%d/%m/%Y - %H:%M")
+            detalhes_produto = buscar_detalhes_produto(access_token, pergunta['item_id'])
+            nickname_usuario = buscar_nickname_usuario(access_token, pergunta['from']['id'])
 
             perguntas.append({
                 'usuario': nickname_usuario,
                 'produto': detalhes_produto,
                 'texto_pergunta': pergunta['text'],
-                'mlb': mlb,
-                'data_hora': data_formatada,  # Formato de data atualizado
+                'mlb': pergunta['item_id'],
+                'data_hora': data_pergunta,  # Mantenha o formato simples para comparação
                 'status_resposta': 'Respondido' if resposta else 'Não respondido',
-                'resposta': resposta
+                'resposta': resposta,
+                'id_pergunta': pergunta['id'],
             })
+
         return perguntas, count_nao_respondidas
     else:
         raise Exception(f"Falha ao buscar perguntas: {response.status_code} {response.text}")
+
+def enviar_resposta(access_token, question_id, text):
+    url = "https://api.mercadolibre.com/answers"
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    payload = {
+        'question_id': int(question_id),
+        'text': text
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 200:
+        return {'status': 'success', 'message': 'Resposta enviada com sucesso!'}
+    else:
+        return {'status': 'error', 'message': f'Falha ao enviar resposta: {response.text}', 'code': response.status_code}

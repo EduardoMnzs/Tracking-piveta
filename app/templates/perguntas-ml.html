@@ -8,17 +8,20 @@
             <button><i class="fa fa-comments-o" aria-hidden="true"></i></button>
             <button><i class="fa fa-calculator" aria-hidden="true"></i></button>
         </div>
-        <div class="filter-section">
-            <input type="text" placeholder="Nome">
-            <input type="text" placeholder="Código MLB">
-            <input type="date" placeholder="De">
-            <input type="date" placeholder="Até">
-            <select>
-                <option>Não respondidas</option>
-                <option>Respondidas</option>
-            </select>
-            <button class="filtrar">Filtrar</button>
-        </div>
+        <form action="/perguntas-mercado-livre" method="get">
+            <div class="filter-section">
+                <input type="text" name="nome" placeholder="Nome">
+                <input type="text" name="codigo_mlb" placeholder="Código MLB">
+                <input type="date" name="data_de" placeholder="De">
+                <input type="date" name="data_ate" placeholder="Até">
+                <select name="status_resposta">
+                    <option value="nao_respondidas">Não respondidas</option>
+                    <option value="respondidas">Respondidas</option>
+                    <option value="todas">Todas</option>
+                </select>
+                <button type="submit" class="filtrar">Filtrar</button>
+            </div>
+        </form>
         <div class="container-tabs">
             <div class="tabs">
                 <div class="tab active" data-tab="tab1">Piveta
@@ -31,7 +34,7 @@
                 <div class="tab" data-tab="tab2">Suprir</div>
                 <div class="tab" data-tab="tab3">JG Tools</div>
             </div>
-            {% if count_nao_respondidas >= 1 %}
+            {% if count_nao_respondidas >= 1 and filtro_atual == 'nao_respondidas' or count_nao_respondidas >= 0 and filtro_atual == 'respondidas' or count_nao_respondidas >= 0 and filtro_atual == 'todas'%}
             <div class="tab-content" id="tab1">
                 <div class="container-perguntas">
                     {% for pergunta in perguntas %}
@@ -45,13 +48,13 @@
                                 <a href="{{ pergunta.produto.permalink }}" target="_blank" class="link-mlb">
                                     <p>{{ pergunta.mlb }} <span><i class="fa fa-external-link"
                                                 aria-hidden="true"></i></span>
-                                </a> | {{ pergunta.data_hora }}</p>
+                                </a> | {{ pergunta.data_hora }} | #{{ pergunta.id_pergunta }}</p>
                                 <hr class="line-product">
                                 <div class="produto-info">
                                     {% if pergunta.produto.preco == None %}
-                                        <p class="price">Preço a combinar</p>
+                                    <p class="price">Preço a combinar</p>
                                     {% else %}
-                                        <p class="price">R$ {{ pergunta.produto.preco }}</p>
+                                    <p class="price">R$ {{ pergunta.produto.preco }}</p>
                                     {% endif %}
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                     <p class="estoque">{{ pergunta.produto.vendido }}</p>
@@ -85,7 +88,8 @@
                                 </div>
                             </div>
                             <div class="button-question-container">
-                                <button class="btn-responder" disabled>Responder</button>
+                                <button class="btn-responder" data-question-id="{{ pergunta.id_pergunta }}"
+                                    disabled>Responder</button>
                             </div>
                             {% endif %}
                         </div>
@@ -94,7 +98,7 @@
                     {% endfor %}
                 </div>
             </div>
-            {% else %}
+            {% else %}{% if count_nao_respondidas == 0 and filtro_atual == 'nao_respondidas' %}
             <div class="tab-content" id="tab1">
                 <div class="container-perguntas">
                     <div class="content">
@@ -105,7 +109,7 @@
                     </div>
                 </div>
             </div>
-
+            {% endif %}
             {% endif %}
 
             <div class="tab-content" id="tab2" style="display:none;">
@@ -166,6 +170,60 @@
             } else {
                 btnResponder.disabled = true; // Desabilita o botão se o input estiver vazio
             }
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Ativar ou desativar o botão de responder baseado na entrada do usuário
+        document.querySelectorAll('.input-resposta').forEach(input => {
+            const button = input.closest('.question').querySelector('.btn-responder');
+            const charCount = input.nextElementSibling.querySelector('.char-count');
+
+            input.addEventListener('input', function () {
+                charCount.textContent = `${input.value.length} / 2000`;
+                button.disabled = !input.value.trim(); // Desabilita o botão se o input estiver vazio
+            });
+        });
+
+        // Enviar resposta ao clicar no botão
+        document.querySelectorAll('.btn-responder').forEach(button => {
+            button.addEventListener('click', function () {
+                var input = this.closest('.question').querySelector('.input-resposta');
+                var text = input.value.trim();
+                var questionId = this.getAttribute('data-question-id');
+
+                if (text === '') {
+                    alert('Por favor, digite uma resposta antes de enviar.');
+                    return;
+                }
+
+                fetch('/enviar-resposta', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        question_id: questionId,
+                        text: text
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert('Erro ao enviar resposta: ' + data.error);
+                        } else {
+                            alert('Resposta enviada com sucesso!');
+                            input.value = '';
+                            this.disabled = true;
+                            input.closest('.question-footer').innerHTML = '<div class="pergunta-respondida"><p>Resposta: ' + text + '</p><i class="fa fa-check-circle-o" aria-hidden="true"></i></div>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar resposta:', error);
+                        alert('Erro ao enviar resposta: ' + error.message);
+                    });
+            });
         });
     });
 </script>

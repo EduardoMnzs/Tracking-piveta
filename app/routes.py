@@ -5,7 +5,7 @@ from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from .utils.tracking import fetch_tracking_info
 # from .utils.bipagem import gen
-from .utils.perguntas_ml import buscar_perguntas, atualizar_token
+from .utils import perguntas_ml
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
@@ -179,10 +179,32 @@ def gerenciaracessos():
 
 @app.route('/perguntas-mercado-livre')
 def perguntas_mercado_livre():
-    refresh_token = 'TG-66bbbfa97748bf0001fb14fe-442729255'
-    access_token, _ = atualizar_token(refresh_token)
-    perguntas, count_nao_respondidas  = buscar_perguntas(access_token)
-    return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas =count_nao_respondidas)
+    if 'access_token' not in session or 'refresh_token' not in session:
+        refresh_token = 'TG-66bf9f1858d2960001cb1ce4-442729255'
+        access_token, refresh_token = perguntas_ml.atualizar_token(refresh_token)
+        session['access_token'] = access_token
+        session['refresh_token'] = refresh_token
+    else:
+        access_token = session['access_token']
+
+    filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
+    data_de = request.args.get('data_de', '')
+    data_ate = request.args.get('data_ate', '')
+    codigo_mlb = request.args.get('codigo_mlb', '')
+    
+    perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
+    return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta)
+
+@app.route('/enviar-resposta', methods=['POST'])
+def handle_enviar_resposta():
+    data = request.get_json()
+    access_token = session['access_token']
+
+    result = perguntas_ml.enviar_resposta(access_token, data['question_id'], data['text'])
+    if result['status'] == 'success':
+        return jsonify({'message': result['message']})
+    else:
+        return jsonify({'error': result['message']}), result.get('code', 500)
 
 @app.route("/test", methods=["GET"])
 def test():
