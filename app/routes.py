@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
 
-app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'
+app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'+'1'
 
 
 DB_HOST = "localhost"
@@ -179,20 +179,30 @@ def gerenciaracessos():
 
 @app.route('/perguntas-mercado-livre')
 def perguntas_mercado_livre():
-    if 'access_token' not in session or 'refresh_token' not in session:
-        refresh_token = 'TG-66bf9f1858d2960001cb1ce4-442729255'
-        access_token, refresh_token = perguntas_ml.atualizar_token(refresh_token)
-        session['access_token'] = access_token
-        session['refresh_token'] = refresh_token
-    else:
-        access_token = session['access_token']
 
     filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
     data_de = request.args.get('data_de', '')
     data_ate = request.args.get('data_ate', '')
     codigo_mlb = request.args.get('codigo_mlb', '')
+
+    if 'access_token' not in session or 'refresh_token' not in session:
+        refresh_token = 'TG-66bbbfa97748bf0001fb14fe-442729255'
+        access_token, refresh_token = perguntas_ml.atualizar_token(refresh_token)
+        session['access_token'] = access_token
+        session['refresh_token'] = refresh_token
+    else:
+        access_token = session['access_token']
+        try:
+            perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
+        except Exception as e:
+            if 'invalid access token' in str(e):
+                access_token, refresh_token = perguntas_ml.atualizar_token(session['refresh_token'])
+                session['access_token'] = access_token
+                session['refresh_token'] = refresh_token
+                perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
+            else:
+                raise e
     
-    perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
     return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta)
 
 @app.route('/enviar-resposta', methods=['POST'])

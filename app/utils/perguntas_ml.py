@@ -19,7 +19,8 @@ def atualizar_token(refresh_token):
 
     response = requests.post(url, data=payload, headers=headers)
     if response.status_code == 200:
-        return response.json()['access_token'], response.json()['refresh_token']
+        response_json = response.json()
+        return response_json['access_token'], response_json['refresh_token']
     else:
         raise Exception(f"Falha ao atualizar o token: {response.status_code} {response.text}")
 
