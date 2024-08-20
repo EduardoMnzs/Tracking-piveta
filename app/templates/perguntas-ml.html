@@ -4,13 +4,18 @@
 {% block main %}
 <div class="background">
     <div class="home-container">
+        <div id="resposta-enviada-popup" class="resposta-enviada-popup" style="display: none;">
+            <div class="resposta-enviada-popup-container">
+                <p>Resposta enviada!<span class="close-button-confirm" onclick="closeLoadingPopup()">&times;</span></p>
+            </div>
+        </div>
         <div class="buttons-options">
-            <button><i class="fa fa-comments-o" aria-hidden="true"></i></button>
+            <button onclick="openPopup()"><i class="fa fa-comments-o" aria-hidden="true"></i></button>
             <button><i class="fa fa-calculator" aria-hidden="true"></i></button>
         </div>
         <form action="/perguntas-mercado-livre" method="get">
             <div class="filter-section">
-                <input type="text" name="nome" placeholder="Nome">
+                <input type="text" name="Título" placeholder="Título">
                 <input type="text" name="codigo_mlb" placeholder="Código MLB">
                 <input type="date" name="data_de" placeholder="De">
                 <input type="date" name="data_ate" placeholder="Até">
@@ -34,7 +39,8 @@
                 <div class="tab" data-tab="tab2">Suprir</div>
                 <div class="tab" data-tab="tab3">JG Tools</div>
             </div>
-            {% if count_nao_respondidas >= 1 and filtro_atual == 'nao_respondidas' or count_nao_respondidas >= 0 and filtro_atual == 'respondidas' or count_nao_respondidas >= 0 and filtro_atual == 'todas'%}
+            {% if count_nao_respondidas >= 1 and filtro_atual == 'nao_respondidas' or count_nao_respondidas >= 0 and
+            filtro_atual == 'respondidas' or count_nao_respondidas >= 0 and filtro_atual == 'todas'%}
             <div class="tab-content" id="tab1">
                 <div class="container-perguntas">
                     {% for pergunta in perguntas %}
@@ -43,7 +49,14 @@
                             <img src="{{ pergunta.produto.thumbnail }}" alt="Imagem do Produto">
                             <div class="question-info">
                                 <div class="titulo-produto">
-                                    <h3>{{ pergunta.produto.titulo }}</h3> <i class="fa fa-ellipsis-v"></i>
+                                    <h3>{{ pergunta.produto.titulo }}</h3>
+                                    <!-- <div class="menu-container">
+                                        <i class="fa fa-ellipsis-v"></i>
+                                        <div class="dropdown-menu" style="display: none;">
+                                            <a href="#" class="edit-codigo">Editar Código</a>
+                                            <a href="#" class="edit-chave">Editar Chave</a>
+                                        </div>
+                                    </div> -->
                                 </div>
                                 <a href="{{ pergunta.produto.permalink }}" target="_blank" class="link-mlb">
                                     <p>{{ pergunta.mlb }} <span><i class="fa fa-external-link"
@@ -134,6 +147,58 @@
                 </div>
             </div>
         </div>
+
+        <div id="quick-responses-popup" class="popup-overlay" style="display: none;">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h2>Respostas rápidas para perguntas</h2>
+                    <button class="close-button" onclick="closePopup()">&times;</button>
+                </div>
+                <div class="popup-body">
+                    <p>Crie-as com as informações que você usa nas suas respostas recorrentes e agilize a comunicação
+                        para concluir mais vendas.</p>
+                    <div class="response-form">
+                        <div class="input-wrapper">
+                            <span class="hash-symbol"># </span>
+                            <input type="text" class="input-hashtag" placeholder="Ex: ESTOQUE" maxlength="30" style="text-transform:uppercase">
+                        </div>
+                        <input type="text" placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
+                        <button class="create-response-btn">Criar resposta</button>
+                    </div>
+                    <div class="response-options">
+                        <label>
+                            <input type="checkbox"> Seleciona respostas para excluir em massa.
+                        </label>
+                        <a href="#" class="delete-link">Excluir</a>
+                    </div>
+                    <table class="responses-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>Identificador</th>
+                                <th>Resposta rápida</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Exemplo de linha de resposta -->
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>#TESTE</td>
+                                <td>Sim, temos estoque. Esperamos sua compra!</td>
+                                <td><i class="fa fa-ellipsis-v"></i></td>
+                            </tr>
+                            <!-- Adicione mais linhas conforme necessário -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="popup-footer">
+                    <p>Qtd. de Respostas: 6</p>
+                    <button class="confirm-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <footer class="small text-center terms-of-usage">
@@ -142,90 +207,6 @@
         privacidade</a>
 </footer>
 
-<script>
-    const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.tab-content');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = document.getElementById(tab.getAttribute('data-tab'));
-
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(content => content.style.display = 'none');
-
-            tab.classList.add('active');
-            target.style.display = 'block';
-        });
-    });
-    document.querySelectorAll('.input-resposta').forEach((input, index) => {
-        const inputResposta = document.getElementById('inputResposta');
-        const btnResponder = document.querySelectorAll('.btn-responder')[index];
-        const charCount = document.querySelectorAll('.char-count')[index];
-
-        input.addEventListener('input', function () {
-            charCount.textContent = `${input.value.length} / 2000`;
-
-            if (input.value.trim() !== "") {
-                btnResponder.disabled = false; // Habilita o botão se o input não estiver vazio
-            } else {
-                btnResponder.disabled = true; // Desabilita o botão se o input estiver vazio
-            }
-        });
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Ativar ou desativar o botão de responder baseado na entrada do usuário
-        document.querySelectorAll('.input-resposta').forEach(input => {
-            const button = input.closest('.question').querySelector('.btn-responder');
-            const charCount = input.nextElementSibling.querySelector('.char-count');
-
-            input.addEventListener('input', function () {
-                charCount.textContent = `${input.value.length} / 2000`;
-                button.disabled = !input.value.trim(); // Desabilita o botão se o input estiver vazio
-            });
-        });
-
-        // Enviar resposta ao clicar no botão
-        document.querySelectorAll('.btn-responder').forEach(button => {
-            button.addEventListener('click', function () {
-                var input = this.closest('.question').querySelector('.input-resposta');
-                var text = input.value.trim();
-                var questionId = this.getAttribute('data-question-id');
-
-                if (text === '') {
-                    alert('Por favor, digite uma resposta antes de enviar.');
-                    return;
-                }
-
-                fetch('/enviar-resposta', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        question_id: questionId,
-                        text: text
-                    })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert('Erro ao enviar resposta: ' + data.error);
-                        } else {
-                            alert('Resposta enviada com sucesso!');
-                            input.value = '';
-                            this.disabled = true;
-                            input.closest('.question-footer').innerHTML = '<div class="pergunta-respondida"><p>Resposta: ' + text + '</p><i class="fa fa-check-circle-o" aria-hidden="true"></i></div>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao enviar resposta:', error);
-                        alert('Erro ao enviar resposta: ' + error.message);
-                    });
-            });
-        });
-    });
-</script>
+<script src="../static/js/perguntas-ml.js"></script>
 
 {% endblock %}

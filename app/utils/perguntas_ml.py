@@ -99,7 +99,7 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
                 'produto': detalhes_produto,
                 'texto_pergunta': pergunta['text'],
                 'mlb': pergunta['item_id'],
-                'data_hora': data_pergunta,  # Mantenha o formato simples para comparação
+                'data_hora': data_pergunta, 
                 'status_resposta': 'Respondido' if resposta else 'Não respondido',
                 'resposta': resposta,
                 'id_pergunta': pergunta['id'],

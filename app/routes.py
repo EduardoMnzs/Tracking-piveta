@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
 
-app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'+'1'
+app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'
 
 
 DB_HOST = "localhost"
@@ -180,10 +180,10 @@ def gerenciaracessos():
 @app.route('/perguntas-mercado-livre')
 def perguntas_mercado_livre():
 
-    filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
+    codigo_mlb = request.args.get('codigo_mlb', '')
     data_de = request.args.get('data_de', '')
     data_ate = request.args.get('data_ate', '')
-    codigo_mlb = request.args.get('codigo_mlb', '')
+    filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
 
     if 'access_token' not in session or 'refresh_token' not in session:
         refresh_token = 'TG-66bbbfa97748bf0001fb14fe-442729255'
