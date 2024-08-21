@@ -160,10 +160,12 @@
                     <div class="response-form">
                         <div class="input-wrapper">
                             <span class="hash-symbol"># </span>
-                            <input type="text" class="input-hashtag" placeholder="Ex: ESTOQUE" maxlength="30" style="text-transform:uppercase">
+                            <input type="text" class="input-hashtag" placeholder="Ex: ESTOQUE" maxlength="30"
+                                style="text-transform:uppercase">
                         </div>
-                        <input type="text" placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
-                        <button class="create-response-btn">Criar resposta</button>
+                        <input type="text" class="input-response"
+                            placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
+                        <button class="create-response-btn" id="save-response">Criar resposta</button>
                     </div>
                     <div class="response-options">
                         <label>
@@ -171,30 +173,71 @@
                         </label>
                         <a href="#" class="delete-link">Excluir</a>
                     </div>
-                    <table class="responses-table">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <th>Identificador</th>
-                                <th>Resposta rápida</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Exemplo de linha de resposta -->
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>#TESTE</td>
-                                <td>Sim, temos estoque. Esperamos sua compra!</td>
-                                <td><i class="fa fa-ellipsis-v"></i></td>
-                            </tr>
-                            <!-- Adicione mais linhas conforme necessário -->
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="responses-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>Identificador <i class="fa fa-question-circle-o" aria-hidden="true"></i></th>
+                                    <th>Resposta rápida <i class="fa fa-question-circle-o" aria-hidden="true"></i></th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                {% for resposta in respostas %}
+                                <tr data-id="{{ resposta[2] }}" id="row-{{ resposta[2] }}">
+                                    <td><input type="checkbox"></td>
+                                    <td class="identificador-cell">#{{ resposta[0] }}</td>
+                                    <td class="response-cell">{{ resposta[1] }}</td>
+                                    <td>
+                                        <div class="menu-container">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <div class="dropdown-menu" style="display: none;">
+                                                <a href="#" class="edit-codigo">Editar resposta</a>
+                                                <a href="#" class="delete-option" style="color: red;">Excluir</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="popup-footer">
-                    <p>Qtd. de Respostas: 6</p>
-                    <button class="confirm-btn">Confirmar</button>
+                    <div class="legenda-container">
+                        <div class="decoracao-legenda"></div>
+                        <p>Qtd. de Respostas: <span class="quantidade-resposta">6</span></p>
+                    </div>
+                    <button class="confirm-btn" onclick="closePopup()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quick-response-popup" class="custom-popup-overlay" style="display: none;">
+            <div class="custom-popup-content">
+                <div class="custom-popup-header">
+                    <h2>Editar resposta rápida</h2>
+                    <button class="custom-close-button" onclick="closeQuickResponsePopup()">×</button>
+                </div>
+                <div class="custom-popup-body">
+                    <div class="custom-form-group">
+                        <label for="custom-identificador">Identificador</label>
+                        <div class="custom-input-wrapper">
+                            <span class="custom-hash-symbol"># </span>
+                            <input type="text" id="custom-identificador" class="custom-input-hashtag" placeholder="Ex.: ESTOQUE" maxlength="30" disabled>
+                        </div>
+                        <p class="custom-helper-text">Você poderá usá-lo para acessar sua resposta rápida quando estiver respondendo a uma pergunta.</p>
+                    </div>
+                    <div class="custom-form-group">
+                        <label for="custom-conteudo-resposta">Conteúdo da resposta rápida</label>
+                        <input type="text" id="custom-conteudo-resposta" class="custom-input-response" placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
+                        <p class="custom-helper-text">Não inclua dados de contato.</p>
+                    </div>
+                </div>
+                <div class="custom-popup-footer">
+                    <button class="custom-btn-cancel" onclick="closeQuickResponsePopup()">Cancelar</button>
+                    <button class="custom-btn-finalizar" onclick="saveQuickResponse()">Salvar</button>
                 </div>
             </div>
         </div>

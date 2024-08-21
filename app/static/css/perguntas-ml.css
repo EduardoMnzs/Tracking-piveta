@@ -555,6 +555,55 @@ select:focus {
     display: inline-block;
 }
 
+.table-container {
+    border-radius: 25px;
+    max-height: 425px;
+    overflow-y: auto;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+    border: 2px solid #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px 0;
+    z-index: 1000;
+    display: none; /* Inicialmente escondido */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 20px;
+    color: black;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
 .hash-symbol {
     position: absolute;
     left: 10px;
@@ -616,12 +665,37 @@ tr {
     padding: 8px;
     border-bottom: 2px solid #ccc !important;
     text-align: center;
+    background: #fff;
+}
+
+.fa-question-circle-o {
+    color: #0071BB;
 }
 
 .popup-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.legenda-container {
+    display: flex;
+    gap: 5px;
+}
+
+.quantidade-resposta {
+    font-weight: bold;
+}
+
+.legenda-container p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.decoracao-legenda {
+    background-color: #0071BB;
+    width: 20px;
+    height: 20px;
 }
 
 .confirm-btn {
@@ -631,6 +705,143 @@ tr {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #0056b3;
+}
+
+.custom-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.custom-popup-content {
+    background: #F0F0F0;
+    max-width: 1000px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.custom-popup-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.custom-close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.custom-popup-body {
+    flex: 1; 
+    overflow-y: auto;
+}
+
+.custom-form-group {
+    margin-bottom: 20px;
+}
+
+.custom-form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.custom-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-hash-symbol {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.custom-input-wrapper input,
+.custom-input-response {
+    padding-left: 30px;
+    width: 100%;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    height: 40px;
+}
+
+.custom-input-response {
+    padding-left: 10px;
+}
+
+.custom-input-wrapper input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom-helper-text {
+    color: #888;
+    font-size: 12px;
+    text-align: left;
+}
+
+.custom-popup-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.custom-btn-cancel, .custom-btn-finalizar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-btn-cancel {
+    background-color: #FF0000;
+    color: #fff;
+}
+
+.custom-btn-cancel:hover {
+    background-color: #a90000;
+}
+
+.custom-btn-finalizar {
+    background-color: #007bff;
+    color: white;
+}
+
+.custom-btn-finalizar:hover {
+    background-color: #0056b3;
+    color: white;
 }
 
 .terms-of-usage {

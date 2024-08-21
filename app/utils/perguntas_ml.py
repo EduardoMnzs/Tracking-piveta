@@ -69,8 +69,7 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
         count_nao_respondidas = 0
 
         for pergunta in perguntas_json:
-            # Filtrar por data usando strings (assumindo formato 'YYYY-MM-DD')
-            data_pergunta = pergunta['date_created'][:10]  # Extrai apenas a parte da data
+            data_pergunta = pergunta['date_created'][:10]
 
             if data_de and data_pergunta < data_de:
                 continue
@@ -80,14 +79,13 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             if codigo_mlb and codigo_mlb.lower() not in pergunta['item_id'].lower():
                 continue
 
-            # Lógica de resposta
             if 'answer' in pergunta and pergunta['answer'] is not None:
                 if filtro_resposta == 'nao_respondidas':
-                    continue  # Pula perguntas respondidas se filtrando por não respondidas
+                    continue
                 resposta = pergunta['answer'].get('text', None)
             else:
                 if filtro_resposta == 'respondidas':
-                    continue  # Pula perguntas não respondidas se filtrando por respondidas
+                    continue
                 resposta = None
                 count_nao_respondidas += 1
 

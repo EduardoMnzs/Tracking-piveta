@@ -180,13 +180,22 @@ def gerenciaracessos():
 @app.route('/perguntas-mercado-livre')
 def perguntas_mercado_livre():
 
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT UPPER(identificador), resposta, id FROM respostas_ml")
+    respostas = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     codigo_mlb = request.args.get('codigo_mlb', '')
     data_de = request.args.get('data_de', '')
     data_ate = request.args.get('data_ate', '')
     filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
 
     if 'access_token' not in session or 'refresh_token' not in session:
-        refresh_token = 'TG-66bbbfa97748bf0001fb14fe-442729255'
+        refresh_token = 'TG-66c5feb3b6dbec00013b4ce8-442729255'
         access_token, refresh_token = perguntas_ml.atualizar_token(refresh_token)
         session['access_token'] = access_token
         session['refresh_token'] = refresh_token
@@ -203,7 +212,7 @@ def perguntas_mercado_livre():
             else:
                 raise e
     
-    return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta)
+    return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta, respostas=respostas)
 
 @app.route('/enviar-resposta', methods=['POST'])
 def handle_enviar_resposta():
@@ -215,6 +224,69 @@ def handle_enviar_resposta():
         return jsonify({'message': result['message']})
     else:
         return jsonify({'error': result['message']}), result.get('code', 500)
+    
+@app.route('/add_resposta', methods=['POST'])
+def add_resposta():
+    data = request.json
+    identificador = data.get('identificador')
+    resposta = data.get('resposta')
+
+    if not identificador or not resposta:
+        return jsonify({'status': 'error', 'message': 'Identificador ou resposta ausente'}), 400
+
+    try:
+        with connect_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO respostas_ml (identificador, resposta) VALUES (%s, %s) RETURNING id",
+                    (identificador, resposta)
+                )
+                new_id = cursor.fetchone()[0]
+            conn.commit()
+
+        return jsonify({'status': 'success', 'message': 'Resposta adicionada com sucesso!', 'id': new_id})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+@app.route('/update_resposta', methods=['POST'])
+def update_resposta():
+    data = request.json
+    id_resposta = data.get('id')
+    nova_resposta = data.get('resposta')
+
+    if id_resposta and nova_resposta:
+        try:
+            conn = connect_db()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE respostas_ml SET resposta = %s WHERE id = %s", (nova_resposta, id_resposta))
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return jsonify({'status': 'success'})
+        except Exception as e:
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+    else:
+        return jsonify({'status': 'error', 'message': 'Dados insuficientes fornecidos'}), 400
+    
+@app.route('/delete_resposta', methods=['POST'])
+def delete_resposta():
+    data = request.json
+    id_resposta = data.get('id')
+
+    if not id_resposta:
+        return jsonify({'status': 'error', 'message': 'ID da resposta ausente'}), 400
+
+    try:
+        excluir_resposta_no_banco(id_resposta)
+        return jsonify({'status': 'success', 'message': 'Resposta excluída com sucesso!'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+def excluir_resposta_no_banco(id_resposta):
+    with connect_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM respostas_ml WHERE id = %s", (id_resposta,))
+        conn.commit()
 
 @app.route("/test", methods=["GET"])
 def test():

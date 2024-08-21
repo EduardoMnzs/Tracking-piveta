@@ -28,4 +28,12 @@ sql = '''CREATE TABLE IF NOT EXISTS usuario (
 cur.execute(sql)
 con.commit()
 
+respostas = '''CREATE TABLE IF NOT EXISTS respostas_ml (
+    id SERIAL PRIMARY KEY NOT NULL,
+    identificador VARCHAR(25) NOT NULL,
+    resposta VARCHAR(255) NOT NULL
+);'''
+cur.execute(respostas)
+con.commit()
+
 con.close()
