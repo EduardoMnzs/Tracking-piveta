@@ -92,13 +92,14 @@
                             </div>
                             {% else %}
                             <div class="question-input-container">
-                                <input type="text" class="input-resposta"
+                                <input type="text" class="input-resposta" id="response-input"
                                     placeholder="Você pode enviar apenas 1 resposta. Não inclua dados de contato."
                                     maxlength="2000">
                                 <div class="container-contador">
                                     <p>Digite # para acessar suas respostas rápidas.</p>
                                     <p class="char-count">0 / 2000</p>
                                 </div>
+                                <div id="suggestions-container" class="suggestions-container"></div>
                             </div>
                             <div class="button-question-container">
                                 <button class="btn-responder" data-question-id="{{ pergunta.id_pergunta }}"
@@ -177,7 +178,7 @@
                         <table class="responses-table">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox"></th>
+                                    <th><input type="checkbox" id="select-all"></th>
                                     <th>Identificador <i class="fa fa-question-circle-o" aria-hidden="true"></i></th>
                                     <th>Resposta rápida <i class="fa fa-question-circle-o" aria-hidden="true"></i></th>
                                     <th>Ações</th>

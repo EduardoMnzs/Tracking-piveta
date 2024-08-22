@@ -295,6 +295,29 @@ select:focus {
     text-align: left;
     width: 100%;
     padding-right: 5px;
+    position: relative;
+}
+
+.suggestions-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 150px;  /* Limita a altura da caixa de sugestões */
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;  /* Assegura que a caixa de seleção apareça acima de outros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    top: 45px;
+}
+
+.suggestions-container div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions-container div:hover {
+    background-color: #f0f0f0;
 }
 
 .question-content {

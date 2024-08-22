@@ -455,3 +455,78 @@ document.getElementById('delete-selected').addEventListener('click', function ()
         alert('Por favor, selecione pelo menos uma resposta para excluir.');
     }
 });
+
+document.getElementById('select-all').addEventListener('change', function () {
+    const checkboxes = document.querySelectorAll('#table-body tr input[type="checkbox"]');
+    const selectAllChecked = this.checked;
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAllChecked;
+    });
+});
+
+let quickResponses = [];
+
+// Função para buscar as respostas rápidas do backend
+function fetchQuickResponses() {
+    fetch('/get_quick_responses')  // Ajuste a URL conforme necessário
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                quickResponses = data.data;
+            } else {
+                console.error('Erro ao buscar respostas rápidas:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar respostas rápidas:', error);
+        });
+}
+
+// Chama a função para buscar as respostas rápidas assim que a página carrega
+document.addEventListener('DOMContentLoaded', function () {
+    fetchQuickResponses();
+    
+    // Aplicar o evento de input em todos os campos com a classe 'input-resposta'
+    document.querySelectorAll('.input-resposta').forEach(inputField => {
+        inputField.addEventListener('input', function () {
+            const input = this.value;
+            const suggestionsContainer = this.nextElementSibling.nextElementSibling;
+
+            if (input.includes('#')) {
+                const query = input.split('#').pop().trim().toLowerCase();
+                
+                const filteredSuggestions = quickResponses.filter(response => 
+                    response.identificador.toLowerCase().startsWith(query)
+                );
+                
+                if (filteredSuggestions.length > 0) {
+                    suggestionsContainer.innerHTML = '';
+                    filteredSuggestions.forEach(suggestion => {
+                        const suggestionElement = document.createElement('div');
+                        suggestionElement.textContent = `#${suggestion.identificador}: ${suggestion.resposta}`;
+                        
+                        suggestionElement.addEventListener('click', function () {
+                            inputField.value = suggestion.resposta;
+                            suggestionsContainer.style.display = 'none';
+                        });
+                        
+                        suggestionsContainer.appendChild(suggestionElement);
+                    });
+                    suggestionsContainer.style.display = 'block';
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Fecha as sugestões se clicar fora
+window.addEventListener('click', function () {
+    document.querySelectorAll('.suggestions-container').forEach(container => {
+        container.style.display = 'none';
+    });
+});

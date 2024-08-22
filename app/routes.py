@@ -288,6 +288,24 @@ def excluir_resposta_no_banco(id_resposta):
             cursor.execute("DELETE FROM respostas_ml WHERE id = %s", (id_resposta,))
         conn.commit()
 
+@app.route('/get_quick_responses', methods=['GET'])
+def get_quick_responses():
+    try:
+        conn = connect_db()  # Supondo que você tenha uma função para conectar ao banco de dados
+        cursor = conn.cursor()
+        cursor.execute("SELECT identificador, resposta FROM respostas_ml")
+        quick_responses = cursor.fetchall()
+        
+        # Converta os resultados em um formato de lista de dicionários
+        quick_responses_list = [{'identificador': row[0], 'resposta': row[1]} for row in quick_responses]
+
+        cursor.close()
+        conn.close()
+        
+        return jsonify({'status': 'success', 'data': quick_responses_list})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 @app.route("/test", methods=["GET"])
 def test():
     return render_template('test.html')
