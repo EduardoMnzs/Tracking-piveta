@@ -15,10 +15,10 @@
         </div>
         <form action="/perguntas-mercado-livre" method="get">
             <div class="filter-section">
-                <input type="text" name="Título" placeholder="Título">
-                <input type="text" name="codigo_mlb" placeholder="Código MLB">
-                <input type="date" name="data_de" placeholder="De">
-                <input type="date" name="data_ate" placeholder="Até">
+                <input type="text" name="Título" placeholder="Título" autocomplete="off">
+                <input type="text" name="codigo_mlb" placeholder="Código MLB" autocomplete="off">
+                <input type="date" name="data_de" placeholder="De" autocomplete="off">
+                <input type="date" name="data_ate" placeholder="Até" autocomplete="off">
                 <select name="status_resposta">
                     <option value="nao_respondidas">Não respondidas</option>
                     <option value="respondidas">Respondidas</option>
@@ -85,14 +85,14 @@
                             </div>
                             {% else %}
                             <div class="question-input-container">
-                                <input type="text" class="input-resposta" id="response-input"
+                                <input type="text" class="input-resposta" id="response-input" autocomplete="off"
                                     placeholder="Você pode enviar apenas 1 resposta. Não inclua dados de contato."
                                     maxlength="2000">
                                 <div class="container-contador">
                                     <p>Digite # para acessar suas respostas rápidas.</p>
                                     <p class="char-count">0 / 2000</p>
                                 </div>
-                                <div id="suggestions-container" class="suggestions-container"></div>
+                                <div id="suggestions-container" class="suggestions-container" ></div>
                             </div>
                             <div class="button-question-container">
                                 <button class="btn-responder" data-question-id="{{ pergunta.id_pergunta }}"
@@ -155,9 +155,9 @@
                         <div class="input-wrapper">
                             <span class="hash-symbol"># </span>
                             <input type="text" class="input-hashtag" placeholder="Ex: ESTOQUE" maxlength="30"
-                                style="text-transform:uppercase">
+                                style="text-transform:uppercase" autocomplete="off">
                         </div>
-                        <input type="text" class="input-response"
+                        <input type="text" class="input-response" autocomplete="off"
                             placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
                         <button class="create-response-btn" id="save-response">Criar resposta</button>
                     </div>
@@ -220,14 +220,14 @@
                         <div class="custom-input-wrapper">
                             <span class="custom-hash-symbol"># </span>
                             <input type="text" id="custom-identificador" class="custom-input-hashtag"
-                                placeholder="Ex.: ESTOQUE" maxlength="30" disabled>
+                                placeholder="Ex.: ESTOQUE" maxlength="30" autocomplete="off" disabled>
                         </div>
                         <p class="custom-helper-text">Você poderá usá-lo para acessar sua resposta rápida quando estiver
                             respondendo a uma pergunta.</p>
                     </div>
                     <div class="custom-form-group">
                         <label for="custom-conteudo-resposta">Conteúdo da resposta rápida</label>
-                        <input type="text" id="custom-conteudo-resposta" class="custom-input-response"
+                        <input autocomplete="off" type="text" id="custom-conteudo-resposta" class="custom-input-response"
                             placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
                         <p class="custom-helper-text">Não inclua dados de contato.</p>
                     </div>
