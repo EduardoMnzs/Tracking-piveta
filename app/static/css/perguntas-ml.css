@@ -52,7 +52,7 @@
     padding-left: 5px;
 }
 
-.summary > p {
+.summary>p {
     padding-inline: 8px;
     background-color: rgba(0, 113, 187, 0.24);
     border-radius: 25px;
@@ -268,7 +268,7 @@ select:focus {
     font-size: 14px;
 }
 
-.question-user > .resposta-rapida {
+.question-user>.resposta-rapida {
     font-size: 12px;
     background-color: rgba(0, 113, 187, 0.24);
     border-radius: 5px;
@@ -303,10 +303,10 @@ select:focus {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
-    max-height: 150px;  /* Limita a altura da caixa de sugestões */
+    max-height: 150px;
     overflow-y: auto;
     width: 100%;
-    z-index: 1000;  /* Assegura que a caixa de seleção apareça acima de outros elementos */
+    z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     top: 45px;
 }
@@ -365,7 +365,8 @@ select:focus {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: rgb(25, 26, 35);;
+    background-color: rgb(25, 26, 35);
+    ;
     color: white;
     font-size: 14px;
     cursor: no-drop;
@@ -393,13 +394,13 @@ select:focus {
     justify-content: space-between;
 }
 
-.pergunta-respondida > p {
+.pergunta-respondida>p {
     margin-top: 0px;
     margin-bottom: 0px;
     color: #007bff;
 }
 
-.pergunta-respondida > i {
+.pergunta-respondida>i {
     display: flex;
     color: #007bff;
     align-items: center;
@@ -524,7 +525,7 @@ select:focus {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
-    flex-direction: column; /* Organiza o conteúdo em uma coluna */
+    flex-direction: column;
     height: 80%;
 }
 
@@ -548,7 +549,7 @@ select:focus {
 }
 
 .popup-body {
-    flex: 1; 
+    flex: 1;
     overflow-y: auto;
 }
 
@@ -613,7 +614,7 @@ select:focus {
     border-radius: 5px;
     padding: 10px 0;
     z-index: 1000;
-    display: none; /* Inicialmente escondido */
+    display: none;
 }
 
 .dropdown-menu a {
@@ -787,7 +788,7 @@ tr {
 }
 
 .custom-popup-body {
-    flex: 1; 
+    flex: 1;
     overflow-y: auto;
 }
 
@@ -851,28 +852,35 @@ tr {
     margin-top: 20px;
 }
 
-.custom-btn-cancel, .custom-btn-finalizar,.cancel-btn, .confirm-delete-btn {
+.custom-btn-cancel,
+.custom-btn-finalizar,
+.cancel-btn,
+.confirm-delete-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.custom-btn-cancel, .confirm-delete-btn {
+.custom-btn-cancel,
+.confirm-delete-btn {
     background-color: #FF0000;
     color: #fff;
 }
 
-.custom-btn-cancel:hover, .confirm-delete-btn:hover {
+.custom-btn-cancel:hover,
+.confirm-delete-btn:hover {
     background-color: #a90000;
 }
 
-.custom-btn-finalizar,.cancel-btn {
+.custom-btn-finalizar,
+.cancel-btn {
     background-color: #007bff;
     color: white;
 }
 
-.custom-btn-finalizar:hover,.cancel-btn:hover {
+.custom-btn-finalizar:hover,
+.cancel-btn:hover {
     background-color: #0056b3;
     color: white;
 }

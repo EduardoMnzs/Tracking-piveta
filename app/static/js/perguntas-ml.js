@@ -96,11 +96,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const ellipses = document.querySelectorAll('.fa-ellipsis-v');
 
     ellipses.forEach(ellipsis => {
-        ellipsis.addEventListener('click', function(event) {
+        ellipsis.addEventListener('click', function (event) {
             const dropdown = this.nextElementSibling;
 
             document.querySelectorAll('.dropdown-menu').forEach(menu => {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    window.addEventListener('click', function() {
+    window.addEventListener('click', function () {
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
             menu.style.display = 'none';
         });
@@ -144,29 +144,28 @@ document.getElementById('save-response').addEventListener('click', function () {
             },
             body: JSON.stringify({ identificador, resposta }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Resposta salva com sucesso!');
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Resposta salva com sucesso!');
 
-                const tableBody = document.getElementById('table-body');
-                const newRow = createTableRow(data.id, identificador, resposta);
-                tableBody.appendChild(newRow);
+                    const tableBody = document.getElementById('table-body');
+                    const newRow = createTableRow(data.id, identificador, resposta);
+                    tableBody.appendChild(newRow);
 
-                hashtagInput.value = ''; 
-                responseInput.value = ''; 
+                    hashtagInput.value = '';
+                    responseInput.value = '';
 
-                // Atualiza o contador de respostas
-                updateResponseCount();
+                    updateResponseCount();
 
-            } else {
-                alert('Erro ao salvar a resposta: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao salvar a resposta.');
-        });
+                } else {
+                    alert('Erro ao salvar a resposta: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao salvar a resposta.');
+            });
     } else {
         alert('Por favor, preencha ambos os campos.');
     }
@@ -244,8 +243,7 @@ function setupDropdownAndActions(ellipsisIcon, dropdownMenu, row) {
     const editCodigo = dropdownMenu.querySelector('.edit-codigo');
     const deleteOption = dropdownMenu.querySelector('.delete-option');
 
-    // Configura a ação de edição
-    editCodigo.addEventListener('click', function(e) {
+    editCodigo.addEventListener('click', function (e) {
         e.preventDefault();
         const currentId = row.getAttribute('data-id');
         const currentIdentificador = row.querySelector('.identificador-cell').textContent.slice(1);
@@ -253,8 +251,7 @@ function setupDropdownAndActions(ellipsisIcon, dropdownMenu, row) {
         openQuickResponsePopup(currentIdentificador, currentResposta, currentId);
     });
 
-    // Configura a ação de exclusão
-    deleteOption.addEventListener('click', function(e) {
+    deleteOption.addEventListener('click', function (e) {
         e.preventDefault();
         currentDeleteId = row.getAttribute('data-id');
         currentDeleteRow = row;
@@ -283,23 +280,22 @@ function confirmDeleteResponse() {
             },
             body: JSON.stringify({ id: currentDeleteId }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Resposta excluída com sucesso!');
-                currentDeleteRow.remove();
-                closeDeletePopup();
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Resposta excluída com sucesso!');
+                    currentDeleteRow.remove();
+                    closeDeletePopup();
 
-                // Atualiza o contador de respostas após excluir
-                updateResponseCount();
-            } else {
-                alert('Erro ao excluir a resposta: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao excluir a resposta.');
-        });
+                    updateResponseCount();
+                } else {
+                    alert('Erro ao excluir a resposta: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao excluir a resposta.');
+            });
     }
 }
 
@@ -333,20 +329,20 @@ function saveQuickResponse() {
             },
             body: JSON.stringify({ id: currentEditingId, resposta: novaResposta }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Resposta atualizada com sucesso!');
-                document.querySelector(`#row-${currentEditingId} .response-cell`).textContent = novaResposta;
-                closeQuickResponsePopup();
-            } else {
-                alert('Erro ao atualizar a resposta: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao atualizar a resposta.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Resposta atualizada com sucesso!');
+                    document.querySelector(`#row-${currentEditingId} .response-cell`).textContent = novaResposta;
+                    closeQuickResponsePopup();
+                } else {
+                    alert('Erro ao atualizar a resposta: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar a resposta.');
+            });
     } else {
         alert('Erro: Nenhuma resposta está sendo editada.');
     }
@@ -358,25 +354,20 @@ document.querySelectorAll('.menu-container .fa-ellipsis-v').forEach(icon => {
     setupDropdownAndActions(icon, dropdownMenu, row);
 });
 
-// Função para atualizar o contador de respostas
 function updateResponseCount() {
     const tableBody = document.getElementById('table-body');
     const responseCount = tableBody.querySelectorAll('tr').length;
     document.querySelector('.quantidade-resposta').textContent = responseCount;
 }
 
-// Chame essa função após carregar a página
 document.addEventListener('DOMContentLoaded', function () {
     updateResponseCount();
 });
 
-// Atualize o contador após salvar uma nova resposta
 document.getElementById('save-response').addEventListener('click', function () {
-    // Após salvar a resposta e adicionar a nova linha na tabela
     updateResponseCount();
 });
 
-// Atualize o contador após excluir uma resposta
 function confirmDeleteResponse() {
     if (currentDeleteId) {
         fetch('/delete_resposta', {
@@ -386,23 +377,22 @@ function confirmDeleteResponse() {
             },
             body: JSON.stringify({ id: currentDeleteId }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Resposta excluída com sucesso!');
-                currentDeleteRow.remove();
-                closeDeletePopup();
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Resposta excluída com sucesso!');
+                    currentDeleteRow.remove();
+                    closeDeletePopup();
 
-                // Atualiza o contador de respostas após excluir
-                updateResponseCount();
-            } else {
-                alert('Erro ao excluir a resposta: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao excluir a resposta.');
-        });
+                    updateResponseCount();
+                } else {
+                    alert('Erro ao excluir a resposta: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao excluir a resposta.');
+            });
     }
 }
 
@@ -431,24 +421,23 @@ document.getElementById('delete-selected').addEventListener('click', function ()
                     },
                     body: JSON.stringify({ id: id }),
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        deleteCount++;
-                        rowsToDelete[index].remove();
-                    } else {
-                        alert('Erro ao excluir a resposta: ' + data.message);
-                    }
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            deleteCount++;
+                            rowsToDelete[index].remove();
+                        } else {
+                            alert('Erro ao excluir a resposta: ' + data.message);
+                        }
 
-                    // Atualiza o contador após a última exclusão
-                    if (deleteCount === idsToDelete.length) {
-                        updateResponseCount();
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Erro ao excluir a resposta.');
-                });
+                        if (deleteCount === idsToDelete.length) {
+                            updateResponseCount();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Erro ao excluir a resposta.');
+                    });
             });
         }
     } else {
@@ -467,9 +456,8 @@ document.getElementById('select-all').addEventListener('change', function () {
 
 let quickResponses = [];
 
-// Função para buscar as respostas rápidas do backend
 function fetchQuickResponses() {
-    fetch('/get_quick_responses')  // Ajuste a URL conforme necessário
+    fetch('/get_quick_responses')
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
@@ -483,11 +471,9 @@ function fetchQuickResponses() {
         });
 }
 
-// Chama a função para buscar as respostas rápidas assim que a página carrega
 document.addEventListener('DOMContentLoaded', function () {
     fetchQuickResponses();
-    
-    // Aplicar o evento de input em todos os campos com a classe 'input-resposta'
+
     document.querySelectorAll('.input-resposta').forEach(inputField => {
         inputField.addEventListener('input', function () {
             const input = this.value;
@@ -495,22 +481,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (input.includes('#')) {
                 const query = input.split('#').pop().trim().toLowerCase();
-                
-                const filteredSuggestions = quickResponses.filter(response => 
+
+                const filteredSuggestions = quickResponses.filter(response =>
                     response.identificador.toLowerCase().startsWith(query)
                 );
-                
+
                 if (filteredSuggestions.length > 0) {
                     suggestionsContainer.innerHTML = '';
                     filteredSuggestions.forEach(suggestion => {
                         const suggestionElement = document.createElement('div');
                         suggestionElement.textContent = `#${suggestion.identificador}: ${suggestion.resposta}`;
-                        
+
                         suggestionElement.addEventListener('click', function () {
                             inputField.value = suggestion.resposta;
                             suggestionsContainer.style.display = 'none';
                         });
-                        
+
                         suggestionsContainer.appendChild(suggestionElement);
                     });
                     suggestionsContainer.style.display = 'block';
@@ -524,7 +510,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Fecha as sugestões se clicar fora
 window.addEventListener('click', function () {
     document.querySelectorAll('.suggestions-container').forEach(container => {
         container.style.display = 'none';

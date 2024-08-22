@@ -50,13 +50,6 @@
                             <div class="question-info">
                                 <div class="titulo-produto">
                                     <h3>{{ pergunta.produto.titulo }}</h3>
-                                    <!-- <div class="menu-container">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <div class="dropdown-menu" style="display: none;">
-                                            <a href="#" class="edit-codigo">Editar Código</a>
-                                            <a href="#" class="edit-chave">Editar Chave</a>
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <a href="{{ pergunta.produto.permalink }}" target="_blank" class="link-mlb">
                                     <p>{{ pergunta.mlb }} <span><i class="fa fa-external-link"
@@ -226,13 +219,16 @@
                         <label for="custom-identificador">Identificador</label>
                         <div class="custom-input-wrapper">
                             <span class="custom-hash-symbol"># </span>
-                            <input type="text" id="custom-identificador" class="custom-input-hashtag" placeholder="Ex.: ESTOQUE" maxlength="30" disabled>
+                            <input type="text" id="custom-identificador" class="custom-input-hashtag"
+                                placeholder="Ex.: ESTOQUE" maxlength="30" disabled>
                         </div>
-                        <p class="custom-helper-text">Você poderá usá-lo para acessar sua resposta rápida quando estiver respondendo a uma pergunta.</p>
+                        <p class="custom-helper-text">Você poderá usá-lo para acessar sua resposta rápida quando estiver
+                            respondendo a uma pergunta.</p>
                     </div>
                     <div class="custom-form-group">
                         <label for="custom-conteudo-resposta">Conteúdo da resposta rápida</label>
-                        <input type="text" id="custom-conteudo-resposta" class="custom-input-response" placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
+                        <input type="text" id="custom-conteudo-resposta" class="custom-input-response"
+                            placeholder="Sim, temos estoque. Esperamos sua compra!" maxlength="1000">
                         <p class="custom-helper-text">Não inclua dados de contato.</p>
                     </div>
                 </div>
@@ -250,7 +246,8 @@
                     <button class="close-button" onclick="closeDeletePopup()">&times;</button>
                 </div>
                 <div class="popup-body">
-                    <p>Desaparecerá de suas respostas rápidas salvas e você não poderá usá-la para responder às perguntas que te fizerem.</p>
+                    <p>Desaparecerá de suas respostas rápidas salvas e você não poderá usá-la para responder às
+                        perguntas que te fizerem.</p>
                     <p>Observe que, se você excluir, não poderá recuperá-la.</p>
                 </div>
                 <div class="popup-footer">
