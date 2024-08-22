@@ -627,13 +627,23 @@ select:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+button#delete-selected {
+    border: none;
+    background: none;
+    color: #007bff;
+}
+
 .create-response-btn {
-    background-color: rgb(25, 26, 35);
+    background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.create-response-btn:hover {
+    background-color: #0056b3;
 }
 
 .response-options {
@@ -818,30 +828,42 @@ tr {
     margin-top: 20px;
 }
 
-.custom-btn-cancel, .custom-btn-finalizar {
+.custom-btn-cancel, .custom-btn-finalizar,.cancel-btn, .confirm-delete-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.custom-btn-cancel {
+.custom-btn-cancel, .confirm-delete-btn {
     background-color: #FF0000;
     color: #fff;
 }
 
-.custom-btn-cancel:hover {
+.custom-btn-cancel:hover, .confirm-delete-btn:hover {
     background-color: #a90000;
 }
 
-.custom-btn-finalizar {
+.custom-btn-finalizar,.cancel-btn {
     background-color: #007bff;
     color: white;
 }
 
-.custom-btn-finalizar:hover {
+.custom-btn-finalizar:hover,.cancel-btn:hover {
     background-color: #0056b3;
     color: white;
+}
+
+.popup-content-excluir {
+    background: #F0F0F0;
+    width: 50%;
+    max-width: 1000px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: 30%;
 }
 
 .terms-of-usage {

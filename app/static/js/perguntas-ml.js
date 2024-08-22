@@ -156,6 +156,9 @@ document.getElementById('save-response').addEventListener('click', function () {
                 hashtagInput.value = ''; 
                 responseInput.value = ''; 
 
+                // Atualiza o contador de respostas
+                updateResponseCount();
+
             } else {
                 alert('Erro ao salvar a resposta: ' + data.message);
             }
@@ -224,6 +227,9 @@ function createTableRow(id, identificador, resposta) {
     return newRow;
 }
 
+let currentDeleteId = null;
+let currentDeleteRow = null;
+
 function setupDropdownAndActions(ellipsisIcon, dropdownMenu, row) {
     ellipsisIcon.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -238,6 +244,7 @@ function setupDropdownAndActions(ellipsisIcon, dropdownMenu, row) {
     const editCodigo = dropdownMenu.querySelector('.edit-codigo');
     const deleteOption = dropdownMenu.querySelector('.delete-option');
 
+    // Configura a ação de edição
     editCodigo.addEventListener('click', function(e) {
         e.preventDefault();
         const currentId = row.getAttribute('data-id');
@@ -246,38 +253,57 @@ function setupDropdownAndActions(ellipsisIcon, dropdownMenu, row) {
         openQuickResponsePopup(currentIdentificador, currentResposta, currentId);
     });
 
+    // Configura a ação de exclusão
     deleteOption.addEventListener('click', function(e) {
         e.preventDefault();
-        const currentId = row.getAttribute('data-id');
-
-        if (confirm('Tem certeza de que deseja excluir esta resposta?')) {
-            fetch('/delete_resposta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: currentId }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Resposta excluída com sucesso!');
-                    row.remove();
-                } else {
-                    alert('Erro ao excluir a resposta: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao excluir a resposta.');
-            });
-        }
+        currentDeleteId = row.getAttribute('data-id');
+        currentDeleteRow = row;
+        openDeletePopup();
     });
 
     window.addEventListener('click', function () {
         dropdownMenu.style.display = 'none';
     });
 }
+
+function openDeletePopup() {
+    document.getElementById('delete-response-popup').style.display = 'flex';
+}
+
+function closeDeletePopup() {
+    document.getElementById('delete-response-popup').style.display = 'none';
+}
+
+function confirmDeleteResponse() {
+    if (currentDeleteId) {
+        fetch('/delete_resposta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: currentDeleteId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Resposta excluída com sucesso!');
+                currentDeleteRow.remove();
+                closeDeletePopup();
+
+                // Atualiza o contador de respostas após excluir
+                updateResponseCount();
+            } else {
+                alert('Erro ao excluir a resposta: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir a resposta.');
+        });
+    }
+}
+
+document.getElementById('confirm-delete-btn').addEventListener('click', confirmDeleteResponse);
 
 document.querySelectorAll('#table-body tr').forEach(row => {
     const ellipsisIcon = row.querySelector('.fa-ellipsis-v');
@@ -330,4 +356,102 @@ document.querySelectorAll('.menu-container .fa-ellipsis-v').forEach(icon => {
     const dropdownMenu = icon.nextElementSibling;
     const row = icon.closest('tr');
     setupDropdownAndActions(icon, dropdownMenu, row);
+});
+
+// Função para atualizar o contador de respostas
+function updateResponseCount() {
+    const tableBody = document.getElementById('table-body');
+    const responseCount = tableBody.querySelectorAll('tr').length;
+    document.querySelector('.quantidade-resposta').textContent = responseCount;
+}
+
+// Chame essa função após carregar a página
+document.addEventListener('DOMContentLoaded', function () {
+    updateResponseCount();
+});
+
+// Atualize o contador após salvar uma nova resposta
+document.getElementById('save-response').addEventListener('click', function () {
+    // Após salvar a resposta e adicionar a nova linha na tabela
+    updateResponseCount();
+});
+
+// Atualize o contador após excluir uma resposta
+function confirmDeleteResponse() {
+    if (currentDeleteId) {
+        fetch('/delete_resposta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: currentDeleteId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Resposta excluída com sucesso!');
+                currentDeleteRow.remove();
+                closeDeletePopup();
+
+                // Atualiza o contador de respostas após excluir
+                updateResponseCount();
+            } else {
+                alert('Erro ao excluir a resposta: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir a resposta.');
+        });
+    }
+}
+
+document.getElementById('delete-selected').addEventListener('click', function () {
+    const selectedRows = document.querySelectorAll('#table-body tr input[type="checkbox"]:checked');
+    const idsToDelete = [];
+    const rowsToDelete = [];
+
+    selectedRows.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        const rowId = row.getAttribute('data-id');
+        if (rowId) {
+            idsToDelete.push(rowId);
+            rowsToDelete.push(row);
+        }
+    });
+
+    if (idsToDelete.length > 0) {
+        if (confirm(`Tem certeza de que deseja excluir as ${idsToDelete.length} respostas selecionadas?`)) {
+            let deleteCount = 0;
+            idsToDelete.forEach((id, index) => {
+                fetch('/delete_resposta', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: id }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        deleteCount++;
+                        rowsToDelete[index].remove();
+                    } else {
+                        alert('Erro ao excluir a resposta: ' + data.message);
+                    }
+
+                    // Atualiza o contador após a última exclusão
+                    if (deleteCount === idsToDelete.length) {
+                        updateResponseCount();
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao excluir a resposta.');
+                });
+            });
+        }
+    } else {
+        alert('Por favor, selecione pelo menos uma resposta para excluir.');
+    }
 });
