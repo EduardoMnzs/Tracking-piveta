@@ -178,6 +178,7 @@ def gerenciaracessos():
     return render_template('gerenciar-acessos.html')
 
 @app.route('/perguntas-mercado-livre')
+@login_required
 def perguntas_mercado_livre():
 
     conn = connect_db()
@@ -218,6 +219,7 @@ def perguntas_mercado_livre():
     return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta, respostas=respostas)
 
 @app.route('/enviar-resposta', methods=['POST'])
+@login_required
 def handle_enviar_resposta():
     data = request.get_json()
     access_token = session['access_token']
@@ -229,6 +231,7 @@ def handle_enviar_resposta():
         return jsonify({'error': result['message']}), result.get('code', 500)
     
 @app.route('/add_resposta', methods=['POST'])
+@login_required
 def add_resposta():
     data = request.json
     identificador = data.get('identificador')
@@ -252,6 +255,7 @@ def add_resposta():
         return jsonify({'status': 'error', 'message': str(e)}), 500
     
 @app.route('/update_resposta', methods=['POST'])
+@login_required
 def update_resposta():
     data = request.json
     id_resposta = data.get('id')
@@ -272,6 +276,7 @@ def update_resposta():
         return jsonify({'status': 'error', 'message': 'Dados insuficientes fornecidos'}), 400
     
 @app.route('/delete_resposta', methods=['POST'])
+@login_required
 def delete_resposta():
     data = request.json
     id_resposta = data.get('id')
@@ -309,12 +314,14 @@ def get_suggestions_from_db(query):
     return suggestions
 
 @app.route('/get_suggestions', methods=['GET'])
+@login_required
 def get_suggestions():
     query = request.args.get('query', '').lstrip('#')
     suggestions = get_suggestions_from_db(query)
     return jsonify(suggestions)
 
 @app.route('/get_quick_responses', methods=['GET'])
+@login_required
 def get_quick_responses():
     try:
         conn = connect_db()  # Supondo que você tenha uma função para conectar ao banco de dados
