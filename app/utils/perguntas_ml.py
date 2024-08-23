@@ -2,8 +2,8 @@ import requests
 from dateutil import parser
 
 def atualizar_token(refresh_token):
-    id_app = '1883487986840320'
-    secret_key = 'pJh5SyiBpzQ1rG8p49WvlMy7ij9UFfaE'
+    id_app = '8055882507445030'
+    secret_key = 'Mr0owc0YQ1Z9bawR82hJlRlEkwDvw7GW'
     url = "https://api.mercadolibre.com/oauth/token"
 
     payload = {
@@ -62,11 +62,38 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
         'Content-Type': 'application/json'
     }
 
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        perguntas_json = response.json()['questions']
-        perguntas = []
-        count_nao_respondidas = 0
+    perguntas = []
+    count_nao_respondidas = 0
+    limit = 50  # Limite padrão
+    offset = 0
+    total_perguntas = None
+    max_offset = 1000  # Assumindo um limite de 1000, pode ajustar conforme necessário
+
+    while True:
+        if offset >= max_offset:
+            break
+
+        params = {
+            'limit': limit,
+            'offset': offset
+        }
+
+        response = requests.get(url, headers=headers, params=params)
+
+        if response.status_code != 200:
+            raise Exception(f"Falha ao buscar perguntas: {response.status_code} {response.text}")
+
+        response_data = response.json()
+        perguntas_json = response_data.get('questions', [])
+
+        if total_perguntas is None:
+            total_perguntas = response_data.get('total', len(perguntas_json))
+
+        if offset >= total_perguntas:
+            break
+
+        if not perguntas_json:
+            break
 
         for pergunta in perguntas_json:
             data_pergunta = pergunta['date_created'][:10]
@@ -79,6 +106,7 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             if codigo_mlb and codigo_mlb.lower() not in pergunta['item_id'].lower():
                 continue
 
+            # Verifica se a pergunta foi respondida
             if 'answer' in pergunta and pergunta['answer'] is not None:
                 if filtro_resposta == 'nao_respondidas':
                     continue
@@ -87,7 +115,15 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
                 if filtro_resposta == 'respondidas':
                     continue
                 resposta = None
-                count_nao_respondidas += 1
+
+                # Verifica se a pergunta não foi moderada/removida antes de contar como não respondida
+                if pergunta.get('text'):
+                    count_nao_respondidas += 1
+
+            # Verifica se o texto da pergunta está vazio ou ausente
+            texto_pergunta = pergunta.get('text', '')
+            if not texto_pergunta:
+                texto_pergunta = "Pergunta removida ou moderada."
 
             detalhes_produto = buscar_detalhes_produto(access_token, pergunta['item_id'])
             nickname_usuario = buscar_nickname_usuario(access_token, pergunta['from']['id'])
@@ -95,17 +131,17 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             perguntas.append({
                 'usuario': nickname_usuario,
                 'produto': detalhes_produto,
-                'texto_pergunta': pergunta['text'],
+                'texto_pergunta': texto_pergunta,
                 'mlb': pergunta['item_id'],
-                'data_hora': data_pergunta, 
+                'data_hora': data_pergunta,
                 'status_resposta': 'Respondido' if resposta else 'Não respondido',
                 'resposta': resposta,
                 'id_pergunta': pergunta['id'],
             })
 
-        return perguntas, count_nao_respondidas
-    else:
-        raise Exception(f"Falha ao buscar perguntas: {response.status_code} {response.text}")
+        offset += limit
+
+    return perguntas, count_nao_respondidas
 
 def enviar_resposta(access_token, question_id, text):
     url = "https://api.mercadolibre.com/answers"

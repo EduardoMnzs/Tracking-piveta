@@ -515,3 +515,87 @@ window.addEventListener('click', function () {
         container.style.display = 'none';
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para configurar sugestões de respostas rápidas e contador de caracteres
+    function setupInputFeatures(inputElement, suggestionsContainer, charCountElement, submitButton) {
+        inputElement.addEventListener('input', function() {
+            const value = this.value;
+
+            // Atualiza o contador de caracteres
+            updateCharCount(value, charCountElement);
+
+            // Habilita ou desabilita o botão de resposta baseado no conteúdo do input
+            submitButton.disabled = value.trim() === '';
+
+            if (value.startsWith('#')) {
+                fetchSuggestions(value, suggestionsContainer);
+            } else {
+                clearSuggestions(suggestionsContainer);
+            }
+        });
+
+        function fetchSuggestions(query, container) {
+            fetch(`/get_suggestions?query=${query}`)
+                .then(response => response.json())
+                .then(suggestions => {
+                    displaySuggestions(suggestions, container, inputElement);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar sugestões:', error);
+                });
+        }
+
+        function displaySuggestions(suggestions, container, inputElement) {
+            container.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.textContent = `#${suggestion.identificador}: ${suggestion.resposta}`;
+                suggestionItem.addEventListener('click', function() {
+                    inputElement.value = suggestion.resposta;  // Insere apenas a resposta no input
+                    clearSuggestions(container);  // Limpa as sugestões após selecionar
+                    updateCharCount(inputElement.value, charCountElement);  // Atualiza o contador após seleção
+                    submitButton.disabled = inputElement.value.trim() === '';  // Atualiza o estado do botão
+                });
+                container.appendChild(suggestionItem);
+            });
+            container.style.display = 'block';
+        }
+
+        function clearSuggestions(container) {
+            container.innerHTML = '';
+            container.style.display = 'none';
+        }
+
+        function updateCharCount(value, charCountElement) {
+            charCountElement.textContent = `${value.length} / 2000`;
+        }
+
+        // Clique fora da caixa de sugestões para fechá-la
+        document.addEventListener('click', function(event) {
+            if (!inputElement.contains(event.target) && !suggestionsContainer.contains(event.target)) {
+                clearSuggestions(suggestionsContainer);
+            }
+        });
+    }
+
+    // Configurar todos os campos de entrada e contêineres de sugestões
+    document.querySelectorAll('.question-input-container').forEach(container => {
+        const inputElement = container.querySelector('.input-resposta');
+        const suggestionsContainer = container.querySelector('.suggestions-container');
+        const charCountElement = container.querySelector('.char-count');
+        const submitButton = container.closest('.question-footer').querySelector('.btn-responder');
+        setupInputFeatures(inputElement, suggestionsContainer, charCountElement, submitButton);
+    });
+
+    // Adiciona a # ao clicar em "Respostas rápidas"
+    document.querySelectorAll('.resposta-rapida').forEach(button => {
+        button.addEventListener('click', function() {
+            const inputElement = this.closest('.question').querySelector('.input-resposta');
+            inputElement.value = '#';
+            inputElement.focus();  // Move o foco para o campo de input
+            inputElement.dispatchEvent(new Event('input'));  // Simula a entrada de texto para acionar as sugestões
+        });
+    });
+});

@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
 
-app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B'
+app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B01'
 
 
 DB_HOST = "localhost"
@@ -195,7 +195,7 @@ def perguntas_mercado_livre():
     filtro_resposta = request.args.get('status_resposta', 'nao_respondidas')
 
     if 'access_token' not in session or 'refresh_token' not in session:
-        refresh_token = 'TG-66c5feb3b6dbec00013b4ce8-442729255'
+        refresh_token = 'TG-66c8d2fd9bc6d70001c5cf46-492958575'
         access_token, refresh_token = perguntas_ml.atualizar_token(refresh_token)
         session['access_token'] = access_token
         session['refresh_token'] = refresh_token
@@ -211,6 +211,9 @@ def perguntas_mercado_livre():
                 perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
             else:
                 raise e
+    
+    print(f"Perguntas: {perguntas}\n")
+    print(f"Respostas: {respostas}\n")
     
     return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta, respostas=respostas)
 
@@ -287,6 +290,29 @@ def excluir_resposta_no_banco(id_resposta):
         with conn.cursor() as cursor:
             cursor.execute("DELETE FROM respostas_ml WHERE id = %s", (id_resposta,))
         conn.commit()
+
+def get_suggestions_from_db(query):
+    conn = connect_db()  # Conexão com o banco de dados
+    cursor = conn.cursor()
+
+    # Consulta para buscar sugestões no banco de dados
+    cursor.execute("SELECT identificador, resposta FROM respostas_ml WHERE identificador ILIKE %s", (f'%{query}%',))
+    resultados = cursor.fetchall()
+
+    # Fecha a conexão com o banco
+    cursor.close()
+    conn.close()
+
+    # Retorna uma lista de dicionários com identificador e resposta
+    suggestions = [{'identificador': resultado[0], 'resposta': resultado[1]} for resultado in resultados]
+
+    return suggestions
+
+@app.route('/get_suggestions', methods=['GET'])
+def get_suggestions():
+    query = request.args.get('query', '').lstrip('#')
+    suggestions = get_suggestions_from_db(query)
+    return jsonify(suggestions)
 
 @app.route('/get_quick_responses', methods=['GET'])
 def get_quick_responses():

@@ -270,9 +270,13 @@ select:focus {
 
 .question-user>.resposta-rapida {
     font-size: 12px;
-    background-color: rgba(0, 113, 187, 0.24);
+    background-color: rgba(0, 113, 187, 0.25);
     border-radius: 5px;
     padding: 2px;
+}
+
+.question-user>.resposta-rapida:hover {
+    background-color: rgba(0, 112, 187, 0.20);
 }
 
 .question-user>p {
@@ -313,6 +317,7 @@ select:focus {
 .suggestions-container div {
     padding: 8px;
     cursor: pointer;
+    color: #007bff;
 }
 
 .suggestions-container div:hover {
@@ -387,7 +392,7 @@ select:focus {
     width: 100%;
     padding: 5px;
     background-color: rgba(0, 113, 187, 0.24);
-    padding-inline: 30px;
+    padding-inline: 20px;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -397,6 +402,7 @@ select:focus {
     margin-top: 0px;
     margin-bottom: 0px;
     color: #007bff;
+    text-align: left;
 }
 
 .pergunta-respondida>i {
@@ -413,24 +419,32 @@ select:focus {
     opacity: 100%;
 }
 
-.container-perguntas::-webkit-scrollbar {
+.container-perguntas::-webkit-scrollbar,
+.suggestions-container::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 
-.container-perguntas::-webkit-scrollbar-track {
+.container-perguntas::-webkit-scrollbar-track,
+.suggestions-container::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 4px;
 }
 
-.container-perguntas::-webkit-scrollbar-thumb {
+.container-perguntas::-webkit-scrollbar-thumb,
+.suggestions-container::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 4px;
     border: 2px solid #f1f1f1;
 }
 
-.container-perguntas::-webkit-scrollbar-thumb:hover {
+.container-perguntas::-webkit-scrollbar-thumb:hover,
+.suggestions-container::-webkit-scrollbar-thumb:hover {
     background-color: #555;
+}
+
+.resposta-rapida {
+    cursor: pointer;
 }
 
 .resposta-enviada-popup {
@@ -709,6 +723,7 @@ tr {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 20px;
 }
 
 .legenda-container {
