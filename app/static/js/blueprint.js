@@ -41,3 +41,49 @@ document.addEventListener('click', function(event) {
         sidebar.style.display = "none";
     }
 });
+
+function toggleChat() {
+    var chatWindow = document.getElementById('chat-window');
+    if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+        chatWindow.style.display = 'flex';
+    } else {
+        chatWindow.style.display = 'none';
+    }
+}
+
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput) return;
+
+    // Exibir a mensagem do usuário no chat
+    const chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML += `<div class="chat-message user-message">${userInput}</div>`;
+
+    // Limpar campo de entrada
+    document.getElementById('user-input').value = '';
+
+    // Enviar a pergunta para o servidor Flask
+    const response = await fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: userInput }),
+    });
+
+    const data = await response.json();
+    let botResponse = data.response;
+
+    // Formatando a resposta (quebras de linha, listas, etc.)
+    botResponse = botResponse
+        .replace(/\n/g, '<br>')  // Substitui quebras de linha por <br>
+        .replace(/(\*\*)(.*?)\1/g, '<strong>$2</strong>')  // Negrito com **
+        .replace(/(\*)(.*?)\1/g, '<em>$2</em>')  // Itálico com *
+        .replace(/`([^`]+)`/g, '<code>$1</code>');  // Código com `
+
+    // Exibir a resposta do bot no chat
+    chatBox.innerHTML += `<div class="chat-message bot-message">${botResponse}</div>`;
+    
+    // Rolagem automática para o final da conversa
+    chatBox.scrollTop = chatBox.scrollHeight;
+}

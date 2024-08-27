@@ -439,14 +439,15 @@ li {
 
 .fa-angle-up {
     color: #0071BB;
-    font-size: 35px !important;
 }
 
 .back-to-top {
+    width: 65px;
+    height: 65px;
     position: fixed;
     font-size: 25px;
-    bottom: 20px;
-    right: 20px;
+    bottom: 105px;
+    right: 37px;
     display: none;
     background-color: #fff;
     color: white;

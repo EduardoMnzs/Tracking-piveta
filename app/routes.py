@@ -9,8 +9,24 @@ from .utils import perguntas_ml
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
 from .utils.login import errorhandler, login_required, not_login_required
+import google.generativeai as genai
 
 app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B01'
+genai.configure(api_key="AIzaSyB9flXuUgr4nr5GxQ-kZGTgnZ6MYKzzDJ4")
+
+generation_config = {
+    "temperature": 1,
+    "top_p": 0.95,
+    "top_k": 64,
+    "max_output_tokens": 1500,
+    "response_mime_type": "text/plain",
+}
+
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+)
+
 
 
 DB_HOST = "localhost"
@@ -213,8 +229,8 @@ def perguntas_mercado_livre():
             else:
                 raise e
     
-    print(f"Perguntas: {perguntas}\n")
-    print(f"Respostas: {respostas}\n")
+    # print(f"Perguntas: {perguntas}\n")
+    # print(f"Respostas: {respostas}\n")
     
     return render_template('perguntas-ml.html', perguntas=perguntas, count_nao_respondidas=count_nao_respondidas, filtro_atual=filtro_resposta, respostas=respostas)
 
@@ -334,6 +350,21 @@ def get_quick_responses():
         return jsonify({'status': 'success', 'data': quick_responses_list})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    text = data.get('text', '')
+
+    prompt = "Você é um torneiro mecânico chamado 'Avanço' que entende tudo sobre usinagem, consegue falar facilmente sobre dúvidas técnicas e explicar de modo que qualquer pessoa entenda de modo claro e assertivo, além de ter uma personalidade alegre mas com seriedade e firmeza na fala. Seja direto e não precisa se apresentar a cada resposta técnica. Sendo assim, a pergunta é: "
+
+    envio = f'{prompt + text}'
+
+    chat_session = model.start_chat(history=[])
+    response = chat_session.send_message(envio)
+
+    return jsonify({'response': response.text})
+
 
 @app.route("/test", methods=["GET"])
 def test():
