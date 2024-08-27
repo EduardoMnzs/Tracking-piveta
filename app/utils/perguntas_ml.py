@@ -63,6 +63,7 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
     }
 
     perguntas = []
+    datas_criacao = []  # Lista para armazenar todas as datas de criação
     count_nao_respondidas = 0
     limit = 50  # Limite padrão
     offset = 0
@@ -96,11 +97,16 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             break
 
         for pergunta in perguntas_json:
-            data_pergunta = pergunta['date_created'][:10]
+            data_pergunta = pergunta['date_created']  # Mantém a data completa
 
-            if data_de and data_pergunta < data_de:
+            # Acumula todas as datas de criação
+            datas_criacao.append(data_pergunta)
+
+            data_pergunta_formatada = data_pergunta[:10]
+
+            if data_de and data_pergunta_formatada < data_de:
                 continue
-            if data_ate and data_pergunta > data_ate:
+            if data_ate and data_pergunta_formatada > data_ate:
                 continue
 
             if codigo_mlb and codigo_mlb.lower() not in pergunta['item_id'].lower():
@@ -133,7 +139,7 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
                 'produto': detalhes_produto,
                 'texto_pergunta': texto_pergunta,
                 'mlb': pergunta['item_id'],
-                'data_hora': data_pergunta,
+                'data_hora': data_pergunta_formatada,
                 'status_resposta': 'Respondido' if resposta else 'Não respondido',
                 'resposta': resposta,
                 'id_pergunta': pergunta['id'],
@@ -141,7 +147,10 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
 
         offset += limit
 
-    return perguntas, count_nao_respondidas
+    # Encontrar a data de criação mais recente entre todas as datas acumuladas
+    data_mais_recente = max(datas_criacao) if datas_criacao else None
+
+    return perguntas, count_nao_respondidas, data_mais_recente
 
 def enviar_resposta(access_token, question_id, text):
     url = "https://api.mercadolibre.com/answers"

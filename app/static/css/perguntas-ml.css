@@ -447,7 +447,9 @@ select:focus {
     cursor: pointer;
 }
 
-.resposta-enviada-popup {
+.resposta-enviada-popup,
+.resposta-atualizada-popup,
+.resposta-criada-popup {
     position: fixed;
     top: 85px;
     left: 50%;
@@ -458,7 +460,52 @@ select:focus {
     border-radius: 10px;
     border-color: #00B707;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: fadeIn 0.5s;
+    z-index: 9999999;
+}
+
+.preencha-campos-popup,
+.selecione-excluir-popup {
+    position: fixed;
+    top: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: hsla(41, 100%, 65%, 0.9);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-color: hsla(41, 100%, 65%, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 9999999;
+}
+
+.resposta-excluida-popup {
+    position: fixed;
+    top: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: hsl(0, 100%, 61%, 0.55);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-color: #FF3A3A;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999999;
     font-size: 16px;
     text-align: center;
     display: flex;
@@ -493,17 +540,32 @@ select:focus {
     }
 }
 
-.resposta-enviada-popup.fade-out {
+.resposta-enviada-popup.fade-out,
+.preencha-campos-popup.fade-out,
+.resposta-atualizada-popup.fade-out,
+.selecione-excluir-popup.fade-out,
+.resposta-excluida-popup.fade-out,
+.resposta-criada-popup.fade-out {
     animation: fadeOut 0.5s forwards;
 }
 
-.resposta-enviada-popup-container {
+.resposta-enviada-popup-container,
+.preencha-campos-popup-container,
+.resposta-atualizada-popup-container,
+.selecione-excluir-popup-container,
+.resposta-excluida-popup-container,
+.resposta-criada-popup-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.resposta-enviada-popup-container>p {
+.resposta-enviada-popup-container>p,
+.preencha-campos-popup-container>p,
+.resposta-atualizada-popup-container>p,
+.selecione-excluir-popup-container>p,
+.resposta-excluida-popup-container>p,
+.resposta-criada-popup-container>p {
     margin-top: 0;
     margin-bottom: 0;
     display: flex;
@@ -512,7 +574,12 @@ select:focus {
     gap: 400px;
 }
 
-.resposta-enviada-popup-container>p>.close-button-confirm {
+.resposta-enviada-popup-container>p>.close-button-confirm,
+.preencha-campos-popup>p>.close-button-confirm,
+.resposta-atualizada-popup>p>.close-button-confirm,
+.selecione-excluir-popup>p>.close-button-confirm,
+.resposta-excluida-popup>p>.close-button-confirm,
+.resposta-criada-popup>p>.close-button-confirm {
     font-size: 20px;
     cursor: pointer;
 }
@@ -933,7 +1000,12 @@ tr {
         margin-inline: 0px;
     }
 
-    .resposta-enviada-popup-container>p {
+    .resposta-enviada-popup-container>p,
+    .preencha-campos-popup-container>p,
+    .resposta-atualizada-popup-container>p,
+    .selecione-excluir-popup-container>p,
+    .resposta-excluida-popup-container>p,
+    .resposta-criada-popup-container>p {
         gap: 300px;
     }
 
@@ -943,7 +1015,12 @@ tr {
 }
 
 @media screen and (max-width: 800px) {
-    .resposta-enviada-popup-container>p {
+    .resposta-enviada-popup-container>p,
+    .preencha-campos-popup-container>p,
+    .resposta-atualizada-popup-container>p,
+    .selecione-excluir-popup-container>p,
+    .resposta-excluida-popup-container>p,
+    .resposta-criada-popup-container>p {
         gap: 200px;
     }
 }
@@ -994,7 +1071,12 @@ tr {
         align-items: center;
     }
 
-    .resposta-enviada-popup-container>p {
+    .resposta-enviada-popup-container>p,
+    .preencha-campos-popup-container>p,
+    .resposta-atualizada-popup-container>p,
+    .selecione-excluir-popup-container>p,
+    .resposta-excluida-popup-container>p,
+    .resposta-criada-popup-container>p {
         gap: 100px;
     }
 

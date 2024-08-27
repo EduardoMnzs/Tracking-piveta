@@ -55,6 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000);
     }
 
+
+
     document.querySelectorAll('.btn-responder').forEach(button => {
         button.addEventListener('click', function () {
             var input = this.closest('.question').querySelector('.input-resposta');
@@ -135,6 +137,37 @@ document.getElementById('save-response').addEventListener('click', function () {
     const responseInput = document.querySelector('.input-response');
     const identificador = hashtagInput.value.trim();
     const resposta = responseInput.value.trim();
+    const popupPreenchaCampos = document.getElementById('preencha-campos-popup-container');
+
+    function PreenchaCampos() {
+        const popup = document.getElementById('preencha-campos-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    function RespostaCriada() {
+        const popup = document.getElementById('resposta-criada-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
+    document.querySelectorAll('.close-button-confirm').forEach(button => {
+        button.onclick = function () {
+            popupPreenchaCampos.style.display = 'none'
+        };
+    });
 
     if (identificador && resposta) {
         fetch('/add_resposta', {
@@ -147,7 +180,7 @@ document.getElementById('save-response').addEventListener('click', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Resposta salva com sucesso!');
+                    RespostaCriada();
 
                     const tableBody = document.getElementById('table-body');
                     const newRow = createTableRow(data.id, identificador, resposta);
@@ -167,7 +200,7 @@ document.getElementById('save-response').addEventListener('click', function () {
                 alert('Erro ao salvar a resposta.');
             });
     } else {
-        alert('Por favor, preencha ambos os campos.');
+        PreenchaCampos();
     }
 });
 
@@ -271,32 +304,16 @@ function closeDeletePopup() {
     document.getElementById('delete-response-popup').style.display = 'none';
 }
 
-function confirmDeleteResponse() {
-    if (currentDeleteId) {
-        fetch('/delete_resposta', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: currentDeleteId }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Resposta excluída com sucesso!');
-                    currentDeleteRow.remove();
-                    closeDeletePopup();
-
-                    updateResponseCount();
-                } else {
-                    alert('Erro ao excluir a resposta: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao excluir a resposta.');
-            });
-    }
+function RespostaExcluida() {
+    const popup = document.getElementById('resposta-excluida-popup');
+    popup.style.display = 'flex';
+    popup.classList.remove('fade-out');
+    setTimeout(function () {
+        popup.classList.add('fade-out');
+        setTimeout(function () {
+            popup.style.display = 'none';
+        }, 500);
+    }, 3000);
 }
 
 document.getElementById('confirm-delete-btn').addEventListener('click', confirmDeleteResponse);
@@ -321,6 +338,18 @@ function closeQuickResponsePopup() {
 function saveQuickResponse() {
     const novaResposta = document.getElementById('custom-conteudo-resposta').value;
 
+    function RespostaAtualizada() {
+        const popup = document.getElementById('resposta-atualizada-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
     if (currentEditingId) {
         fetch('/update_resposta', {
             method: 'POST',
@@ -332,7 +361,7 @@ function saveQuickResponse() {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Resposta atualizada com sucesso!');
+                    RespostaAtualizada();
                     document.querySelector(`#row-${currentEditingId} .response-cell`).textContent = novaResposta;
                     closeQuickResponsePopup();
                 } else {
@@ -380,11 +409,12 @@ function confirmDeleteResponse() {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Resposta excluída com sucesso!');
+                    RespostaExcluida();
                     currentDeleteRow.remove();
                     closeDeletePopup();
 
                     updateResponseCount();
+
                 } else {
                     alert('Erro ao excluir a resposta: ' + data.message);
                 }
@@ -400,6 +430,18 @@ document.getElementById('delete-selected').addEventListener('click', function ()
     const selectedRows = document.querySelectorAll('#table-body tr input[type="checkbox"]:checked');
     const idsToDelete = [];
     const rowsToDelete = [];
+
+    function SelecioneExcluir() {
+        const popup = document.getElementById('selecione-excluir-popup');
+        popup.style.display = 'flex';
+        popup.classList.remove('fade-out');
+        setTimeout(function () {
+            popup.classList.add('fade-out');
+            setTimeout(function () {
+                popup.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
 
     selectedRows.forEach(checkbox => {
         const row = checkbox.closest('tr');
@@ -441,7 +483,7 @@ document.getElementById('delete-selected').addEventListener('click', function ()
             });
         }
     } else {
-        alert('Por favor, selecione pelo menos uma resposta para excluir.');
+        SelecioneExcluir();
     }
 });
 

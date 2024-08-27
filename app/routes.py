@@ -203,7 +203,7 @@ def perguntas_mercado_livre():
     else:
         access_token = session['access_token']
         try:
-            perguntas, count_nao_respondidas = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
+            perguntas, count_nao_respondidas, data_mais_recente = perguntas_ml.buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_mlb)
         except Exception as e:
             if 'invalid access token' in str(e):
                 access_token, refresh_token = perguntas_ml.atualizar_token(session['refresh_token'])
@@ -297,18 +297,15 @@ def excluir_resposta_no_banco(id_resposta):
         conn.commit()
 
 def get_suggestions_from_db(query):
-    conn = connect_db()  # Conexão com o banco de dados
+    conn = connect_db()
     cursor = conn.cursor()
 
-    # Consulta para buscar sugestões no banco de dados
     cursor.execute("SELECT identificador, resposta FROM respostas_ml WHERE identificador ILIKE %s", (f'%{query}%',))
     resultados = cursor.fetchall()
 
-    # Fecha a conexão com o banco
     cursor.close()
     conn.close()
 
-    # Retorna uma lista de dicionários com identificador e resposta
     suggestions = [{'identificador': resultado[0], 'resposta': resultado[1]} for resultado in resultados]
 
     return suggestions
@@ -324,12 +321,11 @@ def get_suggestions():
 @login_required
 def get_quick_responses():
     try:
-        conn = connect_db()  # Supondo que você tenha uma função para conectar ao banco de dados
+        conn = connect_db()
         cursor = conn.cursor()
         cursor.execute("SELECT identificador, resposta FROM respostas_ml")
         quick_responses = cursor.fetchall()
         
-        # Converta os resultados em um formato de lista de dicionários
         quick_responses_list = [{'identificador': row[0], 'resposta': row[1]} for row in quick_responses]
 
         cursor.close()

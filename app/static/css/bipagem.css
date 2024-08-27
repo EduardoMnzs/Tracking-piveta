@@ -775,9 +775,7 @@ i.fa.fa-trash-o {
     justify-content: center;
     align-items: center;
     white-space: nowrap;
-    /* Impede a quebra de linha */
     overflow: hidden;
-    /* Oculta o conteúdo que não cabe */
     animation: fadeIn 0.5s;
 }
 
@@ -800,9 +798,7 @@ i.fa.fa-trash-o {
     justify-content: center;
     align-items: center;
     white-space: nowrap;
-    /* Impede a quebra de linha */
     overflow: hidden;
-    /* Oculta o conteúdo que não cabe */
     animation: fadeIn 0.5s;
 }
 
