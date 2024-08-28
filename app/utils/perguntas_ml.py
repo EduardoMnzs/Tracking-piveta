@@ -63,12 +63,12 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
     }
 
     perguntas = []
-    datas_criacao = []  # Lista para armazenar todas as datas de criação
+    datas_criacao = []  
     count_nao_respondidas = 0
-    limit = 50  # Limite padrão
+    limit = 50  
     offset = 0
     total_perguntas = None
-    max_offset = 1000  # Assumindo um limite de 1000, pode ajustar conforme necessário
+    max_offset = 1000  
 
     while True:
         if offset >= max_offset:
@@ -78,6 +78,9 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             'limit': limit,
             'offset': offset
         }
+
+        if filtro_resposta == 'nao_respondidas':
+            params['status'] = 'UNANSWERED'
 
         response = requests.get(url, headers=headers, params=params)
 
@@ -97,9 +100,8 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             break
 
         for pergunta in perguntas_json:
-            data_pergunta = pergunta['date_created']  # Mantém a data completa
+            data_pergunta = pergunta['date_created']
 
-            # Acumula todas as datas de criação
             datas_criacao.append(data_pergunta)
 
             data_pergunta_formatada = data_pergunta[:10]
@@ -112,7 +114,6 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
             if codigo_mlb and codigo_mlb.lower() not in pergunta['item_id'].lower():
                 continue
 
-            # Verifica se a pergunta foi respondida
             if 'answer' in pergunta and pergunta['answer'] is not None:
                 if filtro_resposta == 'nao_respondidas':
                     continue
@@ -122,11 +123,9 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
                     continue
                 resposta = None
 
-                # Verifica se a pergunta não foi moderada/removida antes de contar como não respondida
                 if pergunta.get('text'):
                     count_nao_respondidas += 1
 
-            # Verifica se o texto da pergunta está vazio ou ausente
             texto_pergunta = pergunta.get('text', '')
             if not texto_pergunta:
                 texto_pergunta = "Pergunta removida ou moderada."
@@ -147,7 +146,6 @@ def buscar_perguntas(access_token, filtro_resposta, data_de, data_ate, codigo_ml
 
         offset += limit
 
-    # Encontrar a data de criação mais recente entre todas as datas acumuladas
     data_mais_recente = max(datas_criacao) if datas_criacao else None
 
     return perguntas, count_nao_respondidas, data_mais_recente

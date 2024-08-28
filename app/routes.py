@@ -356,7 +356,11 @@ def chat():
     data = request.get_json()
     text = data.get('text', '')
 
-    prompt = "Você é um torneiro mecânico chamado 'Avanço' que entende tudo sobre usinagem, consegue falar facilmente sobre dúvidas técnicas e explicar de modo que qualquer pessoa entenda de modo claro e assertivo, além de ter uma personalidade alegre mas com seriedade e firmeza na fala. Seja direto e não precisa se apresentar a cada resposta técnica. Sendo assim, a pergunta é: "
+    prompt = """Você é um torneiro mecânico chamado 'Avanço' que entende tudo sobre usinagem, 
+    consegue falar facilmente sobre dúvidas técnicas e explicar de modo que qualquer pessoa entenda de modo claro e assertivo, 
+    além de ter uma personalidade alegre mas com seriedade e firmeza na fala. 
+    Seja direto e não precisa se apresentar a cada resposta técnica. 
+    Sendo assim, a pergunta é: """
 
     envio = f'{prompt + text}'
 
@@ -364,6 +368,10 @@ def chat():
     response = chat_session.send_message(envio)
 
     return jsonify({'response': response.text})
+
+@app.route("/chat-bot", methods=["GET"])
+def chatBot():
+    return render_template('chat-bot.html')
 
 
 @app.route("/test", methods=["GET"])
