@@ -2,7 +2,11 @@
   
 ---
   
-Um chat-bot é um programa de computador projetado para simular conversas humanas através de mensagens de texto ou voz. Ele utiliza inteligência artificial para entender e responder a perguntas, realizar tarefas automatizadas e oferecer suporte em tempo real. Chat-bots são amplamente utilizados em atendimento ao cliente, marketing e outras áreas, proporcionando interações rápidas e eficientes com usuários.
+O chat-bot "Avanço" é um programa de computador projetado para simular conversas humanas através de mensagens de texto ou voz. 
+
+Ele utiliza inteligência artificial para entender e responder a perguntas, realizar tarefas automatizadas e oferecer suporte em tempo real. 
+
+Chat-bots são amplamente utilizados em atendimento ao cliente, marketing e outras áreas, proporcionando interações rápidas e eficientes com usuários.
   
 ### Pré-requisitos
   
@@ -12,6 +16,7 @@ Antes de iniciar, certifique-se de que você tem os seguintes itens:
   
 - Acesso a um terminal de comando.
 - Permissões adequadas para criar diretórios e arquivos no sistema.
+- Permissões para a instalação de bibliotecas e programas no sistema.
   
 ### Arquitetura do Projeto
   
@@ -21,21 +26,21 @@ Para facilitar a compreensão, utilizei a abordagem de arquitetura C4 para ilust
 
 ##### Contexto de Bipagem
 
-A primeira etapa do desenho é mostrar as interações de forma macro, focando nas comunicações e dependências entre sistemas e usuários no processo de bipagem. Esse diagrama deve ser compreendido por todos os envolvidos no projeto, tanto técnicos quanto de negócios, que interagem direta ou indiretamente com o sistema.
+A primeira etapa do desenho é mostrar as interações de forma macro, focando nas comunicações e dependências entre sistemas e usuários no chat-bot "Avanço". Esse diagrama deve ser compreendido por todos os envolvidos no projeto, tanto técnicos quanto de negócios, que interagem direta ou indiretamente com o sistema.
 
-![Diagrama de Contexto](./arquitetura/bipagem/C4-contexto-bipagem.jpg)
+![Diagrama de Contexto](./arquitetura/chat-bot/C4%20Architecture%20-%20CHAT-BOT%20-%20Contexto.jpg)
 
 ##### Container de Bipagem
 
 O segundo nível detalha o sistema, descrevendo seus containers e como eles se comunicam. Foca na arquitetura e tecnologias usadas, mostrando como o sistema é construído de forma macro. Um container pode ser uma aplicação web, um banco de dados, ou um sistema de arquivos. Este diagrama é direcionado à equipe técnica, como desenvolvedores e profissionais de suporte.
 
-![Diagrama de Contexto](./arquitetura/bipagem/C4-container-bipagem.jpg)
+![Diagrama de Container](./arquitetura/chat-bot/C4%20Architecture%20-%20CHAT-BOT%20-%20Containers.jpg)
 
 ##### Componentes de Bipagem
 
 No terceiro nível, detalhamos as partes que compõem os containers, incluindo interações, responsabilidades e tecnologias de forma mais minuciosa. Um sistema pode ter vários diagramas de componente, focando na equipe técnica de desenvolvimento.
 
-![Diagrama de Contexto](./arquitetura/bipagem/C4-componentes-bipagem.jpg)
+![Diagrama de Componentes](./arquitetura/chat-bot/C4%20Architecture%20-%20CHAT-BOT%20-%20Components.jpg)
   
 ### Estrutura do Projeto
   
@@ -48,14 +53,14 @@ No terceiro nível, detalhamos as partes que compõem os containers, incluindo i
 ├── app/
 │   ├── static/
 │   |    ├── css/
-│   |    │   └── bipagem.css
+│   |    │   └── chat-bot.css
+│   |    │   └── blueprint.css
 │   |    └── js/
-│   |        └── bipagem.js
+│   |        └── chat-bot.js
+│   |        └── blueprint.js
 │   ├── templates/
-│   │    └── bipagem.html
-│   ├── utils/
-│   │    ├── bipagem.py
-│   │    └── conexao.py
+│   │    └── chat-bot.html
+│   │    └── blueprint.html
 │   ├── __init__.py
 │   ├── .flaskenv
 │   └── routes.py
@@ -71,25 +76,8 @@ No terceiro nível, detalhamos as partes que compõem os containers, incluindo i
   
 Instale as dependências do projeto com o seguinte comando: ```pip install -r requirements.txt```
   
-##### Configuração do Banco de Dados
-  
-A conexão ao banco de dados PostgreSQL é feita na função ``connect_db()``:
-  
-``` ruby
-import psycopg2
-  
-def connect_db():
-    return psycopg2.connect(
-        dbname="yourdbname",
-        user="yourdbuser",
-        password="yourdbpassword",
-        host="yourdbhost",
-        port="yourdbport"
-    )
-```
-  
 ##### Rotas
-Definimos uma rota /add_produtos para inserir produtos no banco de dados:
+Definimos uma rota /chat para fazer requisições ao chat-bot:
   
 ``` Ruby
 from flask import Flask, request, jsonify
@@ -97,38 +85,34 @@ from datetime import datetime
   
 app = Flask(__name__)
   
-@app.route('/add_produtos', methods=['POST'])
-def add_produtos():
+@app.route('/chat', methods=['POST'])
+def chat():
     data = request.get_json()
-    produtos = data['produtos']
-  
-    conn = connect_db()
-    cursor = conn.cursor()
-  
-    inserted_ids = []
-    for produto in produtos:
-        codigo_interno = produto['codigo_interno']
-        codigo = produto['codigo']
-        chave = produto['chave']
-        data_hora = datetime.now()
-        cursor.execute(
-            "INSERT INTO produtos (codigo_interno, codigo, chave, data_hora) VALUES (%s, %s, %s, %s) RETURNING id",
-            (codigo_interno, codigo, chave, data_hora)
-        )
-        inserted_id = cursor.fetchone()[0]
-        inserted_ids.append(inserted_id)
-  
-    conn.commit()
-    cursor.close()
-    conn.close()
-  
-    if inserted_ids:
-        return jsonify({"message": "Produtos adicionados com sucesso!", "inserted_ids": inserted_ids}), 201
-    else:
-        return jsonify({"message": "Falha ao adicionar produtos."}), 500
+    text = data.get('text', '')
+
+    prompt = """Você é um torneiro mecânico chamado 'Avanço' que entende tudo sobre usinagem, 
+    consegue falar facilmente sobre dúvidas técnicas e explicar de modo que qualquer pessoa entenda de modo claro e assertivo, 
+    além de ter uma personalidade alegre mas com seriedade e firmeza na fala. 
+    Seja direto e não precisa se apresentar a cada resposta técnica. 
+    Sendo assim, a pergunta é: """
+
+    envio = f'{prompt + text}'
+
+    chat_session = model.start_chat(history=[])
+    response = chat_session.send_message(envio)
+
+    return jsonify({'response': response.text})
   
 if __name__ == '__main__':
     app.run(debug=True)
+```
+
+Para visualizar préviamente o funcionamento do chat-bot Avanço, também foi criado uma página de apresentação:
+
+``` Ruby
+@app.route("/chat-bot", methods=["GET"])
+def chatBot():
+    return render_template('chat-bot.html')
 ```
   
 ### Frontend
@@ -136,60 +120,50 @@ if __name__ == '__main__':
 ---
   
 ##### HTML
-O HTML contém a informações cruciais frizando a importância da usabilidade do rastreio:
-  
-Ex:
+O HTML do chat-bot Avanço foi criado em 'Blueprint.html', justamente para ser um assistente que possa ser utilizado em qualquer ferramenta do sistema:
+
   
 ``` Ruby
-<div id="popup-finalizar-container" class="popup-finalizar-container" style="display:none;">
-                    <div class="popup-finalizar">
-                        <h2>Confirmação<span class="close-button-confirm">&times;</span></h2>
-                        <div class="aviso-cuidado">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            <p>Com a operação finalizada não poderá ser feito mais alterações.</p>
-                        </div>
-                        <p class="confirm-message">Uma vez finalizado, a operação será <b>salva e todos os registros
-                                serão carregados</b> e não poderá ser alterado.
-                            <br><br>Deseja finalizar esta operação?
-                        </p>
-                        <div class="button-container-confirm">
-                            <button class="button-cancel">Cancelar</button>
-                            <button class="button-confirm" id="save-table-data">Finalizar</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="chat-button-container">
+        <button class="float-button" onclick="toggleChat()"><i class="fa fa-comments-o" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <img class="chat-icon" src="../static/img/chat-bot.jpg" alt="">
+            <h2>AVANÇO B.O.T</h2>
+            <a href="/chat-bot"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+            <button class="close-button-chat" onclick="toggleChat()">X</button>
+        </div>
+        <div id="chat-box" class="chat-box">
+
+        </div>
+        <div class="input-area">
+            <input class="input-field" type="text" id="user-input" placeholder="Digite sua mensagem...">
+            <button class="enviar-chat" onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
 ```
+
 ##### CSS
   
 O CSS estiliza os componentes da página:
   
-1. Atributo ``style`` para Ocultar o Popup:
+1. Atributo ``style`` para Ocultar a caixa de mensagem do chat-bot:
   
-O atributo ``style`` é aplicado ao elemento ``div`` do popup para torná-lo inicialmente oculto. Utilize a propriedade ``display`` com o valor ``none``.
+O atributo ``style`` é aplicado a classe ``chat-window`` do popup para torná-lo inicialmente oculto. Utilize a propriedade ``display`` com o valor ``none``.
   
-Ex: ``<div id="meuPopup" style="display: none;">...</div>``
+ex: ``<div class="chat-window" style="display: none;"></div>``
   
-2. ``Keyframe`` para animação:
+2. ``transition`` para animação:
   
-As ``keyframes`` são a base para criar animações CSS fluidas e complexas. Elas definem os pontos-chave da animação, especificando como os elementos da página devem se transformar ao longo do tempo.
+As ``transition`` podem ser utizadas para criar animações no CSS fluidas.
   
 Ex: 
 ``` Ruby
-@keyframes dots {
-    0%,
-    20% {
-        content: "";
-    }
-    40% {
-        content: ".";
-    }
-    60% {
-        content: "..";
-    }
-    80%,
-    100% {
-        content: "...";
-    }
+.chat-message {
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 ```
   
@@ -200,79 +174,110 @@ As ``Media Queries`` permitem adaptar o layout e o estilo de uma página com bas
 Ex:
   
 ``` Ruby
-@media only screen and (max-width: 1150px) {
-    .popup-finalizar {
-        width: 60% !important;
+@media only screen and (max-width: 1200px) {
+    .image-container {
+        width: 60%;
+    }
+
+    .text-container {
+        width: 100%;
     }
 }
 ```
 ##### Javascript
   
-O JavaScript dá vida aos popups ocultos controlando sua visibilidade e interação com o usuário, funcionalidades de data hora, e até mesmo um contador de volumes.
+O JavaScript dá vida chat-bot Avanço, controlando sua visibilidade e interação com o usuário.
   
-1. Mostrar o Popup:
+1. Requisitar a pergunta:
   
-Utilize a propriedade ``display`` do elemento ``div`` e defina seu valor como ``block`` para tornar o popup visível. Isso pode ser feito em resposta a eventos específicos, como cliques em botões ou ações do usuário.
-  
-Ex:
-  
-``` Ruby
-const meuPopup = document.getElementById('meuPopup');
-const botaoAbrir = document.querySelector('.botao-abrir');
-  
-botaoAbrir.addEventListener('click', () => {
-  meuPopup.style.display = 'block';
-});
-```
-  
-2. Ocultar o Popup:
-  
-Para fechar o popup, defina a propriedade ``display`` do elemento ``div`` como ``none`` novamente. Isso pode ser feito através de botões de fechamento, clique fora do popup ou outras ações desejadas.
+Utilize a função ``sendMessage()`` para capturar a mensagem inserida no ``user-input`` pelo usuário e enviar a requisição para a ``API`` do chat-bot.
   
 Ex:
   
 ``` Ruby
-const meuPopup = document.getElementById('meuPopup');
-const botaoFechar = document.querySelector('.botao-fechar');
-  
-botaoFechar.addEventListener('click', () => {
-  meuPopup.style.display = 'none';
-});
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput) return;
+
+    const chatBox = document.getElementById('chat-box');
+    const userMessage = document.createElement('div');
+    userMessage.className = 'chat-message user-message';
+    userMessage.textContent = userInput;
+    chatBox.appendChild(userMessage);
+
+    setTimeout(function() {
+        userMessage.classList.add('show');
+    }, 10);
+
+    document.getElementById('user-input').value = '';
+
+    const response = await fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: userInput }),
+    });
+...
 ```
   
-3. Função de data/hora:
+2. Mostrar a resposta:
   
-As funções de data e hora permite que manipule e processe informações de datas e horários de forma eficiente. Elas oferecem diversas funcionalidades para lidar com diferentes aspectos do tempo, como por exemplo a obtenção da data atual.
+Para visualizar a mensagem, utilizamos um método de formatação de texto, deixando-o legível ao usuário e intuitivo.
+  
+Ex:
   
 ``` Ruby
-function dataTable() {
-    const now = new Date();
-    let day = now.getDate().toString().padStart(2, '0');
-    let month = (now.getMonth() + 1).toString().padStart(2, '0');
-    let year = now.getFullYear();
-    let hours = now.getHours().toString().padStart(2, '0');
-    let minutes = now.getMinutes().toString().padStart(2, '0');
-    let seconds = now.getSeconds().toString().padStart(2, '0');
-  
-    return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
+...
+    const data = await response.json();
+    let botResponse = data.response;
+
+    botResponse = botResponse
+        .replace(/\n/g, '<br>')
+        .replace(/(\*\*)(.*?)\1/g, '<strong>$2</strong>')
+        .replace(/(\*)(.*?)\1/g, '<em>$2</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    const botMessage = document.createElement('div');
+    botMessage.className = 'chat-message bot-message';
+    botMessage.innerHTML = botResponse;
+    chatBox.appendChild(botMessage);
+
+    setTimeout(function() {
+        botMessage.classList.add('show');
+    }, 10);
+    
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
-dataTable();
 ```
   
-4. Função de Contador:
+3. Mostrar caixa de mensagem:
   
-A função contador é uma ferramenta para gerenciar contagens repetitivas de forma eficiente e precisa. Utilizamos para iterar  lista de dados e acompanhar a quantidade de registros do algoritmo.
+Como esse assistente está disponível em todas as ferramentas, de algum modo temos que deixa-lo discreto. E claro, para acessa-lo utilizamos do botão no canto inferior direito.
+  
+Ex:
   
 ``` Ruby
-function getNextProductNumber() {
-    let newNumber = lastProductNumber;
-    lastProductNumber += 4;
-    return newNumber.toString().padStart(4, '0');
+function toggleChat() {
+    var chatWindow = document.getElementById('chat-window');
+    if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+        chatWindow.style.display = 'flex';
+        setTimeout(function() {
+            chatWindow.classList.add('open');
+        }, 10);
+    } else {
+        chatWindow.classList.remove('open');
+        setTimeout(function() {
+            chatWindow.style.display = 'none';
+        }, 300);
+    }
 }
 ```
   
 ### Conclusão
   
 ---
+
+![Chat-bot Avanço](./arquitetura/chat-bot/chat-bot.png)
   
-Este sistema permite a inserção, edição e exclusão de produtos, armazenando todas as operações em um banco de dados PostgreSQL. O frontend responsivo garante uma boa experiência do usuário em diferentes dispositivos.
+Este sistema permite a interação para dúvidas e curiosidade sobre usinagem. O Avanço foi pensado para todos os colaboradores como forma de suporte e fácil acesso a informações cruciais para alavancar produtividade, com uma interface amigável e responsiva, garante uma boa experiência do usuário em diferentes dispositivos e cenários.

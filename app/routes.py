@@ -6,9 +6,8 @@ from datetime import datetime
 from .utils.tracking import fetch_tracking_info
 # from .utils.bipagem import gen
 from .utils import perguntas_ml
-from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash
-from .utils.login import errorhandler, login_required, not_login_required
+from .utils.login import login_required
 import google.generativeai as genai
 
 app.secret_key = '5~n>+1s{wM|vWLng8KZ$LzYq=A7S`gD"wl&M7"tNVR46pEIn?B01'

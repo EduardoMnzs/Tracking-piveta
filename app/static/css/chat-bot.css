@@ -42,15 +42,15 @@
 }
 
 .text-container {
-    padding-left:100px;
-    padding-right:50px;
+    padding-left: 100px;
+    padding-right: 50px;
     width: 60%;
 }
 
 .text-container h2 {
     color: #0056b3;
     font-size: 3.5rem;
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
     font-weight: bold;
 }
 
@@ -68,4 +68,45 @@
     background: black !important;
     margin-bottom: 8px;
     border: none !important;
+}
+
+@media only screen and (max-width: 1500px) {
+    .home-container {
+        flex-direction: column;
+    }
+
+    .background {
+        height: max-content;
+    }
+
+    .text-container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+    .image-container {
+        width: 60%;
+    }
+
+    .text-container {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .image-container {
+        width: 100%;
+    }
+
+    .text-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .home-container {
+        padding-inline: 45px;
+    }
+
 }

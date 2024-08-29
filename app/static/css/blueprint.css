@@ -475,4 +475,8 @@ input:checked+.slider-input:before {
         margin-left: -4px;
         margin-top: -8px;
     }
+
+    .chat-window {
+        right: 20px;
+    }
 }
