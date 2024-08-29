@@ -16,6 +16,7 @@
     font-size: inherit; 
     font-weight: normal;
     display: flex;
+    margin-right: 25px;
 }
 
 .chat-header a:hover, 
@@ -354,7 +355,7 @@ input:checked+.slider-input:before {
     text-align: center;
     position: relative;
     gap: 10px;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .chat-header > h2 {

@@ -289,6 +289,22 @@
     color: #fff;
 }
 
+.box a {
+    text-decoration: none !important;
+    color: inherit !important;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-weight: normal;
+    display: flex;
+}
+
+.documentacao-img-container {
+    display: flex;
+}
+
 .titulo-documentacao {
     font-size: 25px;
     margin-bottom: 35px;

@@ -27,7 +27,6 @@ model = genai.GenerativeModel(
 )
 
 
-
 DB_HOST = "localhost"
 DB_NAME = "Piveta"
 DB_USER = "postgres"
@@ -351,6 +350,7 @@ def get_quick_responses():
         return jsonify({'status': 'error', 'message': str(e)}), 500
     
 @app.route('/chat', methods=['POST'])
+@login_required
 def chat():
     data = request.get_json()
     text = data.get('text', '')
@@ -369,8 +369,14 @@ def chat():
     return jsonify({'response': response.text})
 
 @app.route("/chat-bot", methods=["GET"])
+@login_required
 def chatBot():
     return render_template('chat-bot.html')
+
+@app.route("/documentacao", methods=["GET"])
+@login_required
+def documentacao():
+    return render_template('documentacao.html')
 
 
 @app.route("/test", methods=["GET"])
