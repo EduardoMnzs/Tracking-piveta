@@ -378,6 +378,10 @@ def chatBot():
 def documentacao():
     return render_template('documentacao.html')
 
+@app.route("/ticket-user", methods=["GET"])
+@login_required
+def ticket_user():
+    return render_template('ticket_user.html')
 
 @app.route("/test", methods=["GET"])
 def test():

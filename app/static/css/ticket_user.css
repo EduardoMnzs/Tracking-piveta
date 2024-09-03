@@ -1,0 +1,136 @@
+.home-container {
+    display: flex;
+    padding-inline: 100px;
+    border-radius: 10px;
+    align-items: center;
+    height: 100%;
+}
+
+.background {
+    background-color: #F0F0F0;
+    border-radius: 45px 45px 0px 0px;
+    height: 90%;
+}
+
+
+.terms-of-usage {
+    background-color: #F0F0F0;
+    padding-bottom: 15px;
+
+    a {
+        margin-left: 40px
+    }
+}
+
+.image-container {
+    position: relative;
+    width: 40%;
+}
+
+.bot-image {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.bot-text {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.text-container {
+    padding-left: 100px;
+    padding-right: 50px;
+    width: 60%;
+}
+
+.text-container h2 {
+    color: #b30000a3;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.text-container p {
+    color: #666;
+    line-height: 1.6;
+    text-align: justify;
+    font-size: 20px;
+}
+
+.button-chamado-container {
+    display: flex;
+    justify-content: center;
+}
+
+.button-chamado {
+    background-color: #FF0000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #f3f7fe;
+    border: none;
+    border-radius: 8px;
+    width: 160px;
+    height: 45px;
+    transition: .3s;
+}
+
+.button-chamado:hover {
+    background-color: #cd0000;
+    box-shadow: 0 0 0 3px #FF00005f;
+    color: #fff;
+}
+
+
+.footer-hr {
+    margin: auto;
+    width: 75%;
+    height: 2px;
+    background: black !important;
+    margin-bottom: 8px;
+    border: none !important;
+}
+
+@media only screen and (max-width: 1500px) {
+    .home-container {
+        flex-direction: column;
+    }
+
+    .background {
+        height: max-content;
+    }
+
+    .text-container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+    .image-container {
+        width: 60%;
+    }
+
+    .text-container {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .image-container {
+        width: 100%;
+    }
+
+    .text-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .home-container {
+        padding-inline: 45px;
+    }
+
+}
