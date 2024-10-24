@@ -9,7 +9,7 @@
         <div class="image-container">
             <img src="../static/img/error-ticket.png" alt="ticket_error" class="bot-image">
         </div>
-        <div class="text-container">
+        <!-- <div class="text-container">
             <h2>Esta com algum erro?<br>Abra agora um chamado!</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium, excepturi ad, expedita fugit
                 suscipit reiciendis velit, ipsum quam voluptatibus voluptatum ipsa! Placeat molestiae autem cupiditate
@@ -19,8 +19,48 @@
                 non beatae.
             </p>
             <div class="button-chamado-container">
-                <button class="button-chamado">Abra um chamado</button>
+                <button class="button-chamado">Abrir chamado</button>
             </div>
+        </div> -->
+        <div class="form-container">
+            <form action="/submit-form" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Título<span class="obrigatorio">*</span></label>
+                    <input type="text" id="title" name="title" placeholder="Título do chamado" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descrição<span class="obrigatorio">*</span></label>
+                    <textarea id="description" name="description" rows="4"
+                        placeholder="Relate o problema com o máximo de detalhes possível" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="start">Data de Início<span class="obrigatorio">*</span><label>
+                            <input type="date" id="start" name="start" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="attempt">Tentou algo?</label>
+                    <input type="text" id="attempt" placeholder="Nos conte para que possamos ajudar" name="attempt">
+                </div>
+
+                <label class="upload-icon" for="file">
+                    <div class="upload-area" id="upload-area">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <span class="upload-area-title">Anexar arquivo</span>
+                        <input type="file" id="file" name="file" accept="image/*" onchange="previewFile()">
+                    </div>
+                </label>
+
+                <div id="file-preview-container" class="file-preview-container">
+                    <div id="file-preview" class="file-preview"></div>
+                    <button id="add-img-button" class="add-img-button" style="display:none;">+</button>
+                </div>
+
+                <div class="button-chamado-container">
+                    <button class="button-chamado">Solicitar chamado</button>
+                </div>
         </div>
     </div>
 </div>
@@ -30,5 +70,76 @@
     © 2024 Piveta Ferramentas. Todos os direitos reservados. <a href="/politica-de-privacidade">Política de
         privacidade</a>
 </footer>
+
+<script>
+    let imageCount = 0;
+
+    function previewFile() {
+        const fileInput = document.getElementById('file');
+        const filePreview = document.getElementById('file-preview');
+        const uploadArea = document.getElementById('upload-area'); 
+        const addImgButton = document.getElementById('add-img-button');
+        const file = fileInput.files[0];
+
+        if (file && imageCount < 3) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (file.type.startsWith('image/')) {
+                    const imageWrapper = document.createElement('div');
+                    imageWrapper.classList.add('image-wrapper');
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+
+                    const removeButton = document.createElement('button');
+                    removeButton.classList.add('remove-image');
+                    removeButton.innerHTML = 'X';
+
+                    removeButton.addEventListener('click', function () {
+                        imageWrapper.remove();
+                        imageCount--;
+
+                        if (imageCount === 0) {
+                            uploadArea.style.display = 'flex';
+                            addImgButton.style.display = 'none';
+                        }
+
+                        if (imageCount < 3 && imageCount > 0) {
+                            addImgButton.style.display = 'inline-block';
+                        }
+                    });
+
+                    imageWrapper.appendChild(img);
+                    imageWrapper.appendChild(removeButton);
+
+                    filePreview.appendChild(imageWrapper);
+
+                    imageCount++;
+
+                    if (imageCount >= 3) {
+                        addImgButton.style.display = 'none';
+                    } else {
+                        addImgButton.style.display = 'inline-block';
+                    }
+
+                    uploadArea.style.display = 'none';
+
+                    fileInput.value = '';
+                } else {
+                    const fileName = document.createElement('p');
+                    fileName.textContent = `Arquivo anexado: ${file.name}`;
+                    filePreview.appendChild(fileName);
+                }
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('add-img-button').addEventListener('click', function () {
+        document.getElementById('file').click();
+    });
+</script>
 
 {% endblock %}

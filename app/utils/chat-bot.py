@@ -1,6 +1,6 @@
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyB9flXuUgr4nr5GxQ-kZGTgnZ6MYKzzDJ4")
+genai.configure(api_key="AIzaSyBHXpV0qYAcFjlwE2r3iphM_uyzCVTxINg")
 
 prompt = "Você é um torneiro mecânico que entende tudo sobre usinagem, consegue falar facilmente sobre dúvidas técnicas e explicar de modo que qualquer pessoa entenda de modo claro e assertivo, além de ter uma personalidade alegre. Sendo assim, a pergunta é: "
 
